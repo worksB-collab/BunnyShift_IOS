@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ShiftTableViewCell" id="KGk-i7-Jjw" customClass="ShiftTableViewCell" customModule="Practice1229SearchBar" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="409" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="409" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="班別" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GdN-Go-5UG">
+                        <rect key="frame" x="118" y="5" width="90" height="34"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="90" id="HCc-Ww-NAB"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="開始時段" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="drm-z9-QHH">
+                        <rect key="frame" x="216" y="5" width="60" height="34"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="cZS-av-aRh"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="結束時段" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r7H-RE-Lc2">
+                        <rect key="frame" x="284" y="5" width="60" height="34"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="faa-Fn-20x"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="人數" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sko-q5-lyU">
+                        <rect key="frame" x="352" y="5" width="45" height="34"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="45" id="T9b-0w-1DW"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                    </textField>
+                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="日別" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BYO-7G-Azq">
+                        <rect key="frame" x="20" y="5" width="90" height="34"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="90" id="Whh-hG-sl1"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="drm-z9-QHH" firstAttribute="leading" secondItem="GdN-Go-5UG" secondAttribute="trailing" constant="8" id="4HX-wb-2px"/>
+                    <constraint firstItem="GdN-Go-5UG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="8nZ-ma-HVX"/>
+                    <constraint firstItem="r7H-RE-Lc2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="Uyt-iV-hsA"/>
+                    <constraint firstItem="sko-q5-lyU" firstAttribute="leading" secondItem="r7H-RE-Lc2" secondAttribute="trailing" constant="8" id="VLk-5x-QbB"/>
+                    <constraint firstItem="BYO-7G-Azq" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="WxU-j1-Gw4"/>
+                    <constraint firstItem="GdN-Go-5UG" firstAttribute="leading" secondItem="BYO-7G-Azq" secondAttribute="trailing" constant="8" id="nJa-nZ-9RO"/>
+                    <constraint firstItem="sko-q5-lyU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="nNa-mV-5h3"/>
+                    <constraint firstItem="BYO-7G-Azq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="rtG-GZ-DCO"/>
+                    <constraint firstItem="r7H-RE-Lc2" firstAttribute="leading" secondItem="drm-z9-QHH" secondAttribute="trailing" constant="8" id="uuh-Yt-R0T"/>
+                    <constraint firstItem="drm-z9-QHH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="vLf-hy-DVs"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="date_name" destination="BYO-7G-Azq" id="nzV-SX-T2l"/>
+                <outlet property="shift_Etime" destination="r7H-RE-Lc2" id="Qq6-Wh-Xpg"/>
+                <outlet property="shift_Stime" destination="drm-z9-QHH" id="Lwz-fH-2gG"/>
+                <outlet property="shift_name" destination="GdN-Go-5UG" id="RpA-gc-IrS"/>
+                <outlet property="staffNum" destination="sko-q5-lyU" id="NZx-N6-blg"/>
+            </connections>
+            <point key="canvasLocation" x="196.37681159420291" y="136.60714285714286"/>
+        </tableViewCell>
+    </objects>
+</document>
