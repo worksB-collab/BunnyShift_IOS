@@ -24,24 +24,7 @@ class ChooseAccountViewController: UIViewController {
     
     @IBOutlet weak var chooseAccount_company: RoundRecButton!
     
-    
-//    // jump to the page we want by its storyBoard ID
-//    @IBAction func chooseAccount_company(_ sender: UIButton) {
-//        if let controller = storyboard?.instantiateViewController(withIdentifier: "CompanyCreationViewController") {
-//            present(controller, animated: true, completion: nil)
-//        }
-//    }
-    
-    
-//    // back to topic page
-//    @IBAction func chooseAccount_backToTopic(_ sender: UIButton) {
-//        // jump to the page we want by its storyBoard ID
-//        if let controller = storyboard?.instantiateViewController(withIdentifier: "RootNavigationController") {
-//            present(controller, animated: true, completion: nil)
-//        }
-//
-//    }
-    
+        
     
     func setNavigationBar(){
         navigationItem.title = "註冊" // 設定title

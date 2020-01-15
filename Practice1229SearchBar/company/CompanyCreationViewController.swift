@@ -63,10 +63,8 @@ class CompanyCreationViewController: UIViewController{
     }
     // jump to the page we want by its storyBoard ID
     func jumpToSchedule(){
-            if let controller = storyboard?.instantiateViewController(withIdentifier: "navShiftArrangementViewController") {
-                present(controller, animated: true, completion: nil)
-            
-        }
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navShiftArrangementViewController") 
+        present(controller, animated: true, completion: nil)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

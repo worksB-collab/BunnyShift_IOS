@@ -20,7 +20,7 @@ public class Global{
     
     
     
-    public static var staffNameList : [String] = ["ada", "belle"]
+    public static var staffNameList : [String] = ["Anders", "Kristian", "Sofia", "John", "Jenny", "Lina", "Annie", "Katie", "Johanna"]
     public static var staffList = Array<Staff>()
     public static var companyShiftDateList = ["weekday" : Array<ShiftDate>(), "weekend" : Array<ShiftDate>()]
     public static var shiftDateNames : Array<String> = ["weekday", "weekend"]

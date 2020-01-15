@@ -126,9 +126,8 @@ extension IndividualCreationViewController: UITextFieldDelegate {
     
     // jump to the page we want by its storyBoard ID
     func jumpToSchedule(){
-            if let controller = storyboard?.instantiateViewController(withIdentifier: "navPersonalScheduleViewController") {
-                present(controller, animated: true, completion: nil)
-            
-        }
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navPersonalScheduleViewController")
+        present(controller, animated: true, completion: nil)
+        
     }
 }

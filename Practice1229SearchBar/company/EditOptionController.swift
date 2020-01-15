@@ -32,33 +32,33 @@ class EditOptionController: UIViewController, UITableViewDataSource , UITableVie
     
     func jumpToDateNamingController(){
         
-        if let controller = storyboard?.instantiateViewController(withIdentifier: "navDateNamingController") {
-            present(controller, animated: true, completion: nil)
-        }
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navDateNamingController")
+        present(controller, animated: true, completion: nil)
+        
     }
     func jumpToShiftArrangementViewController(){
         
-        if let controller = storyboard?.instantiateViewController(withIdentifier: "navShiftArrangementViewController") {
-            present(controller, animated: true, completion: nil)
-        }
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navShiftArrangementViewController")
+        present(controller, animated: true, completion: nil)
+        
     }
     func jumpToDateShiftAssignController(){
         
-        if let controller = storyboard?.instantiateViewController(withIdentifier: "navDateShiftAssignController") {
-            present(controller, animated: true, completion: nil)
-        }
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navDateShiftAssignController")
+        present(controller, animated: true, completion: nil)
+        
     }
     func jumpToCertainDayTypeController(){
         
-        if let controller = storyboard?.instantiateViewController(withIdentifier: "navCertainDayTypeController") {
-            present(controller, animated: true, completion: nil)
-        }
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navCertainDayTypeController")
+        present(controller, animated: true, completion: nil)
+        
     }
     func jumpToAssignScheduleController(){
         
-        if let controller = storyboard?.instantiateViewController(withIdentifier: "navAssignScheduleController") {
-            present(controller, animated: true, completion: nil)
-        }
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navAssignScheduleController")
+        present(controller, animated: true, completion: nil)
+        
     }
     
     

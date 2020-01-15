@@ -95,10 +95,10 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
     
     
     func jumpToNext(){
-
-            if let controller = storyboard?.instantiateViewController(withIdentifier: "navShiftArrangementViewController") {
-                present(controller, animated: true, completion: nil)
-        }
+        
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navShiftArrangementViewController")
+        present(controller, animated: true, completion: nil)
+        
     }
     
     func registerNib() {
@@ -165,6 +165,14 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
         
     }
     
-
+    func tableView(_ tableView: UITableView,
+                      commit editingStyle: UITableViewCell.EditingStyle,
+                               forRowAt indexPath: IndexPath)
+       {
+        
+        tableViewCellArr.remove(at: indexPath.row)
+           tableView.deleteRows(at: [indexPath], with: .automatic)
+           tableView.reloadData() // 更新tableView
+       }
     
 }

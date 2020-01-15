@@ -27,11 +27,7 @@ class ScheduleViewController: UIViewController, UICollectionViewDataSource, UICo
         staffSelected = ItemSelection(names)
         super.init(coder: aDecoder)
     }
-    
-    @IBAction func edit(_ sender: UIBarButtonItem) {
-        jumpToSchedule()
-    }
-    
+        
     @IBAction func toggle(_ sender: UIBarButtonItem) {
         let scope: FSCalendarScope = (calendar.scope == .month) ? .week : .month
         self.calendar.setScope(scope, animated: true)
@@ -62,7 +58,7 @@ class ScheduleViewController: UIViewController, UICollectionViewDataSource, UICo
         calendar.delegate = self
         calendar.register(FSCalendarCell.self, forCellReuseIdentifier: "CELL")
         view.addSubview(calendar)
-        calendar.allowsMultipleSelection = true;
+        calendar.allowsMultipleSelection = false;
         
         calendar.appearance.weekdayTextColor = UIColor(named : "Color3")
         calendar.appearance.headerTitleColor = UIColor(named : "Color3")
@@ -75,15 +71,8 @@ class ScheduleViewController: UIViewController, UICollectionViewDataSource, UICo
         
     }
     
-    func jumpToSchedule(){
-//            if let controller = storyboard?.instantiateViewController(withIdentifier: "") {
-//                present(controller, animated: true, completion: nil)
-//        }
-    }
-    
-    
     // collection view
-    var names = ["Anders", "Kristian", "Sofia", "John", "Jenny", "Lina", "Annie", "Katie", "Johanna"]
+    var names = Global.staffNameList
     var staffSelected : ItemSelection
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -118,6 +107,7 @@ class ScheduleViewController: UIViewController, UICollectionViewDataSource, UICo
         staffSelected.selected[indexPath.item] = true
         let selectedCell:UICollectionViewCell = self.collectionView.cellForItem(at: indexPath)!
         changeCellColor(selectedCell, didSelectItemAt: indexPath)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -154,6 +144,10 @@ extension ScheduleViewController : FSCalendarDataSource, FSCalendarDelegate{
         if monthPosition == .next || monthPosition == .previous {
             calendar.setCurrentPage(date, animated: true)
         }
+        
+        
+        jumpToDayView()
+        
     }
     
     func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
@@ -183,5 +177,12 @@ extension ScheduleViewController : FSCalendarDataSource, FSCalendarDelegate{
     self.calendar.frame.size.height = bounds.height
     self.eventLabel?.frame.origin.y = calendar.frame.maxY + 10
     
+    }
+    
+    func jumpToDayView(){
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DayViewController")
+        
+         present(controller, animated: true, completion: nil)
+            
     }
 }

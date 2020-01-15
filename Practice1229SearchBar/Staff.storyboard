@@ -48,7 +48,7 @@
         <!--Default View Controller-->
         <scene sceneID="WIU-Jn-l62">
             <objects>
-                <viewController storyboardIdentifier="OptionsViewController" id="rI3-i2-UvA" customClass="DefaultViewController" customModule="Practice1229SearchBar" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PersonalDayViewController" id="rI3-i2-UvA" customClass="DefaultViewController" customModule="Practice1229SearchBar" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Qtv-7R-df3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -399,7 +399,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Pj5-ix-dyW">
             <objects>
-                <navigationController storyboardIdentifier="navOptionsViewController" automaticallyAdjustsScrollViewInsets="NO" id="4xe-g3-9Pz" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="navPersonalDayViewController" automaticallyAdjustsScrollViewInsets="NO" id="4xe-g3-9Pz" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gSO-Pd-SDp">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>

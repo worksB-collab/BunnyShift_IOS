@@ -47,11 +47,11 @@ class DateShiftAssignController: UIViewController, UICollectionViewDataSource, U
 
     }
     func jumpToSchedule(){
-        if let controller = storyboard?.instantiateViewController(withIdentifier: "navAssignScheduleController") {
-            present(controller, animated: true, completion: nil)
-        }
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navAssignScheduleController")
+        present(controller, animated: true, completion: nil)
+        
     }
-       
+    
     
     // collection view
     var weekDayNames = ["週一", "週二", "週三", "週四", "週五", "週六", "週日"]
@@ -67,9 +67,7 @@ class DateShiftAssignController: UIViewController, UICollectionViewDataSource, U
         
         //tableView
         self.tableView?.register(UINib(nibName: "ShiftSetTableViewCell", bundle: nil), forCellReuseIdentifier: "ShiftSetTableViewCell")
-        
-        let cell1 = tableView?.dequeueReusableCell(withIdentifier: "ShiftSetTableViewCell") as! ShiftSetTableViewCell
-        
+                
         tableView.allowsMultipleSelection = false
         
         //隱藏cell灰色底線

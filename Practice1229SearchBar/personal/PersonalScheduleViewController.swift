@@ -66,10 +66,9 @@ extension PersonalScheduleViewController : FSCalendarDataSource, FSCalendarDeleg
             let selectedDates = calendar.selectedDates.map({self.dateFormatter.string(from: $0)})
             print("selected dates is \(selectedDates)")
             
-            if let controller = storyboard?.instantiateViewController(withIdentifier: "navOptionsViewController") {
+            let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navPersonalDayViewController")
                 present(controller, animated: true, completion: nil)
-                
-            }
+            
             
             
             if monthPosition == .next || monthPosition == .previous {

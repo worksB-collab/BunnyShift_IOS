@@ -37,9 +37,9 @@ class StaffManagementController: UIViewController, UITableViewDelegate, UITableV
         
     }
     func jumpToSchedule(){
-        if let controller = storyboard?.instantiateViewController(withIdentifier: "navAssignScheduleController") {
-            present(controller, animated: true, completion: nil)
-        }
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navAssignScheduleController")
+        present(controller, animated: true, completion: nil)
+        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

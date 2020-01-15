@@ -189,9 +189,9 @@ class ShiftArrangementViewController: UIViewController, UITableViewDataSource , 
     }
         
     func jumpToNext(){
-            if let controller = storyboard?.instantiateViewController(withIdentifier: "navDateShiftAssignController") {
+       let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navDateShiftAssignController") 
                 present(controller, animated: true, completion: nil)
-        }
+       
     }
     
     func registerNib() {

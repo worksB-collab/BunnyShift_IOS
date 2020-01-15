@@ -9,8 +9,11 @@
 
 import UIKit
 import FSCalendar
+import SwiftyJSON
 
-class AssignScheduleController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class AssignScheduleController: UIViewController{
+    
+    var selectedDate : String?
     
     fileprivate let gregorian = Calendar(identifier: .gregorian)
     
@@ -21,6 +24,9 @@ class AssignScheduleController: UIViewController, UICollectionViewDataSource, UI
     }()
     
     fileprivate weak var calendar: FSCalendar!
+    let tableView = UITableView()
+//    @IBOutlet weak var tableView: UITableView!
+    
     fileprivate weak var eventLabel: UILabel!
     
     required init?(coder aDecoder: NSCoder) {
@@ -43,7 +49,7 @@ class AssignScheduleController: UIViewController, UICollectionViewDataSource, UI
         registerNib()
         calendarSettings() // calendar settings
         navigationBarSettings()
-        
+        setTableView()
         
     }
     
@@ -58,7 +64,7 @@ class AssignScheduleController: UIViewController, UICollectionViewDataSource, UI
     }
     
     func calendarSettings(){
-        let calendar = FSCalendar(frame: CGRect(x: 5, y: 250, width: view.frame.width-10, height: view.frame.height-400))
+        let calendar = FSCalendar(frame: CGRect(x: 5, y: 200, width: view.frame.width-10, height: view.frame.height-400))
         calendar.dataSource = self
         calendar.delegate = self
         calendar.register(FSCalendarCell.self, forCellReuseIdentifier: "CELL")
@@ -76,15 +82,34 @@ class AssignScheduleController: UIViewController, UICollectionViewDataSource, UI
         
     }
     
-    func jumpToSchedule(){
-        if let controller = storyboard?.instantiateViewController(withIdentifier: "EditOptionController") {
-            present(controller, animated: true, completion: nil)
-        }
+    func setTableView(){
+        view.addSubview(tableView)
+
+        tableView.frame = CGRect(x: 10, y: 700, width: view.frame.width-20, height: view.frame.height-750);
+        tableView.backgroundColor = .lightGray
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DayViewTableViewCell")
+        tableView.allowsMultipleSelection = false
+                
+        //隱藏cell灰色底線
+        tableView.tableFooterView = UIView()
+        
+//        tableView.translatesAutoresizingMaskIntoConstraints = false
+//        tableView.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
+//        tableView.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
+//        tableView.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
+//        tableView.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
+        
+//        tableView.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
+//        tableView.leadingAnchor.constraint(equalTo:view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+//        tableView.trailingAnchor.constraint(equalTo:view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+//        tableView.bottomAnchor.constraint(equalTo:view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
-    
+
     
     // collection view
-    var names = ["Anders", "Kristian", "Sofia", "John", "Jenny", "Lina", "Annie", "Katie", "Johanna"]
+    var names = Global.staffNameList
     var staffSelected : ItemSelection
     var shiftSelected : ItemSelection
     
@@ -101,6 +126,16 @@ class AssignScheduleController: UIViewController, UICollectionViewDataSource, UI
         shiftCollectionView.register(UINib(nibName: ShiftCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: ShiftCollectionViewCell.reuseIdentifier)
         shiftCollectionView.contentInsetAdjustmentBehavior = .never
     }
+    
+    func jumpToSchedule(){
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditOptionController")
+        present(controller, animated: true, completion: nil)
+        
+    }
+    
+}
+
+extension AssignScheduleController : UICollectionViewDataSource, UICollectionViewDelegate{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // check which data should the current CollectionView should take
@@ -166,6 +201,7 @@ class AssignScheduleController: UIViewController, UICollectionViewDataSource, UI
             }
         }
     }
+    
     func changeCellColor(_ cell: UICollectionViewCell?, didSelectItemAt indexPath: IndexPath){
         
         if cell is StaffCollectionViewCell{
@@ -191,6 +227,81 @@ class AssignScheduleController: UIViewController, UICollectionViewDataSource, UI
     
 }
 
+extension AssignScheduleController : UITableViewDelegate, UITableViewDataSource{
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    // 根據各區去計算顯示列數
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return 1 //需要依據當天為平日或假日給予不同的array
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cellIdentifier = "DayViewTableViewCell"
+        let cell1 = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! DayViewTableViewCell
+        
+        //  待填寫每個被按到當天的資料
+       
+        var date = selectedDate?.split(separator: "-")
+        var year = date![0]
+        var month = date![1]
+        var day = date![2]
+        var shiftArr = Array<String>()
+        shiftArr.append("Johanna")
+        shiftArr.append("Katie")
+        var timeShiftName : [String : Array<String>] = ["weekday" : shiftArr]
+        // 待填寫
+        
+        var a = "/search/schedule/" + year + "/" + month
+        var b = "/" + Global.companyInfo!.ltdID
+        
+        NetWorkController.sharedInstance.get(api: a+b)
+        {(jsonData) in
+            
+            
+        }
+        
+        //let departureLat = jsonData[i]["departureLat"].double
+        
+        cell1.configureCell(dateShift: "weekday", staffNum: 5, startTime: "22:00", endTime: "12:00", staffs: timeShiftName["weekday"]!)
+        
+        
+        cell1.layer.shadowColor = UIColor.groupTableViewBackground.cgColor
+        cell1.layer.shadowOffset = CGSize(width: 2, height: 7)
+        cell1.layer.shadowOpacity = 2
+        cell1.layer.shadowRadius = 2
+        cell1.layer.masksToBounds = false
+        
+        return cell1
+        
+    }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("selected" , indexPath.item)
+        let cell1 = tableView.cellForRow(at: indexPath) as! DayViewTableViewCell
+        
+        
+        cell1.backgroundColor = UIColor (named : "Color1")
+        cell1.tintColor = UIColor (named : "Color5")
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        
+        print("deSelected" , indexPath.item)
+        
+        let cell1 = tableView.cellForRow(at: indexPath) as! DayViewTableViewCell
+        
+        cell1.backgroundColor = UIColor.clear
+    }
+    
+}
+
+
 extension AssignScheduleController : FSCalendarDataSource, FSCalendarDelegate{
     
     
@@ -203,6 +314,7 @@ extension AssignScheduleController : FSCalendarDataSource, FSCalendarDelegate{
         if monthPosition == .next || monthPosition == .previous {
             calendar.setCurrentPage(date, animated: true)
         }
+        selectedDate = "\(selectedDates)"
     }
     
     func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
@@ -225,9 +337,7 @@ extension AssignScheduleController : FSCalendarDataSource, FSCalendarDelegate{
         return 2
     }
     
-    
     //delegate
-    
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
         self.calendar.frame.size.height = bounds.height
         self.eventLabel?.frame.origin.y = calendar.frame.maxY + 10

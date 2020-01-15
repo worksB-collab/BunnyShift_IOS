@@ -74,7 +74,6 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
                     Toast.showToast(self.view, "錯誤的帳號或密碼")
                 }
                 
-                
             }
         }
     
@@ -158,14 +157,14 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
     // set next button in keyboard focus on the next textfield
     
     func jumpToCompany(){
-        let controller = UIStoryboard.init(name: "Company", bundle: nil).instantiateViewController(withIdentifier: "companyMain")
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "companyMain")
         
         present(controller, animated: true, completion: nil)
         
     }
     
     func jumpToStaff(){
-        let controller = UIStoryboard.init(name: "Staff", bundle: nil).instantiateViewController(withIdentifier: "navPersonalScheduleViewController")
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navPersonalScheduleViewController")
         
          present(controller, animated: true, completion: nil)
             

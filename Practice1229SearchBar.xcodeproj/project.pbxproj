@@ -62,6 +62,11 @@
 		117E6BFD23CDB73E000BE43A /* SetupAndEdit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 117E6BFC23CDB73E000BE43A /* SetupAndEdit.storyboard */; };
 		117E6BFF23CDB7AC000BE43A /* Company.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 117E6BFE23CDB7AC000BE43A /* Company.storyboard */; };
 		117E6C0123CDB7E2000BE43A /* Reference.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 117E6C0023CDB7E2000BE43A /* Reference.storyboard */; };
+		1190603923CEA608005AD6B9 /* FSCalendarScopeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1190603823CEA608005AD6B9 /* FSCalendarScopeViewController.swift */; };
+		1190604023CEBFD6005AD6B9 /* DayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1190603F23CEBFD6005AD6B9 /* DayViewModel.swift */; };
+		1190604123CEBFD6005AD6B9 /* DayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1190603E23CEBFD6005AD6B9 /* DayViewController.swift */; };
+		1190604423CEC67B005AD6B9 /* DayViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1190604223CEC67B005AD6B9 /* DayViewTableViewCell.swift */; };
+		1190604523CEC67B005AD6B9 /* DayViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1190604323CEC67B005AD6B9 /* DayViewTableViewCell.xib */; };
 		11966CA523B876BC00FA4449 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11966CA423B876BC00FA4449 /* AppDelegate.swift */; };
 		11966CA723B876BC00FA4449 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11966CA623B876BC00FA4449 /* SceneDelegate.swift */; };
 		11966CA923B876BC00FA4449 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11966CA823B876BC00FA4449 /* ViewController.swift */; };
@@ -71,6 +76,7 @@
 		11966CB923B8ACBB00FA4449 /* testController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11966CB823B8ACBB00FA4449 /* testController.swift */; };
 		11ACB51623B9C89900F74655 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11ACB51523B9C89900F74655 /* LoginViewController.swift */; };
 		11B5B98C23B9D87000C1CAC0 /* ThirdTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5B98B23B9D87000C1CAC0 /* ThirdTableViewCell.swift */; };
+		11CECEB123CDF73F00014FF8 /* testViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CECEB023CDF73F00014FF8 /* testViewController.swift */; };
 		11E15C3323CC126500ADA452 /* RoundRecButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E15C3223CC126500ADA452 /* RoundRecButton.swift */; };
 		11E15C3523CC243200ADA452 /* TakeLeaveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E15C3423CC243200ADA452 /* TakeLeaveController.swift */; };
 		11E15C3723CC26CE00ADA452 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E15C3623CC26CE00ADA452 /* Toast.swift */; };
@@ -137,6 +143,11 @@
 		117E6BFC23CDB73E000BE43A /* SetupAndEdit.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SetupAndEdit.storyboard; sourceTree = "<group>"; };
 		117E6BFE23CDB7AC000BE43A /* Company.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Company.storyboard; sourceTree = "<group>"; };
 		117E6C0023CDB7E2000BE43A /* Reference.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Reference.storyboard; sourceTree = "<group>"; };
+		1190603823CEA608005AD6B9 /* FSCalendarScopeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FSCalendarScopeViewController.swift; sourceTree = "<group>"; };
+		1190603E23CEBFD6005AD6B9 /* DayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayViewController.swift; sourceTree = "<group>"; };
+		1190603F23CEBFD6005AD6B9 /* DayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayViewModel.swift; sourceTree = "<group>"; };
+		1190604223CEC67B005AD6B9 /* DayViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayViewTableViewCell.swift; sourceTree = "<group>"; };
+		1190604323CEC67B005AD6B9 /* DayViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DayViewTableViewCell.xib; sourceTree = "<group>"; };
 		11966CA123B876BC00FA4449 /* Practice1229SearchBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Practice1229SearchBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11966CA423B876BC00FA4449 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		11966CA623B876BC00FA4449 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -149,6 +160,7 @@
 		11ACB51523B9C89900F74655 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		11ACB51823B9C8C300F74655 /* ThirdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 		11B5B98B23B9D87000C1CAC0 /* ThirdTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdTableViewCell.swift; sourceTree = "<group>"; };
+		11CECEB023CDF73F00014FF8 /* testViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testViewController.swift; sourceTree = "<group>"; };
 		11E15C3223CC126500ADA452 /* RoundRecButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundRecButton.swift; sourceTree = "<group>"; };
 		11E15C3423CC243200ADA452 /* TakeLeaveController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeLeaveController.swift; sourceTree = "<group>"; };
 		11E15C3623CC26CE00ADA452 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
@@ -178,8 +190,8 @@
 			children = (
 				11E15C3223CC126500ADA452 /* RoundRecButton.swift */,
 				11E15C3623CC26CE00ADA452 /* Toast.swift */,
-				114C918B23C778040074EAB6 /* JZCalendarWeekView */,
 				1176CF2623BCC7CC0040F22A /* Cells */,
+				114C918B23C778040074EAB6 /* JZCalendarWeekView */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -197,6 +209,10 @@
 				1141AC8823CD698C00C9FC5A /* CompanyProfileController.swift */,
 				117E6BF023CD6F26000BE43A /* StaffManagementController.swift */,
 				117E6BF623CDA7B1000BE43A /* EditOptionController.swift */,
+				1190603E23CEBFD6005AD6B9 /* DayViewController.swift */,
+				1190603F23CEBFD6005AD6B9 /* DayViewModel.swift */,
+				11CECEB023CDF73F00014FF8 /* testViewController.swift */,
+				1190603823CEA608005AD6B9 /* FSCalendarScopeViewController.swift */,
 			);
 			path = company;
 			sourceTree = "<group>";
@@ -284,24 +300,8 @@
 		1176CF2623BCC7CC0040F22A /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				1176CF5E23BF123D0040F22A /* CompanyScheduleCollectionViewCell.swift */,
-				1176CF5F23BF123D0040F22A /* CompanyScheduleCollectionViewCell.xib */,
-				1125E57423C1C46F00E01141 /* WeekdayCollectionViewCell.swift */,
-				1125E57523C1C46F00E01141 /* WeekdayCollectionViewCell.xib */,
-				1125E58023C3608C00E01141 /* ShiftTableViewCell.swift */,
-				1125E58123C3608C00E01141 /* ShiftTableViewCell.xib */,
-				1125E59323C4529600E01141 /* LabelShiftTableViewCell.swift */,
-				1125E59423C4529600E01141 /* LabelShiftTableViewCell.xib */,
-				114C917E23C60A800074EAB6 /* StaffCollectionViewCell.swift */,
-				114C917F23C60A800074EAB6 /* StaffCollectionViewCell.xib */,
-				11E15C3A23CC561400ADA452 /* ShiftCollectionViewCell.swift */,
-				11E15C3B23CC561400ADA452 /* ShiftCollectionViewCell.xib */,
-				114C91B023C82E2B0074EAB6 /* DateNamingTableViewCell.swift */,
-				114C91B123C82E2B0074EAB6 /* DateNamingTableViewCell.xib */,
-				114C91B423C86CC40074EAB6 /* ShiftSetTableViewCell.swift */,
-				114C91B523C86CC40074EAB6 /* ShiftSetTableViewCell.xib */,
-				117E6BF223CD7211000BE43A /* StaffManagementTableViewCell.swift */,
-				117E6BF323CD7211000BE43A /* StaffManagementTableViewCell.xib */,
+				1190603A23CEB9F0005AD6B9 /* CollectionViewCells */,
+				1190603B23CEBA05005AD6B9 /* TableViewCells */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -315,6 +315,40 @@
 				1125E58423C3684D00E01141 /* components */,
 			);
 			path = mutual;
+			sourceTree = "<group>";
+		};
+		1190603A23CEB9F0005AD6B9 /* CollectionViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				1176CF5E23BF123D0040F22A /* CompanyScheduleCollectionViewCell.swift */,
+				1176CF5F23BF123D0040F22A /* CompanyScheduleCollectionViewCell.xib */,
+				1125E57423C1C46F00E01141 /* WeekdayCollectionViewCell.swift */,
+				1125E57523C1C46F00E01141 /* WeekdayCollectionViewCell.xib */,
+				114C917E23C60A800074EAB6 /* StaffCollectionViewCell.swift */,
+				114C917F23C60A800074EAB6 /* StaffCollectionViewCell.xib */,
+				11E15C3A23CC561400ADA452 /* ShiftCollectionViewCell.swift */,
+				11E15C3B23CC561400ADA452 /* ShiftCollectionViewCell.xib */,
+			);
+			path = CollectionViewCells;
+			sourceTree = "<group>";
+		};
+		1190603B23CEBA05005AD6B9 /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				1125E58023C3608C00E01141 /* ShiftTableViewCell.swift */,
+				1125E58123C3608C00E01141 /* ShiftTableViewCell.xib */,
+				1125E59323C4529600E01141 /* LabelShiftTableViewCell.swift */,
+				1125E59423C4529600E01141 /* LabelShiftTableViewCell.xib */,
+				114C91B023C82E2B0074EAB6 /* DateNamingTableViewCell.swift */,
+				114C91B123C82E2B0074EAB6 /* DateNamingTableViewCell.xib */,
+				114C91B423C86CC40074EAB6 /* ShiftSetTableViewCell.swift */,
+				114C91B523C86CC40074EAB6 /* ShiftSetTableViewCell.xib */,
+				117E6BF223CD7211000BE43A /* StaffManagementTableViewCell.swift */,
+				117E6BF323CD7211000BE43A /* StaffManagementTableViewCell.xib */,
+				1190604223CEC67B005AD6B9 /* DayViewTableViewCell.swift */,
+				1190604323CEC67B005AD6B9 /* DayViewTableViewCell.xib */,
+			);
+			path = TableViewCells;
 			sourceTree = "<group>";
 		};
 		11966C9823B876BC00FA4449 = {
@@ -458,6 +492,7 @@
 				117E6BFF23CDB7AC000BE43A /* Company.storyboard in Resources */,
 				1176CF6123BF123D0040F22A /* CompanyScheduleCollectionViewCell.xib in Resources */,
 				114C91AB23C779DA0074EAB6 /* ExpandableHeaderView.xib in Resources */,
+				1190604523CEC67B005AD6B9 /* DayViewTableViewCell.xib in Resources */,
 				114C91B723C86CC40074EAB6 /* ShiftSetTableViewCell.xib in Resources */,
 				114C91A923C779DA0074EAB6 /* OptionsTableViewCell.xib in Resources */,
 				11E15C3D23CC561400ADA452 /* ShiftCollectionViewCell.xib in Resources */,
@@ -561,6 +596,7 @@
 				114C918323C71BDC0074EAB6 /* ItemSelection.swift in Sources */,
 				114C91AA23C779DA0074EAB6 /* ExpandableHeaderView.swift in Sources */,
 				11E15C3523CC243200ADA452 /* TakeLeaveController.swift in Sources */,
+				1190604423CEC67B005AD6B9 /* DayViewTableViewCell.swift in Sources */,
 				11E15C3923CC541E00ADA452 /* AssignScheduleController.swift in Sources */,
 				114C91AF23C82CE00074EAB6 /* DateNamingController.swift in Sources */,
 				114C918023C60A800074EAB6 /* StaffCollectionViewCell.swift in Sources */,
@@ -573,6 +609,8 @@
 				1125E57923C1E1FE00E01141 /* codeScheduleViewController.swift in Sources */,
 				11E15C3C23CC561400ADA452 /* ShiftCollectionViewCell.swift in Sources */,
 				11966CA523B876BC00FA4449 /* AppDelegate.swift in Sources */,
+				1190604123CEBFD6005AD6B9 /* DayViewController.swift in Sources */,
+				1190604023CEBFD6005AD6B9 /* DayViewModel.swift in Sources */,
 				114C91A723C779DA0074EAB6 /* ExampleOptionsViewController.swift in Sources */,
 				114C91B623C86CC40074EAB6 /* ShiftSetTableViewCell.swift in Sources */,
 				1125E59823C46E1300E01141 /* ShiftDate.swift in Sources */,
@@ -594,6 +632,7 @@
 				114C91AD23C779DA0074EAB6 /* ToastUtil.swift in Sources */,
 				1176CF6023BF123D0040F22A /* CompanyScheduleCollectionViewCell.swift in Sources */,
 				114C918523C763990074EAB6 /* DateShiftAssignController.swift in Sources */,
+				11CECEB123CDF73F00014FF8 /* testViewController.swift in Sources */,
 				1125E5AB23C4CDC700E01141 /* Global.swift in Sources */,
 				1125E5A923C4A0BA00E01141 /* Staff.swift in Sources */,
 				1141AC8923CD698C00C9FC5A /* CompanyProfileController.swift in Sources */,
@@ -606,6 +645,7 @@
 				114C91B223C82E2B0074EAB6 /* DateNamingTableViewCell.swift in Sources */,
 				11E15C3723CC26CE00ADA452 /* Toast.swift in Sources */,
 				1125E58223C3608C00E01141 /* ShiftTableViewCell.swift in Sources */,
+				1190603923CEA608005AD6B9 /* FSCalendarScopeViewController.swift in Sources */,
 				1125E57D23C31F3A00E01141 /* UIAlertController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
