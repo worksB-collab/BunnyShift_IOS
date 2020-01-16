@@ -16,12 +16,12 @@ class EditOptionController: UIViewController, UITableViewDataSource , UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navSetting()
+        setNav()
         registerNib()
         // Do any additional setup after loading the view.
     }
     
-    func navSetting(){
+    func setNav(){
         
         navigationController?.title = "各種設定"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(named: "Color7")! ]

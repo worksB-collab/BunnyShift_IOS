@@ -33,20 +33,21 @@ class DayViewTableViewCell: UITableViewCell {
         return "DayViewTableViewCell"
     }
     
+    //有bug拉幹
     func configureCell(dateShift: String, staffNum : Int, startTime : String, endTime : String, staffs : Array<String>) {
-        self.dateShift!.text = dateShift
-        self.staffNum.text = "\(staffNum)" + "人"
-        self.startTime.text = startTime
-        self.endTime.text = endTime
-        
-        var s : String = ""
-        for i in staffs{
-            if s != ""{
-                s += ", " + i
-            }
-            s += i
-        }
-        
-        self.staffs!.text = s
+//        self.dateShift.text = dateShift
+//        self.staffNum.text = "\(staffNum)" + "人"
+//        self.startTime.text = startTime
+//        self.endTime.text = endTime
+//
+//        var s : String = ""
+//        for i in staffs{
+//            if s != ""{
+//                s += ", " + i
+//            }
+//            s += i
+//        }
+//
+//        self.staffs!.text = s
     }
 }

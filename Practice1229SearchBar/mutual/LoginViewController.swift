@@ -9,6 +9,7 @@
 import UIKit
 import GoogleSignIn
 
+
 class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerViewDelegate {
     
 
@@ -43,6 +44,11 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
                 print(jsonData.description)
                 if jsonData.description.contains("200"){
                     
+                    
+                    let token = jsonData["token"].string
+                    Global.token = token
+                    
+                    
                     let preferencesSave = UserDefaults.standard
                       preferencesSave.set(self.login_tf_account.text!, forKey: "account")
                     preferencesSave.set(self.login_tf_password.text! , forKey: "password")
@@ -61,6 +67,8 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
                 print(jsonData.description)
                 if jsonData.description.contains("200"){
                 
+                    let token = jsonData["token"].string
+                    Global.token = token
                     
                     let preferencesSave = UserDefaults.standard
                       preferencesSave.set(self.login_tf_account.text!, forKey: "account")
@@ -164,7 +172,7 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
     }
     
     func jumpToStaff(){
-        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navPersonalScheduleViewController")
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "staffMain")
         
          present(controller, animated: true, completion: nil)
             

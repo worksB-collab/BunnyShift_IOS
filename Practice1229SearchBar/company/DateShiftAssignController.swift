@@ -26,7 +26,7 @@ class DateShiftAssignController: UIViewController, UICollectionViewDataSource, U
     override func viewDidLoad() {
         super.viewDidLoad()
         registerNib()
-        navigationBarSettings()
+        setNav()
     }
     
     
@@ -38,7 +38,7 @@ class DateShiftAssignController: UIViewController, UICollectionViewDataSource, U
     }
     
     
-    func navigationBarSettings(){
+    func setNav(){
         navigationItem.title = "每週日別設定"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(named: "Color7")! ]
         navigationController?.navigationBar.prefersLargeTitles = false

@@ -12,6 +12,8 @@ public class Global{
     
     static let sharedInstance = Global()
     
+    public static var token : String?
+    
     //company login
     public static var companyInfo : Company?
 //    public static var staffList : [String] = []
@@ -25,16 +27,14 @@ public class Global{
     public static var companyShiftDateList = ["weekday" : Array<ShiftDate>(), "weekend" : Array<ShiftDate>()]
     public static var shiftDateNames : Array<String> = ["weekday", "weekend"]
     public static var dayType : [String] = []
-    
+       
     
     
     //staff login
     public static var staffShiftList : [ShiftDate]? = []
     public static var staffInfo : Staff?
-    public static var companyName : String?
-    public static var companyPhone : String?
-    public static var comapanyID : String?
-    public static var companyTaxID : String?
+    
+    public static var date : String? = ""
     
     init(){
         
@@ -48,13 +48,17 @@ public class Global{
     init(_ staffShiftDateList : [ShiftDate], _ staffInfo : Staff, _ companyName : String, _ companyPhone : String, _ comapanyID : String, _ companyTaxID : String){
         Global.self.staffShiftList = staffShiftDateList
         Global.self.staffInfo = staffInfo
-        Global.self.companyName = companyName
-        Global.self.companyPhone = companyPhone
-        Global.self.comapanyID = comapanyID
-        Global.self.companyTaxID = companyTaxID
+        Global.self.companyInfo?.name = companyName
+        Global.self.companyInfo?.number = companyPhone
+        Global.self.companyInfo?.ltdID = comapanyID
+        Global.self.companyInfo?.taxID = companyTaxID
         }
     
     static func getCertainTypeShifts(typeName : String) -> Array<String>{
+        
+        
+        
+        
         var arr = Array<String>()
         for i in 0 ..< Global.companyShiftDateList[typeName]!.count{ arr.append(Global.companyShiftDateList[typeName]![i].timeName)
         }

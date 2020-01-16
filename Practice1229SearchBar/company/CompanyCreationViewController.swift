@@ -42,6 +42,15 @@ class CompanyCreationViewController: UIViewController{
                 print(jsonData.description)
                 if jsonData.description.contains("200"){
                     
+                    let companyID = jsonData["companyID"].description
+                    Global.companyInfo?.ltdID = companyID
+                    Global.companyInfo?.account = self.company_tf_account.text
+                    Global.companyInfo?.password = self.company_tf_password.text
+                    Global.companyInfo?.name = self.company_tf_name.text!
+                    Global.companyInfo?.number = self.company_tf_phone.text!
+                    Global.companyInfo?.address = self.company_tf_address.text!
+                    Global.companyInfo?.taxID = self.company_tf_taxID.text!
+                    
                     self.jumpToSchedule()
                     
                 }else{

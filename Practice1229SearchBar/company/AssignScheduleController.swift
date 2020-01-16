@@ -48,14 +48,14 @@ class AssignScheduleController: UIViewController{
         super.viewDidLoad()
         registerNib()
         calendarSettings() // calendar settings
-        navigationBarSettings()
+        setNav()
         setTableView()
         
     }
     
     // for collection view registration
     
-    func navigationBarSettings(){
+    func setNav(){
         navigationItem.title = "班表排程設定"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(named: "Color7")! ]
         navigationController?.navigationBar.prefersLargeTitles = false
@@ -84,12 +84,10 @@ class AssignScheduleController: UIViewController{
     
     func setTableView(){
         view.addSubview(tableView)
-
+        self.tableView.register(DayViewTableViewCell.self, forCellReuseIdentifier: "DayViewTableViewCell")
         tableView.frame = CGRect(x: 10, y: 700, width: view.frame.width-20, height: view.frame.height-750);
-        tableView.backgroundColor = .lightGray
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DayViewTableViewCell")
         tableView.allowsMultipleSelection = false
                 
         //隱藏cell灰色底線
@@ -128,7 +126,7 @@ class AssignScheduleController: UIViewController{
     }
     
     func jumpToSchedule(){
-        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditOptionController")
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "companyMain")
         present(controller, animated: true, completion: nil)
         
     }
@@ -230,7 +228,7 @@ extension AssignScheduleController : UICollectionViewDataSource, UICollectionVie
 extension AssignScheduleController : UITableViewDelegate, UITableViewDataSource{
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     // 根據各區去計算顯示列數
@@ -244,10 +242,14 @@ extension AssignScheduleController : UITableViewDelegate, UITableViewDataSource{
         let cellIdentifier = "DayViewTableViewCell"
         let cell1 = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! DayViewTableViewCell
         
+        cell1.backgroundColor = UIColor(named: "Color1")
         //  待填寫每個被按到當天的資料
-       
-        var date = selectedDate?.split(separator: "-")
-        var year = date![0]
+        if selectedDate == "" || selectedDate == nil{
+            selectedDate = "0-0-0"
+        }
+//        var date = selectedDate?.split(separator: "-")
+        let date = selectedDate?.components(separatedBy: "-")
+        let year = date![0]
         var month = date![1]
         var day = date![2]
         var shiftArr = Array<String>()
@@ -256,8 +258,9 @@ extension AssignScheduleController : UITableViewDelegate, UITableViewDataSource{
         var timeShiftName : [String : Array<String>] = ["weekday" : shiftArr]
         // 待填寫
         
-        var a = "/search/schedule/" + year + "/" + month
-        var b = "/" + Global.companyInfo!.ltdID
+        Global.companyInfo = Company("name", "0928", "new taipei", "817227386", "23")
+        let a = "/search/schedule/" + year + "/" + month
+        let b = "/" + Global.companyInfo!.ltdID
         
         NetWorkController.sharedInstance.get(api: a+b)
         {(jsonData) in
@@ -265,9 +268,27 @@ extension AssignScheduleController : UITableViewDelegate, UITableViewDataSource{
             
         }
         
-        //let departureLat = jsonData[i]["departureLat"].double
+//        let departureLat = jsonData[i]["departureLat"].double
         
+        //test data
         cell1.configureCell(dateShift: "weekday", staffNum: 5, startTime: "22:00", endTime: "12:00", staffs: timeShiftName["weekday"]!)
+        // test
+        
+//        cell1.dateShift.text = "weekday"
+//        cell1.staffNum.text = "5"
+//        cell1.startTime.text = "12:00"
+//        cell1.endTime.text = "22:00"
+//
+//        var s : String = ""
+//        for i in timeShiftName["weekday"]!{
+//            if s != ""{
+//                s += ", " + i
+//            }
+//            s += i
+//        }
+//
+//        cell1.staffs!.text = s
+        
         
         
         cell1.layer.shadowColor = UIColor.groupTableViewBackground.cgColor

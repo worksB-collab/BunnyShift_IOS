@@ -10,6 +10,9 @@ import UIKit
 
 class TakeLeaveController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    
+    static var selectedDate = ""
+    
     let shiftPicker = UIPickerView()
     let alterPicker = UIPickerView()
     
@@ -28,6 +31,9 @@ class TakeLeaveController: UIViewController, UIPickerViewDelegate, UIPickerViewD
                     
                     if true {
 //                        self.dismiss(animated: true, completion: nil)
+                        Toast.showToast(self.view, "已成功送出申請")
+                        self.dismiss(animated: true, completion: nil)
+                        //
                     }else{
                         
                     }
@@ -44,23 +50,45 @@ class TakeLeaveController: UIViewController, UIPickerViewDelegate, UIPickerViewD
                 
         }
         
-        
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setPickerView()
+        view.setNeedsDisplay()
         setDefaultData()
-        // Do any additional setup after loading the view.
+        print("view did load")
+//        NotificationCenter.default.addObserver(self, selector: #selector(disconnectPaxiSocket(_:)), name: Notification.Name(rawValue: "disconnectPaxiSockets"), object: nil)
     }
     
+//    @objc func disconnectPaxiSocket(_ notification: Notification) {
+//        setDefaultData()
+//    }
+    
+    //有用啊幹
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(true)
+//        view.setNeedsDisplay()
+//        setDefaultData()
+//        print("view will appear")
+//    }
+    
+    
     func setDefaultData(){
+//        print("1ww" + TakeLeaveController.selectedDate)
+//        print("hi \(tf_date.text)")
+        tf_date.text = TakeLeaveController.selectedDate
 
         tf_shift.text = Global.shiftDateNames[0]
         tf_alter.text = "Arumin" // 給定目前可選擇員工的第一個員工
+        tf_date.addTarget(self, action: #selector(myTargetFunction), for: .touchDown)
+        
     }
-    
+    @objc func myTargetFunction(textField: UITextField) {
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ChooseDateController")
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
 
     // picker view
     func setPickerView(){
@@ -78,7 +106,7 @@ class TakeLeaveController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         
     }
     
-    //有幾個滾輪
+     //有幾個滾輪
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -143,6 +171,8 @@ class TakeLeaveController: UIViewController, UIPickerViewDelegate, UIPickerViewD
       }
      return true
     }
+    
+    
 
 }
 
@@ -166,3 +196,4 @@ extension TakeLeaveController: UITextFieldDelegate {
         })
     }
 }
+

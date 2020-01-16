@@ -13,7 +13,7 @@ class StaffManagementController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationBarSettings()
+        setNav()
         registerNib()
         
     }
@@ -29,7 +29,7 @@ class StaffManagementController: UIViewController, UITableViewDelegate, UITableV
     tableView?.tableFooterView = UIView()
     }
     
-    func navigationBarSettings(){
+    func setNav(){
         navigationItem.title = "班表排程設定"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(named: "Color7")! ]
         navigationController?.navigationBar.prefersLargeTitles = false

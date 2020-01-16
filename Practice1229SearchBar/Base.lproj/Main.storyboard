@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aua-00-7r2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vG2-qI-faA">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
@@ -980,6 +980,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="PtC-H7-gMa">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" name="Color1"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1103,6 +1104,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="RMD-h6-YCC">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" name="Color1"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" name="Color7"/>
                         </textAttributes>
@@ -1214,12 +1216,26 @@
                                 <color key="textColor" name="Color7"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EDa-jG-2Nd" customClass="RoundRecButton" customModule="Practice1229SearchBar" customModuleProvider="target">
+                                <rect key="frame" x="132" y="674" width="150" height="30"/>
+                                <color key="backgroundColor" name="Color1"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="wQ5-2M-fex"/>
+                                </constraints>
+                                <state key="normal" title="登出">
+                                    <color key="titleColor" name="Color7"/>
+                                </state>
+                                <connections>
+                                    <action selector="logout:" destination="RLp-aP-ArX" eventType="touchUpInside" id="fQ9-ec-PvR"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="gJa-r8-Q7W" firstAttribute="top" secondItem="arb-CD-fS5" secondAttribute="top" constant="230" id="01J-A9-dMB"/>
                             <constraint firstItem="irp-U4-QZQ" firstAttribute="leading" secondItem="gJa-r8-Q7W" secondAttribute="trailing" constant="93" id="0CX-EA-qVl"/>
                             <constraint firstItem="ddf-CX-CD4" firstAttribute="leading" secondItem="irp-U4-QZQ" secondAttribute="leading" id="0cP-Kl-Geo"/>
+                            <constraint firstItem="EDa-jG-2Nd" firstAttribute="top" secondItem="eJk-ki-fCf" secondAttribute="bottom" constant="41" id="2aT-Nj-VnY"/>
                             <constraint firstItem="3um-sY-oeJ" firstAttribute="top" secondItem="tGf-Oj-Ifr" secondAttribute="bottom" constant="10" id="4ej-GN-OqI"/>
                             <constraint firstItem="zU9-1n-FdA" firstAttribute="top" secondItem="irp-U4-QZQ" secondAttribute="bottom" constant="10" id="619-kL-CrN"/>
                             <constraint firstItem="56t-LA-Rb4" firstAttribute="top" secondItem="3um-sY-oeJ" secondAttribute="bottom" constant="10" id="B2q-vc-11g"/>
@@ -1237,6 +1253,7 @@
                             <constraint firstItem="3um-sY-oeJ" firstAttribute="leading" secondItem="gJa-r8-Q7W" secondAttribute="leading" id="bil-E9-7RP"/>
                             <constraint firstItem="jcm-0L-ajI" firstAttribute="leading" secondItem="gJa-r8-Q7W" secondAttribute="leading" id="cUz-72-2Wy"/>
                             <constraint firstItem="jcm-0L-ajI" firstAttribute="top" secondItem="56t-LA-Rb4" secondAttribute="bottom" constant="10" id="dfn-wW-E5c"/>
+                            <constraint firstItem="EDa-jG-2Nd" firstAttribute="leading" secondItem="arb-CD-fS5" secondAttribute="leading" constant="132" id="ks6-4E-Ngy"/>
                             <constraint firstItem="KCq-wI-WgI" firstAttribute="top" secondItem="arb-CD-fS5" secondAttribute="top" constant="35.5" id="lUk-Dx-iKn"/>
                             <constraint firstItem="eJk-ki-fCf" firstAttribute="top" secondItem="arb-CD-fS5" secondAttribute="top" constant="515" id="nNm-oA-ySK"/>
                             <constraint firstItem="irp-U4-QZQ" firstAttribute="top" secondItem="arb-CD-fS5" secondAttribute="top" constant="230" id="uN2-oY-jWH"/>
@@ -1417,7 +1434,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="IaD-Dd-SeU">
             <objects>
-                <tabBarController modalPresentationStyle="fullScreen" id="vG2-qI-faA" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="staffMain" modalPresentationStyle="fullScreen" id="vG2-qI-faA" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="XhT-HC-5Ae"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" itemPositioning="centered" id="11M-eT-JWy">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
@@ -1569,6 +1586,22 @@
             </objects>
             <point key="canvasLocation" x="3183" y="-2274"/>
         </scene>
+        <!--Choose Date Controller-->
+        <scene sceneID="tfd-dw-Osu">
+            <objects>
+                <viewController storyboardIdentifier="ChooseDateController" id="N47-aK-hSN" customClass="ChooseDateController" customModule="Practice1229SearchBar" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ssB-wb-mb5">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="h6v-AJ-2ko"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="35g-KB-exG"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c9B-DT-ycq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4776.811594202899" y="-2274.1071428571427"/>
+        </scene>
         <!--行事曆-->
         <scene sceneID="cAm-Mb-lMJ">
             <objects>
@@ -1639,19 +1672,19 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="本月上班時數" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nws-bY-bCF">
-                                <rect key="frame" x="68" y="669" width="104" height="21"/>
+                                <rect key="frame" x="68" y="639" width="104" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="時薪" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5oq-Tf-fqT">
-                                <rect key="frame" x="68" y="638" width="35" height="21"/>
+                                <rect key="frame" x="68" y="608" width="35" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="本月累積工資" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cIR-ji-LGl">
-                                <rect key="frame" x="68" y="700" width="104" height="21"/>
+                                <rect key="frame" x="68" y="670" width="104" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color3"/>
                                 <nil key="highlightedColor"/>
@@ -1702,19 +1735,19 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="本月上班時數" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cWv-bE-kzi">
-                                <rect key="frame" x="196" y="669" width="104" height="21"/>
+                                <rect key="frame" x="196" y="639" width="104" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color7"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="時薪" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5YK-WY-Yyj">
-                                <rect key="frame" x="196" y="638" width="35" height="21"/>
+                                <rect key="frame" x="196" y="608" width="35" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color7"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="本月累積工資" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mw4-Ta-LgJ">
-                                <rect key="frame" x="196" y="700" width="104" height="21"/>
+                                <rect key="frame" x="196" y="670" width="104" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color7"/>
                                 <nil key="highlightedColor"/>
@@ -1733,9 +1766,23 @@
                                 <color key="textColor" name="Color3"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oV3-39-1ea" customClass="RoundRecButton" customModule="Practice1229SearchBar" customModuleProvider="target">
+                                <rect key="frame" x="157" y="733" width="100" height="30"/>
+                                <color key="backgroundColor" name="Color1"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="WHk-Vr-S1x"/>
+                                </constraints>
+                                <state key="normal" title="登出">
+                                    <color key="titleColor" name="Color7"/>
+                                </state>
+                                <connections>
+                                    <action selector="logout:" destination="BFg-zF-F9h" eventType="touchUpInside" id="CfA-H6-gDR"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="2zR-Wn-eMG" firstAttribute="bottom" secondItem="oV3-39-1ea" secondAttribute="bottom" constant="50" id="1qK-1y-Nvn"/>
                             <constraint firstItem="OHS-zw-AO8" firstAttribute="leading" secondItem="epw-HJ-VpZ" secondAttribute="leading" id="3os-PI-A9f"/>
                             <constraint firstItem="6Yh-aL-yIY" firstAttribute="top" secondItem="TyY-Pe-wuZ" secondAttribute="bottom" constant="10" id="5S2-xT-cll"/>
                             <constraint firstItem="cWv-bE-kzi" firstAttribute="top" secondItem="5YK-WY-Yyj" secondAttribute="bottom" constant="10" id="7BR-77-5eU"/>
@@ -1746,8 +1793,8 @@
                             <constraint firstItem="cWv-bE-kzi" firstAttribute="leading" secondItem="5YK-WY-Yyj" secondAttribute="leading" id="Czp-LM-QRg"/>
                             <constraint firstItem="tEM-4O-LqN" firstAttribute="top" secondItem="2zR-Wn-eMG" secondAttribute="top" constant="230" id="Dpp-Qn-OCU"/>
                             <constraint firstItem="epw-HJ-VpZ" firstAttribute="leading" secondItem="tEM-4O-LqN" secondAttribute="leading" id="Ik3-kO-DQg"/>
-                            <constraint firstItem="5YK-WY-Yyj" firstAttribute="top" secondItem="2zR-Wn-eMG" secondAttribute="top" constant="550" id="JC9-8v-oen"/>
-                            <constraint firstItem="5oq-Tf-fqT" firstAttribute="top" secondItem="2zR-Wn-eMG" secondAttribute="top" constant="550" id="L7L-RA-F96"/>
+                            <constraint firstItem="5YK-WY-Yyj" firstAttribute="top" secondItem="2zR-Wn-eMG" secondAttribute="top" constant="520" id="JC9-8v-oen"/>
+                            <constraint firstItem="5oq-Tf-fqT" firstAttribute="top" secondItem="2zR-Wn-eMG" secondAttribute="top" constant="520" id="L7L-RA-F96"/>
                             <constraint firstItem="ZXb-IY-109" firstAttribute="leading" secondItem="FwD-R4-nOD" secondAttribute="leading" id="LND-cn-2jW"/>
                             <constraint firstItem="ZXb-IY-109" firstAttribute="top" secondItem="FwD-R4-nOD" secondAttribute="bottom" constant="10" id="Lme-1a-7t2"/>
                             <constraint firstItem="tEM-4O-LqN" firstAttribute="leading" secondItem="TyY-Pe-wuZ" secondAttribute="trailing" constant="93" id="M2U-ua-3Jq"/>
@@ -1761,6 +1808,7 @@
                             <constraint firstItem="FtG-TM-bia" firstAttribute="top" secondItem="pND-gr-bu1" secondAttribute="bottom" constant="10" id="Z6B-tf-JwP"/>
                             <constraint firstItem="omI-Z8-eSY" firstAttribute="top" secondItem="RQe-Bc-Mbk" secondAttribute="bottom" constant="10" id="ZA2-tP-Cqe"/>
                             <constraint firstItem="eGW-sX-sgU" firstAttribute="centerX" secondItem="2zR-Wn-eMG" secondAttribute="centerX" id="ZNV-5R-v4k"/>
+                            <constraint firstItem="2zR-Wn-eMG" firstAttribute="trailing" secondItem="oV3-39-1ea" secondAttribute="trailing" constant="157" id="aI4-Vd-vsu"/>
                             <constraint firstItem="iAe-86-OvV" firstAttribute="leading" secondItem="OHS-zw-AO8" secondAttribute="leading" id="bXh-PR-hPx"/>
                             <constraint firstItem="RQe-Bc-Mbk" firstAttribute="top" secondItem="ON8-yx-wBY" secondAttribute="bottom" constant="10" id="bts-Jj-NaF"/>
                             <constraint firstItem="Qr4-Yi-w9m" firstAttribute="leading" secondItem="OHS-zw-AO8" secondAttribute="leading" id="cLz-fE-sxp"/>
@@ -1880,6 +1928,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fLv-7x-Zfk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="234.78260869565219" y="-773.4375"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="rWK-hu-NfA">
+            <objects>
+                <navigationController storyboardIdentifier="navChooseDateController" automaticallyAdjustsScrollViewInsets="NO" id="59N-9W-ptE" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="psX-mQ-tp7"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="5Ys-Oo-rWE">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="N47-aK-hSN" kind="relationship" relationship="rootViewController" id="TQK-JR-YTm"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9FP-CI-PXz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4116" y="-2274"/>
         </scene>
     </scenes>
     <resources>

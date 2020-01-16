@@ -22,6 +22,7 @@
 		1125E5A723C49E6100E01141 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1125E5A623C49E6100E01141 /* Company.swift */; };
 		1125E5A923C4A0BA00E01141 /* Staff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1125E5A823C4A0BA00E01141 /* Staff.swift */; };
 		1125E5AB23C4CDC700E01141 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1125E5AA23C4CDC700E01141 /* Global.swift */; };
+		1140FD5C23CF43A0000BA013 /* ChooseDateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1140FD5B23CF43A0000BA013 /* ChooseDateController.swift */; };
 		1141AC8923CD698C00C9FC5A /* CompanyProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1141AC8823CD698C00C9FC5A /* CompanyProfileController.swift */; };
 		114C917D23C603610074EAB6 /* testCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114C917C23C603610074EAB6 /* testCollectionViewCell.swift */; };
 		114C918023C60A800074EAB6 /* StaffCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114C917E23C60A800074EAB6 /* StaffCollectionViewCell.swift */; };
@@ -103,6 +104,7 @@
 		1125E5A623C49E6100E01141 /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 		1125E5A823C4A0BA00E01141 /* Staff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Staff.swift; sourceTree = "<group>"; };
 		1125E5AA23C4CDC700E01141 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		1140FD5B23CF43A0000BA013 /* ChooseDateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseDateController.swift; sourceTree = "<group>"; };
 		1141AC8823CD698C00C9FC5A /* CompanyProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyProfileController.swift; sourceTree = "<group>"; };
 		114C917C23C603610074EAB6 /* testCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testCollectionViewCell.swift; sourceTree = "<group>"; };
 		114C917E23C60A800074EAB6 /* StaffCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 				1125E58923C419BB00E01141 /* PersonalScheduleViewController.swift */,
 				11E15C3423CC243200ADA452 /* TakeLeaveController.swift */,
 				11E15C3E23CC7EDD00ADA452 /* PersonalProfileController.swift */,
+				1140FD5B23CF43A0000BA013 /* ChooseDateController.swift */,
 			);
 			path = personal;
 			sourceTree = "<group>";
@@ -632,6 +635,7 @@
 				114C91AD23C779DA0074EAB6 /* ToastUtil.swift in Sources */,
 				1176CF6023BF123D0040F22A /* CompanyScheduleCollectionViewCell.swift in Sources */,
 				114C918523C763990074EAB6 /* DateShiftAssignController.swift in Sources */,
+				1140FD5C23CF43A0000BA013 /* ChooseDateController.swift in Sources */,
 				11CECEB123CDF73F00014FF8 /* testViewController.swift in Sources */,
 				1125E5AB23C4CDC700E01141 /* Global.swift in Sources */,
 				1125E5A923C4A0BA00E01141 /* Staff.swift in Sources */,

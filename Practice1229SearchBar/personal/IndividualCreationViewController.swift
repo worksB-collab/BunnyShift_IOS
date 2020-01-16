@@ -60,16 +60,27 @@ class IndividualCreationViewController: UIViewController {
             }else{
             
             
-            NetWorkController.sharedInstance.post(api: "/register/staff", params: ["account": self.individual_tf_account.text, "password": self.individual_tf_password.text, "name": self.individual_tf_name.text, "number": self.individual_tf_phone.text, "ltdID": self.individual_tf_companyID.text])
-            {(jsonData) in
-                print(jsonData.description)
-                if jsonData.description.contains("200"){
-                    
-                    self.jumpToSchedule()
-                    
-                }else{
-                    Toast.showToast(self.view, "wrong info")
-                }
+                NetWorkController.sharedInstance.post(api: "/register/staff", params: ["account": self.individual_tf_account.text, "password": self.individual_tf_password.text, "name": self.individual_tf_name.text, "number": self.individual_tf_phone.text, "ltdID": self.individual_tf_companyID.text, "authority" : 0])
+                {(jsonData) in
+                    print(jsonData.description)
+                    if jsonData.description.contains("200"){
+                        
+                        NetWorkController.sharedInstance.post(api: "/login/staff", params: ["account": self.individual_tf_account.text, "password": self.individual_tf_password.text])
+                        {(jsonData) in
+                            
+                            let token = jsonData["token"].string
+                            
+                        }
+                        
+                        let companyID = jsonData["companyID"].string
+                        
+                        
+                        
+                        self.jumpToSchedule()
+                        
+                    }else{
+                        Toast.showToast(self.view, "wrong info")
+                    }
                 }
             }
         }
@@ -126,7 +137,7 @@ extension IndividualCreationViewController: UITextFieldDelegate {
     
     // jump to the page we want by its storyBoard ID
     func jumpToSchedule(){
-        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navPersonalScheduleViewController")
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "staffMain")
         present(controller, animated: true, completion: nil)
         
     }

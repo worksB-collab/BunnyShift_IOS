@@ -11,6 +11,7 @@ import FSCalendar
 
 class PersonalScheduleViewController: UIViewController {
 
+    var selectedDate : String = ""
     fileprivate let gregorian = Calendar(identifier: .gregorian)
     
     fileprivate lazy var dateFormatter: DateFormatter = {
@@ -22,15 +23,18 @@ class PersonalScheduleViewController: UIViewController {
     fileprivate weak var calendar: FSCalendar!
     fileprivate weak var eventLabel: UILabel!
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+//        Toast.showToast(self.view, "已成功送出申請") // 沒用啊靠
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
         calendarSettings() // calendar settings
-        navigationBarSettings()
+        setNav()
     }
 
-    func navigationBarSettings(){
+    func setNav(){
         navigationItem.title = "排班表"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(named: "Color7")! ]
         navigationController?.navigationBar.prefersLargeTitles = false
@@ -38,7 +42,7 @@ class PersonalScheduleViewController: UIViewController {
         }
     
     func calendarSettings(){
-        let calendar = FSCalendar(frame: CGRect(x: 5, y: 100, width: view.frame.width-10, height: view.frame.height-400))
+        let calendar = FSCalendar(frame: CGRect(x: 5, y: 100, width: view.frame.width-10, height: view.frame.height-200))
         calendar.dataSource = self
         calendar.delegate = self
         calendar.register(FSCalendarCell.self, forCellReuseIdentifier: "CELL")
@@ -69,7 +73,7 @@ extension PersonalScheduleViewController : FSCalendarDataSource, FSCalendarDeleg
             let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navPersonalDayViewController")
                 present(controller, animated: true, completion: nil)
             
-            
+            TakeLeaveController.selectedDate = "\(self.dateFormatter.string(from: date))"
             
             if monthPosition == .next || monthPosition == .previous {
                 calendar.setCurrentPage(date, animated: true)
@@ -83,6 +87,7 @@ extension PersonalScheduleViewController : FSCalendarDataSource, FSCalendarDeleg
             if monthPosition == .next || monthPosition == .previous {
                 calendar.setCurrentPage(date, animated: true)
             }
+            
         }
         
         func calendar(_ calendar: FSCalendar, titleFor date: Date) -> String? {

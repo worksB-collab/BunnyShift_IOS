@@ -17,6 +17,22 @@ class CompanyProfileController: UIViewController {
     @IBOutlet weak var companyTaxID: UILabel!
     @IBOutlet weak var address: UILabel!
     @IBOutlet weak var staffNum: RoundRecButton!
+    @IBAction func logout(_ sender: RoundRecButton) {
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RootNavigationController")
+        let controller1 = UIAlertController(title: "登出", message: "確認登出？", preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "登出", style: .default) { (_) in
+            
+            Toast.showToast(self.view, "登出")
+            self.present(controller, animated: true, completion: nil)
+        }
+        controller1.addAction(okAction)
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel) { (_) in
+        }
+        controller1.addAction(cancelAction)
+        present(controller1, animated: true, completion: nil)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

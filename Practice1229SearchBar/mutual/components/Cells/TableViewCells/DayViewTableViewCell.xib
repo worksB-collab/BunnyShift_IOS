@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,31 +20,31 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="無敵早早早班" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ovo-HB-vYC">
                         <rect key="frame" x="10" y="10" width="74" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" name="Color3"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="人數" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQ7-wU-pmv">
                         <rect key="frame" x="98" y="10" width="25" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" name="Color3"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mlq-ou-ydr">
                         <rect key="frame" x="13" y="30" width="27" height="12"/>
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" name="Color3"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="23:59" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Icr-2F-xal">
                         <rect key="frame" x="59" y="30" width="29" height="12"/>
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" name="Color3"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wy1-gq-w8e">
                         <rect key="frame" x="47" y="30" width="5" height="12"/>
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" name="Color3"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ada" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mAj-5T-Aw0">
@@ -52,7 +53,7 @@
                             <constraint firstAttribute="width" constant="236" id="JiV-m7-c1l"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" name="Color3"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -75,14 +76,18 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="dateShift" destination="Ovo-HB-vYC" id="OQS-b4-OQW"/>
-                <outlet property="emdTime" destination="Icr-2F-xal" id="uuO-eP-SVO"/>
-                <outlet property="endTime" destination="Icr-2F-xal" id="FoA-nF-au9"/>
-                <outlet property="staffNum" destination="xQ7-wU-pmv" id="Fpk-b6-3Ni"/>
-                <outlet property="staffs" destination="mAj-5T-Aw0" id="QBr-fl-fvg"/>
-                <outlet property="startTime" destination="Mlq-ou-ydr" id="ZBQ-Cl-rWN"/>
+                <outlet property="dateShift" destination="Ovo-HB-vYC" id="wOo-aq-ZyK"/>
+                <outlet property="endTime" destination="Icr-2F-xal" id="MVv-gY-PBf"/>
+                <outlet property="staffNum" destination="xQ7-wU-pmv" id="F0N-KQ-N1M"/>
+                <outlet property="staffs" destination="mAj-5T-Aw0" id="tu4-dw-LLB"/>
+                <outlet property="startTime" destination="Mlq-ou-ydr" id="Wuz-dr-4oz"/>
             </connections>
             <point key="canvasLocation" x="143.47826086956522" y="130.58035714285714"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <namedColor name="Color3">
+            <color red="0.96078431372549022" green="0.49019607843137253" blue="0.56862745098039214" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

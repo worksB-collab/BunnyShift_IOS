@@ -8,6 +8,8 @@
 //新增日別
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class DateNamingController: UIViewController, UITableViewDataSource , UITableViewDelegate {
     
@@ -76,16 +78,40 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navSetting()
+        setNav()
         registerNib()
         //監聽tap鍵盤的事件 -> 點擊螢幕關閉pickerView
         // An object that is the recipient of action messages sent by the receiver when it recognizes a gesture.
         hideKeyboardWhenTappedAround()
         
+        //test
+        var testShift = ShiftDate("weekday", "morning", "10:00", "23:22", "2")
+        var testArr = Array<ShiftDate>()
+        testArr.append(testShift)
+        Global.companyShiftDateList.updateValue(testArr, forKey: "weekday")
+        
+        //test
+        
+        
     }
-
     
-    func navSetting(){
+    
+    var alamofireManager:Alamofire.SessionManager!
+    
+    func saveDataToDataBase(api : String){
+        
+        alamofireManager.request(NetWorkController.rootUrl + api, encoding: JSONEncoding.default, headers: [ "token" : Global.token! ])
+            .validate(statusCode: 200 ..< 500).responseJSON
+            {
+                (jsonData) in
+                print(jsonData.description)
+                if jsonData.description.contains("200"){
+//                    let token = jsonData["token"].description
+                }
+        }
+    }
+    
+    func setNav(){
         
         navigationController?.title = "新增日別"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(named: "Color7")! ]

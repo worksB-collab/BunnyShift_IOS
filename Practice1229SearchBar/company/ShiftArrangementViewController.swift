@@ -173,7 +173,7 @@ class ShiftArrangementViewController: UIViewController, UITableViewDataSource , 
      
     override func viewDidLoad() {
         super.viewDidLoad()
-        navSetting()
+        setNav()
         registerNib()
         //監聽tap鍵盤的事件 -> 點擊螢幕關閉pickerView
         // An object that is the recipient of action messages sent by the receiver when it recognizes a gesture.
@@ -181,7 +181,7 @@ class ShiftArrangementViewController: UIViewController, UITableViewDataSource , 
         setPickerView()
     }
 
-    func navSetting(){
+    func setNav(){
         navigationController?.title = "班別設定"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(named: "Color7")! ]
         navigationController?.navigationBar.prefersLargeTitles = true

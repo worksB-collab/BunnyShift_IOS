@@ -37,14 +37,14 @@ class ScheduleViewController: UIViewController, UICollectionViewDataSource, UICo
         super.viewDidLoad()
         registerNib()
         calendarSettings() // calendar settings
-        navigationBarSettings()
+        setNav()
         
         
     }
     
     // for collection view registration
     
-    func navigationBarSettings(){
+    func setNav(){
         navigationItem.title = "班表總覽"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(named: "Color7")! ]
         navigationController?.navigationBar.prefersLargeTitles = false

@@ -17,6 +17,7 @@ public class Company{
     var ltdID : String
     var staffList : [Staff]?
     
+    
     init(_ name : String, _ number: String, _ address :String, _ taxID :String, _ ltdID : String){
         self.name = name
         self.number = number

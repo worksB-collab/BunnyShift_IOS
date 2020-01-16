@@ -50,7 +50,7 @@ class codeScheduleViewController: UIViewController, UICollectionViewDataSource, 
         super.viewDidLoad()
         registerNib() // collection view settings
         calendarSettings() // calendar settings
-        navigationBarSettings()
+        setNav()
         loadData()
         
         
@@ -78,7 +78,7 @@ class codeScheduleViewController: UIViewController, UICollectionViewDataSource, 
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
-    func navigationBarSettings(){
+    func setNav(){
         navigationItem.title = "排班表"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(named: "Color7")! ]
         navigationController?.navigationBar.prefersLargeTitles = false
