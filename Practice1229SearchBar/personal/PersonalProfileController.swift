@@ -41,11 +41,11 @@ class PersonalProfileController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //test
-        Global.staffInfo = Staff("Chad", "ImChad", "yesIm", "0985231245")
+        Global.staffInfo = Staff("Chad", "staff1", "ImChad", "yesIm", "0985231245")
         Global.staffInfo?.salaryHourly = 150
         Global.staffInfo?.currentWorkingHours = 50
         Global.staffInfo?.assignedWorkingHours = 150
-        Global.companyInfo = Company("CMoney", "02-65456589", "taipei taipei" , "87944456", "companyID")
+        Global.companyInfo = Company("CMoney", "02-65456589", "taipei taipei" , "87944456")
         //test
         setInfo()
         // Do any additional setup after loading the view.

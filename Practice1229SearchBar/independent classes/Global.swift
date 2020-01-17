@@ -17,16 +17,16 @@ public class Global{
     //company login
     public static var companyInfo : Company?
 //    public static var staffList : [String] = []
-//    public static var companyShiftDateList : [String : Array<ShiftDate>?]! = [:]
+    public static var companyShiftDateList : [String : Array<ShiftDate>?]! = [:]
 //    public static var shiftDateNames : [String] = []
     
     
     
     public static var staffNameList : [String] = ["Anders", "Kristian", "Sofia", "John", "Jenny", "Lina", "Annie", "Katie", "Johanna"]
     public static var staffList = Array<Staff>()
-    public static var companyShiftDateList = ["weekday" : Array<ShiftDate>(), "weekend" : Array<ShiftDate>()]
+//    public static var companyShiftDateList = ["weekday" : Array<ShiftDate>(), "weekend" : Array<ShiftDate>()]
     public static var shiftDateNames : Array<String> = ["weekday", "weekend"]
-    public static var dayType : [String] = []
+    public static var dayType : [String] = [] // 每個星期的日子是什麼日別
        
     
     
@@ -55,12 +55,8 @@ public class Global{
         }
     
     static func getCertainTypeShifts(typeName : String) -> Array<String>{
-        
-        
-        
-        
         var arr = Array<String>()
-        for i in 0 ..< Global.companyShiftDateList[typeName]!.count{ arr.append(Global.companyShiftDateList[typeName]![i].timeName)
+        for i in 0 ..< Global.companyShiftDateList[typeName]!!.count{ arr.append(Global.companyShiftDateList[typeName]!![i].timeName)
         }
         return arr
     }

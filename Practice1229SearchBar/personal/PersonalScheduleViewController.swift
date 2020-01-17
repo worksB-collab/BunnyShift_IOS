@@ -30,7 +30,7 @@ class PersonalScheduleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        calendarSettings() // calendar settings
+        setCalendar() // calendar settings
         setNav()
     }
 
@@ -41,7 +41,7 @@ class PersonalScheduleViewController: UIViewController {
         navigationController?.navigationBar.isTranslucent = true
         }
     
-    func calendarSettings(){
+    func setCalendar(){
         let calendar = FSCalendar(frame: CGRect(x: 5, y: 100, width: view.frame.width-10, height: view.frame.height-200))
         calendar.dataSource = self
         calendar.delegate = self

@@ -43,8 +43,17 @@ class ShiftArrangementViewController: UIViewController, UITableViewDataSource , 
             }
             controller1.addAction(cancelAction)
             present(controller1, animated: true, completion: nil)
+        }else{
+//            NetWorkController.sharedInstance.postT(api: "/schedule/settimeshift", params: ["dataShiftName": i, "ltdID": Global.companyInfo?.ltdID])
+//            {(jsonData) in }
+//
+//
+//
+            
+            
+            jumpToNext()
         }
-        jumpToNext()
+        
     }
     
     @IBAction func addItem(_ sender: UIBarButtonItem) {

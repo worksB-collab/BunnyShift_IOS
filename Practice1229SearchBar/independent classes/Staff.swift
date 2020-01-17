@@ -17,9 +17,12 @@ public class Staff{
     var startWorkingDate : String?
     var assignedWorkingHours : Int? // 本月工作時數
     var currentWorkingHours : Int?
+    var staffID : String
     
-    init(_ name : String, _ account: String, _ password: String, _ number: String){
+       
+    init(_ name : String, _ staffID : String, _ account: String, _ password: String, _ number: String){
         self.name = name
+        self.staffID = staffID
         self.account = account
         self.password = password
         self.number = number

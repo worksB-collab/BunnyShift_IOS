@@ -8,14 +8,12 @@
 //新增日別
 
 import UIKit
-import Alamofire
-import SwiftyJSON
 
 class DateNamingController: UIViewController, UITableViewDataSource , UITableViewDelegate {
     
     var addDateName:UITextField?
     
-    var tableViewCellArr = Global.shiftDateNames
+    var tableViewCellArr = Array<String>()
     
     
     var shiftCells = 1
@@ -61,6 +59,7 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
             
             Global.shiftDateNames.append( self.addDateName!.text!)
             
+          
             self.shift_tableView.reloadData()
             
         }
@@ -83,31 +82,42 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
         //監聽tap鍵盤的事件 -> 點擊螢幕關閉pickerView
         // An object that is the recipient of action messages sent by the receiver when it recognizes a gesture.
         hideKeyboardWhenTappedAround()
+//        getDatafromDataBase()
         
-        //test
-        var testShift = ShiftDate("weekday", "morning", "10:00", "23:22", "2")
-        var testArr = Array<ShiftDate>()
-        testArr.append(testShift)
-        Global.companyShiftDateList.updateValue(testArr, forKey: "weekday")
-        
-        //test
-        
+        Global.shiftDateNames = Array<String>()
         
     }
     
-    
-    var alamofireManager:Alamofire.SessionManager!
-    
-    func saveDataToDataBase(api : String){
+    func setDefaultData(){
         
-        alamofireManager.request(NetWorkController.rootUrl + api, encoding: JSONEncoding.default, headers: [ "token" : Global.token! ])
-            .validate(statusCode: 200 ..< 500).responseJSON
-            {
-                (jsonData) in
-                print(jsonData.description)
-                if jsonData.description.contains("200"){
-//                    let token = jsonData["token"].description
+    }
+    
+    func getDatafromDataBase(){
+        Global.shiftDateNames = Array<String>()
+        Global.companyShiftDateList = [String : Array<ShiftDate>]()
+//        Global.companyInfo = Company()
+        NetWorkController.sharedInstance.get(api: "/search/dateshiftbycompany/" + Global.companyInfo!.ltdID!)
+        {(jsonData) in
+            if jsonData["Status"].string == "200"{
+                let rows = jsonData["rows"].array
+                for i in rows!{
+                    let name = jsonData["date_shift_name"].string
+                    Global.shiftDateNames.append(name!)
+                    
                 }
+                self.tableViewCellArr = Global.shiftDateNames
+            }else{
+                print("not able to get data: " + jsonData.description)
+            }
+        }
+    }
+    
+    func saveDataToDataBase(){
+        
+        for i in tableViewCellArr{
+            NetWorkController.sharedInstance.postT(api: "/schedule/setdateshift", params: ["dataShiftName": i, "ltdID": Global.companyInfo?.ltdID])
+            {(jsonData) in }
+            print("saveDataToDataBase successful!")
         }
     }
     

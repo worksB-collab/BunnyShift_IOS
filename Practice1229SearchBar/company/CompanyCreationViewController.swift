@@ -35,7 +35,7 @@ class CompanyCreationViewController: UIViewController{
             if self.company_tf_account.text == "" || self.company_tf_password.text == "" || self.company_tf_name.text == "" || self.company_tf_phone.text == "" || self.company_tf_address.text == "" || self.company_tf_taxID.text == "" {
                 Toast.showToast(self.view, "請完整填寫空白處")
             }else{
-            
+                Global.companyInfo = Company(self.company_tf_name.text!, self.company_tf_phone.text!, self.company_tf_address.text!, self.company_tf_taxID.text!)
             
                 NetWorkController.sharedInstance.post(api: "/register/company", params: ["name" : self.company_tf_name.text , "account": self.company_tf_account.text, "password": self.company_tf_password.text, "number": self.company_tf_phone.text, "address": self.company_tf_address.text, "taxID" : self.company_tf_taxID.text])
             {(jsonData) in
@@ -72,7 +72,7 @@ class CompanyCreationViewController: UIViewController{
     }
     // jump to the page we want by its storyBoard ID
     func jumpToSchedule(){
-        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navShiftArrangementViewController") 
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navDateNamingController") 
         present(controller, animated: true, completion: nil)
     }
     

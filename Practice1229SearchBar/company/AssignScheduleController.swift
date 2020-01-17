@@ -13,7 +13,10 @@ import SwiftyJSON
 
 class AssignScheduleController: UIViewController{
     
+    var selectedStaff : String?
+    var selectedShift : String?
     var selectedDate : String?
+    
     
     fileprivate let gregorian = Calendar(identifier: .gregorian)
     
@@ -36,6 +39,8 @@ class AssignScheduleController: UIViewController{
     }
     
     @IBAction func save(_ sender: UIBarButtonItem) {
+        
+        
         jumpToSchedule()
     }
     
@@ -47,7 +52,7 @@ class AssignScheduleController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         registerNib()
-        calendarSettings() // calendar settings
+        setCalendar() // calendar settings
         setNav()
         setTableView()
         
@@ -63,7 +68,7 @@ class AssignScheduleController: UIViewController{
         
     }
     
-    func calendarSettings(){
+    func setCalendar(){
         let calendar = FSCalendar(frame: CGRect(x: 5, y: 200, width: view.frame.width-10, height: view.frame.height-400))
         calendar.dataSource = self
         calendar.delegate = self
@@ -141,7 +146,7 @@ extension AssignScheduleController : UICollectionViewDataSource, UICollectionVie
         if collectionView == self.collectionView{
             return names.count
         }else{
-            return Global.getCertainTypeShifts(typeName : "weekday").count
+            return Global.getCertainTypeShifts(typeName : "weekday").count // 依照日期給定某日別的班別
         }
         
     }
@@ -159,7 +164,7 @@ extension AssignScheduleController : UICollectionViewDataSource, UICollectionVie
             }
         }else{
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShiftCollectionViewCell.reuseIdentifier,for: indexPath) as? ShiftCollectionViewCell {
-                let name = Global.getCertainTypeShifts(typeName : "weekday")[indexPath.row]
+                let name = Global.getCertainTypeShifts(typeName : "weekday")[indexPath.row] // 依照日期給定某日別的班別
                 cell.configureCell(name: name)
                 cell.clipsToBounds = true
                 cell.layer.cornerRadius = cell.frame.height/2
@@ -176,6 +181,9 @@ extension AssignScheduleController : UICollectionViewDataSource, UICollectionVie
             staffSelected.selected[indexPath.item] = true
             let selectedCell:UICollectionViewCell = self.collectionView.cellForItem(at: indexPath)!
             changeCellColor(selectedCell, didSelectItemAt: indexPath)
+            
+            
+            
         }else{
             shiftSelected.selected[indexPath.item] = true
             let selectedCell:UICollectionViewCell = self.shiftCollectionView.cellForItem(at: indexPath)!
@@ -228,7 +236,7 @@ extension AssignScheduleController : UICollectionViewDataSource, UICollectionVie
 extension AssignScheduleController : UITableViewDelegate, UITableViewDataSource{
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return Global.shiftDateNames.count
     }
     
     // 根據各區去計算顯示列數
@@ -258,9 +266,9 @@ extension AssignScheduleController : UITableViewDelegate, UITableViewDataSource{
         var timeShiftName : [String : Array<String>] = ["weekday" : shiftArr]
         // 待填寫
         
-        Global.companyInfo = Company("name", "0928", "new taipei", "817227386", "23")
+        Global.companyInfo = Company("name", "0928", "new taipei", "817227386")
         let a = "/search/schedule/" + year + "/" + month
-        let b = "/" + Global.companyInfo!.ltdID
+        let b = "/" + Global.companyInfo!.ltdID!
         
         NetWorkController.sharedInstance.get(api: a+b)
         {(jsonData) in

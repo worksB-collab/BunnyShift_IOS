@@ -26,7 +26,7 @@ class TakeLeaveController: UIViewController, UIPickerViewDelegate, UIPickerViewD
             let controller1 = UIAlertController(title: "確認送出？", message: "請確認資訊正確", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "沒問題", style: .default) { (_) in
                 
-                NetWorkController.sharedInstance.post(api: "/someAPI", params: ["date": self.tf_date.text, "shift": self.tf_shift.text, "alter": self.tf_alter.text, "ltdID": Global.comapanyID])
+                NetWorkController.sharedInstance.postT(api: "/someAPI", params: ["date": self.tf_date.text, "shift": self.tf_shift.text, "alter": self.tf_alter.text, "ltdID": Global.companyInfo?.ltdID])
                 {(jsonData) in
                     
                     if true {

@@ -14,16 +14,15 @@ public class Company{
     var number: String
     var address :String
     var taxID :String
-    var ltdID : String
+    var ltdID : String?
     var staffList : [Staff]?
+
     
-    
-    init(_ name : String, _ number: String, _ address :String, _ taxID :String, _ ltdID : String){
+    init(_ name : String, _ number: String, _ address :String, _ taxID :String){
         self.name = name
         self.number = number
         self.address = address
         self.taxID = taxID
-        self.ltdID = ltdID
     }
 
 }

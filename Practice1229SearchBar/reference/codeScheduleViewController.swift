@@ -49,7 +49,7 @@ class codeScheduleViewController: UIViewController, UICollectionViewDataSource, 
     override func viewDidLoad() {
         super.viewDidLoad()
         registerNib() // collection view settings
-        calendarSettings() // calendar settings
+        setCalendar() // calendar settings
         setNav()
         loadData()
         
@@ -87,7 +87,7 @@ class codeScheduleViewController: UIViewController, UICollectionViewDataSource, 
 
     }
     
-    func calendarSettings(){
+    func setCalendar(){
         let calendar = FSCalendar(frame: CGRect(x: 5, y: 250, width: view.frame.width-10, height: view.frame.height-400))
         calendar.dataSource = self
         calendar.delegate = self

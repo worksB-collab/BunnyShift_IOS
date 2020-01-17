@@ -19,6 +19,15 @@ class DateShiftAssignController: UIViewController, UICollectionViewDataSource, U
     @IBOutlet weak var tableView: UITableView!
     @IBAction func save(_ sender: RoundRecButton) {
         Global.dayType = dayType
+        
+        NetWorkController.sharedInstance.postT(api: "/schedule/setweekshift", params: ["monday": dayType[0], "tuesday": dayType[1],"wednesday": dayType[2], "thursday": dayType[3],"friday": dayType[4], "saturday": dayType[5],"sunday": dayType[6], "ltdID": Global.companyInfo?.ltdID])
+                    {(jsonData) in
+                        
+                        
+                        
+                        
+        }
+
         jumpToSchedule()
         
     }
@@ -47,7 +56,7 @@ class DateShiftAssignController: UIViewController, UICollectionViewDataSource, U
 
     }
     func jumpToSchedule(){
-        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navAssignScheduleController")
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "companyMain")
         present(controller, animated: true, completion: nil)
         
     }
