@@ -30,10 +30,12 @@ class EventCell: UICollectionViewCell {
         layer.shadowOpacity = 0
         locationLabel.font = UIFont.systemFont(ofSize: 12)
         titleLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        titleLabel.textColor = UIColor( named: "Color7")
+        locationLabel.textColor = UIColor( named: "Color7")
 //        self.backgroundColor = UIColor(hex: 0xEEF7FF)
 //        borderView.backgroundColor = UIColor(hex: 0x0899FF)
-        self.backgroundColor = UIColor( named: "Color5")
-        borderView.backgroundColor = UIColor( named: "Color1")
+        self.backgroundColor = UIColor( named: "Color1")
+        borderView.backgroundColor = UIColor( named: "Color7")
     }
 
     func configureCell(event: DefaultEvent) {

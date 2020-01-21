@@ -25,55 +25,55 @@ class IndividualCreationViewController: UIViewController {
     @IBOutlet weak var IndividualCreation_confirm: RoundRecButton!
     @IBAction func IndividualCreation_confirm(_ sender: UIButton) {
 
-//            let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
-//
-//            let saveAction = UIAlertAction(title: "Save", style: .default, handler:
-//            {
-//                (alert: UIAlertAction!) -> Void in
-//                print("Saved")
-//            })
-//
-//            let deleteAction = UIAlertAction(title: "Delete", style: .default, handler:
-//            {
-//                (alert: UIAlertAction!) -> Void in
-//                print("Deleted")
-//            })
-//
-//            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:
-//            {
-//                (alert: UIAlertAction!) -> Void in
-//                print("Cancelled")
-//            })
-//            optionMenu.view.tintColor = UIColor(named : "Color7")
-//            optionMenu.view.backgroundColor = UIColor(named : "Color7")
-//            optionMenu.addAction(deleteAction)
-//            optionMenu.addAction(saveAction)
-//            optionMenu.addAction(cancelAction)
-//            present(optionMenu, animated: true, completion: nil)
-        //
-        
-        
         let controller1 = UIAlertController(title: "好了嗎？", message: "請確認資訊正確", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "沒問題", style: .default) { (_) in
             if self.individual_tf_account.text == "" || self.individual_tf_password.text == "" || self.individual_tf_name.text == "" || self.individual_tf_phone.text == "" || self.individual_tf_companyID.text == ""{
                 Toast.showToast(self.view, "請完整填寫空白處")
             }else{
             
-            
                 NetWorkController.sharedInstance.post(api: "/register/staff", params: ["account": self.individual_tf_account.text, "password": self.individual_tf_password.text, "name": self.individual_tf_name.text, "number": self.individual_tf_phone.text, "ltdID": self.individual_tf_companyID.text, "authority" : 0])
                 {(jsonData) in
                     print(jsonData.description)
-                    if jsonData.description.contains("200"){
+                    if jsonData["Status"].string == "200"{
+                        
+                        NetWorkController.sharedInstance.get(api: "/search/companyinfo")
+                        {(jsonData) in
+                            
+                            if jsonData["Status"].string == "200"{
+                                
+                                let arr = jsonData["rows"]
+                                for _ in 0 ..< arr.count{
+                                    let companyJson = arr[0]
+                                    
+                                    let ltdID = companyJson["ltd_id"].string
+                                    let name = companyJson["ltd_name"].string
+                                    let number = companyJson["ltd_number"].string
+                                    let address = companyJson["address"].string
+                                    let taxID = companyJson["tax_id"].string
+                                    
+                                    Global.companyInfo = Company(name: name!, number: number!, address: address!, taxID: taxID!)
+                                    
+                                    let arr = jsonData["rows"]
+                                    for _ in 0 ..< arr.count{
+                                        let staffJson = arr[0]
+                                        let staffID = staffJson["staff_id"].int
+                                    
+                                    Global.staffInfo = Staff(name : self.individual_tf_name.text!, staffID : staffID!, account: self.individual_tf_account.text!, password: self.individual_tf_password.text!, number: self.individual_tf_phone.text!)
+                                    }
+                                }
+                            }
+                        }
+                        
                         
                         NetWorkController.sharedInstance.post(api: "/login/staff", params: ["account": self.individual_tf_account.text, "password": self.individual_tf_password.text])
                         {(jsonData) in
                             
                             let token = jsonData["token"].string
-                            
+                            Global.token = token
                         }
                         
-                        let companyID = jsonData["companyID"].string
-                        
+                        let companyID = jsonData["ltd_id"].int
+                        Global.companyInfo?.ltdID = companyID
                         
                         
                         self.jumpToSchedule()

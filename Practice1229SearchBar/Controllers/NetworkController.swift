@@ -93,7 +93,7 @@ class NetWorkController: NSObject {
     //                        print("請求失敗 callBack 後端寫錯那種: \(response.debugDescription)")
     //                    }
                         
-                        print("請求成功 \(String(describing: response.result.value))")
+                        print("請求成功 \(jsonData)")
                         callBack?(jsonData)
                         
                     }else{

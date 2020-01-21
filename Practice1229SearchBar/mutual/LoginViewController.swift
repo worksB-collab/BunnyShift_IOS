@@ -8,11 +8,10 @@
 
 import UIKit
 import GoogleSignIn
+import SwiftyJSON
 
 
 class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerViewDelegate {
-    
-    
     
     @IBOutlet weak var login_tf_account: UITextField!
     @IBOutlet weak var login_tf_password: UITextField!
@@ -24,7 +23,6 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
     @IBAction func login_btn_GoogleLogin(_ sender: GIDSignInButton) {
         GIDSignIn.sharedInstance().signIn()
     }
-    
     
     @IBOutlet weak var login_btn_login: RoundRecButton!
     
@@ -41,29 +39,62 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
         if loginIdentify.text == "公司登入"{
             NetWorkController.sharedInstance.post(api: "/login/company", params: ["account": login_tf_account.text, "password": login_tf_password.text])
             {(jsonData) in
-                print(jsonData.description)
                 if jsonData.description.contains("200"){
-                    
                     
                     let token = jsonData["token"].string
                     Global.token = token
                     
                     NetWorkController.sharedInstance.get(api: "/search/companyinfo")
                     {(jsonData) in
-                        //待確認有哪些資訊可以拿
-                        if jsonData["Status"].string == "200"{
-                            var arr = jsonData["rows"].dictionary
-                            Global.companyInfo?.ltdID = arr!["ltd_id"]!.string!
-                            Global.companyInfo?.name = arr!["ltd_name"]!.string!
-                            Global.companyInfo?.account = arr!["ltd_account"]!.string!
-                            Global.companyInfo?.password = arr!["ltd_password"]!.string!
-                            Global.companyInfo?.number = arr!["ltd_number"]!.string!
-                            Global.companyInfo?.address = arr!["address"]!.string!
-                            Global.companyInfo?.taxID = arr!["tax_id"]!.string!
-                        }
                         
+                        if jsonData["Status"].string == "200"{
+                           
+                            let arr = jsonData["rows"]
+                            for _ in 0 ..< arr.count{
+                                let companyJson = arr[0]
+                                
+                                let account = companyJson["ltd_account"].string
+                                let password = companyJson["ltd_password"].string
+                                let ltdID = companyJson["ltd_id"].int
+                                let name = companyJson["ltd_name"].string
+                                let number = companyJson["ltd_number"].string
+                                let address = companyJson["address"].string
+                                let taxID = companyJson["tax_id"].string
+                                
+                                
+                                Global.companyInfo = Company(name: name!, number: number!, address: address!, taxID: taxID!)
+                                Global.companyInfo?.account = account
+                                Global.companyInfo?.password = password
+                                Global.companyInfo?.ltdID = ltdID
+                            }
+                        }
                     }
-                    
+                    NetWorkController.sharedInstance.get(api: "search/shiftbycompany/")
+                    {(jsonData) in
+                        
+                        if jsonData["Status"].string == "200"{
+                            
+                            let arr = jsonData["rows"]
+                            for i in 0 ..< arr.count{
+                                let companyJson = arr[i]
+                                
+                                let date_shift_name = companyJson["date_shift_name"].string
+                                let time_shift_name = companyJson["time_shift_name"].string
+                                let start_time = companyJson["start_time"].string
+                                let end_time = companyJson["end_time"].string
+                                let number = companyJson["number"].int
+                                
+                                if Global.companyShiftDateList[date_shift_name!] != nil{
+                                    Global.companyShiftDateList[date_shift_name!]!?.append(ShiftDate(date_shift_name!,time_shift_name!, start_time!, end_time!, "\(number!)"))
+                                    
+                                }else{
+                                    var shiftDateArr = Array<ShiftDate>()
+                                    shiftDateArr.append(ShiftDate(date_shift_name!,time_shift_name!, start_time!, end_time!, "\(number!)"))
+                                    Global.companyShiftDateList.updateValue(shiftDateArr, forKey: date_shift_name!)
+                                }
+                            }
+                        }
+                    }
                     let preferencesSave = UserDefaults.standard
                     preferencesSave.set(self.login_tf_account.text!, forKey: "account")
                     preferencesSave.set(self.login_tf_password.text! , forKey: "password")
@@ -79,27 +110,50 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
         }else{
             NetWorkController.sharedInstance.post(api: "/login/staff", params: ["account": login_tf_account.text, "password": login_tf_password.text])
             {(jsonData) in
-                print(jsonData.description)
                 if jsonData.description.contains("200"){
                     
                     let token = jsonData["token"].string
                     Global.token = token
                     
-                    
-                    NetWorkController.sharedInstance.get(api: "/search/companyinfo")
-                    {(jsonData) in
+                    NetWorkController.sharedInstance.get(api: "/search/companyinfo"){(jsonData) in
                         
                         if jsonData["Status"].string == "200"{
-                            var arr = jsonData["rows"].dictionary
-                            Global.companyInfo?.ltdID = arr!["ltd_id"]!.string!
-                            Global.staffInfo?.name = arr!["staff_name"]!.string!
-                            Global.staffInfo?.account = arr!["staff_account"]!.string!
-                            Global.staffInfo?.password = arr!["staff_password"]!.string!
-                            Global.staffInfo?.number = arr!["staff_number"]!.string!
-                            Global.staffInfo?.staffID = arr!["staff_id"]!.string!
+                            
+                            let arr = jsonData["rows"]
+                            for _ in 0 ..< arr.count{
+                                let companyJson = arr[0]
+                                
+                                let ltdID = companyJson["ltd_id"].int
+                                let name = companyJson["ltd_name"].string
+                                let number = companyJson["ltd_number"].string
+                                let address = companyJson["address"].string
+                                let taxID = companyJson["tax_id"].string
+                                
+                                Global.companyInfo = Company(name: name!, number: number!, address: address!, taxID: taxID!)
+                                
+                                Global.companyInfo?.ltdID = ltdID
+                                NetWorkController.sharedInstance.get(api: "/search/staffinfo")
+                                {(jsonData) in
+                                    
+                                    if jsonData["Status"].string == "200"{
+                                        
+                                        let arr = jsonData["rows"]
+                                        for _ in 0 ..< arr.count{
+                                            let staffJson = arr[0]
+                                            
+                                            let staffName = staffJson["staff_name"].string
+                                            let staffAccount = staffJson["staff_account"].string
+                                            let staffPassword = staffJson["staff_password"].string
+                                            let staffnumber = staffJson["staff_number"].string
+                                            let staffID = staffJson["staff_id"].int
+                                            
+                                            Global.staffInfo = Staff(name : staffName!, staffID : staffID!, account: staffAccount!, password: staffPassword!, number: staffnumber!)
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
-                        
                     
                     let preferencesSave = UserDefaults.standard
                     preferencesSave.set(self.login_tf_account.text!, forKey: "account")
@@ -128,8 +182,6 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
         
         // Change background color of UIAlertController
         alertController.setBackgroundColor(color: UIColor.white)
-        
-        
         
         
         alertController.addTextField { (textField) in
@@ -161,7 +213,6 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
         identifyPickerSettings()
         //google sign in
         GIDSignIn.sharedInstance().presentingViewController = self
-        
         
         
         
@@ -233,7 +284,6 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
         if component == 0{
             return identifyList.count
         }
-        
         return 0
     }
     
@@ -260,7 +310,6 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
         self.view.endEditing(true)
     }
     
-    
     //按下return接續到下一個textfield
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == login_tf_account {
@@ -284,8 +333,6 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
-    
-    
 }
 
 // extension that let user to tap anywhere to dismiss keyboard
@@ -310,7 +357,6 @@ extension LoginViewController: UITextFieldDelegate {
         UIView.animate(withDuration: 0.5, animations: {
             self.view.frame.origin.y = -50
         })
-        
     }
     
     /// 結束輸入

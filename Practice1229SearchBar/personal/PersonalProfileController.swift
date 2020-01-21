@@ -40,17 +40,19 @@ class PersonalProfileController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //test
-        Global.staffInfo = Staff("Chad", "staff1", "ImChad", "yesIm", "0985231245")
-        Global.staffInfo?.salaryHourly = 150
-        Global.staffInfo?.currentWorkingHours = 50
-        Global.staffInfo?.assignedWorkingHours = 150
-        Global.companyInfo = Company("CMoney", "02-65456589", "taipei taipei" , "87944456")
-        //test
+//        //test
+//        Global.staffInfo = Staff(name: "Chad", staffID: 1, account: "ImChad", password: "yesIm", number: "0985231245")
+//        Global.staffInfo?.salaryHourly = 150
+//        Global.staffInfo?.currentWorkingHours = 50
+//        Global.staffInfo?.assignedWorkingHours = 150
+//        //test
         setInfo()
         // Do any additional setup after loading the view.
         
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setInfo()
     }
     
     func setInfo(){
@@ -58,13 +60,13 @@ class PersonalProfileController: UIViewController {
         self.account?.text = Global.staffInfo?.account
         self.phone?.text = Global.staffInfo?.number
         self.companyName?.text = Global.companyInfo?.name
-        self.companyID?.text = Global.companyInfo?.ltdID
+        self.companyID?.text = "\(Global.companyInfo?.ltdID)"
         self.companyPhone?.text = Global.companyInfo?.number
         self.companyTaxID?.text = Global.companyInfo?.taxID
         self.companyAddress?.text = Global.companyInfo?.address
-        self.salaryHourly?.text = "\(Global.staffInfo!.salaryHourly!)"
-        self.currentWorkingHours?.text = "\(Global.staffInfo!.currentWorkingHours!)"
-        self.salaryMonthly?.text = "\(Global.staffInfo!.getSalary())"
+        self.salaryHourly?.text = "\(Global.staffInfo!.salaryHourly)" ?? "尚無資料"
+        self.currentWorkingHours?.text = "\(Global.staffInfo!.currentWorkingHours)" ?? "尚無資料"
+        self.salaryMonthly?.text = "\(Global.staffInfo!.getSalary())" ?? "尚無資料"
         
     }
     

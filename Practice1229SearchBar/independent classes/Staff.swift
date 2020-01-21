@@ -17,10 +17,10 @@ public class Staff{
     var startWorkingDate : String?
     var assignedWorkingHours : Int? // 本月工作時數
     var currentWorkingHours : Int?
-    var staffID : String
+    var staffID : Int
     
        
-    init(_ name : String, _ staffID : String, _ account: String, _ password: String, _ number: String){
+    init(name : String, staffID : Int, account: String, password: String, number: String){
         self.name = name
         self.staffID = staffID
         self.account = account
@@ -29,7 +29,10 @@ public class Staff{
     }
 
     func getSalary() -> Int {
-        return currentWorkingHours!*salaryHourly!
+        if currentWorkingHours == nil || salaryHourly == nil{
+            return 0
+        }
+        return currentWorkingHours!*salaryHourly! 
     }
 
 }

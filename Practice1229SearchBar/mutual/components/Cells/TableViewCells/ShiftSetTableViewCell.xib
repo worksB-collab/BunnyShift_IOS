@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,30 +20,71 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="日別" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lB5-tC-IhX">
                         <rect key="frame" x="15" y="10" width="37" height="21.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" name="Color7"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="其他資訊" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="50" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0wG-8a-Zax">
-                        <rect key="frame" x="19" y="41.5" width="61.5" height="26.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="班別" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0wG-8a-Zax">
+                        <rect key="frame" x="19" y="41.5" width="31" height="26.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" name="Color7"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="開始" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z5o-iw-1sd">
+                        <rect key="frame" x="65" y="46" width="31" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" name="Color7"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="結束" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5rU-TA-8c2">
+                        <rect key="frame" x="113" y="46" width="31" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" name="Color7"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uiA-xv-PlP">
+                        <rect key="frame" x="101" y="46" width="7" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" name="Color7"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="人數" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0j7-wR-hMA">
+                        <rect key="frame" x="159" y="46" width="31" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" name="Color7"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="0wG-8a-Zax" firstAttribute="top" secondItem="lB5-tC-IhX" secondAttribute="bottom" constant="10" id="5rW-UH-6ch"/>
+                    <constraint firstItem="0j7-wR-hMA" firstAttribute="centerY" secondItem="z5o-iw-1sd" secondAttribute="centerY" id="7Ib-cE-XgZ"/>
+                    <constraint firstItem="z5o-iw-1sd" firstAttribute="centerY" secondItem="0wG-8a-Zax" secondAttribute="centerY" id="98b-hq-9n5"/>
                     <constraint firstItem="lB5-tC-IhX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="SVA-xv-6yf"/>
+                    <constraint firstItem="uiA-xv-PlP" firstAttribute="leading" secondItem="z5o-iw-1sd" secondAttribute="trailing" constant="5" id="XFY-Hj-ggq"/>
+                    <constraint firstItem="z5o-iw-1sd" firstAttribute="leading" secondItem="0wG-8a-Zax" secondAttribute="trailing" constant="15" id="YYK-i1-Zal"/>
                     <constraint firstAttribute="bottom" secondItem="0wG-8a-Zax" secondAttribute="bottom" constant="10" id="Zcg-AV-yvA"/>
                     <constraint firstItem="lB5-tC-IhX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="gOp-IY-sxY"/>
+                    <constraint firstItem="uiA-xv-PlP" firstAttribute="centerY" secondItem="z5o-iw-1sd" secondAttribute="centerY" id="gdI-u1-U4R"/>
+                    <constraint firstItem="0j7-wR-hMA" firstAttribute="leading" secondItem="5rU-TA-8c2" secondAttribute="trailing" constant="15" id="hna-Fd-pVz"/>
+                    <constraint firstItem="5rU-TA-8c2" firstAttribute="leading" secondItem="uiA-xv-PlP" secondAttribute="trailing" constant="5" id="r5L-k7-xB8"/>
+                    <constraint firstItem="5rU-TA-8c2" firstAttribute="centerY" secondItem="z5o-iw-1sd" secondAttribute="centerY" id="tiP-Ti-Jb5"/>
                     <constraint firstItem="0wG-8a-Zax" firstAttribute="leading" secondItem="lB5-tC-IhX" secondAttribute="leading" constant="4" id="w26-l2-Nc4"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="dash" destination="uiA-xv-PlP" id="gwQ-sv-Rlw"/>
                 <outlet property="dateName" destination="lB5-tC-IhX" id="tIp-6S-J3V"/>
-                <outlet property="otherInfo" destination="0wG-8a-Zax" id="yUZ-9X-HWc"/>
+                <outlet property="endTime" destination="5rU-TA-8c2" id="tCl-CG-CKd"/>
+                <outlet property="staffNum" destination="0j7-wR-hMA" id="4tV-aL-7ar"/>
+                <outlet property="startTime" destination="z5o-iw-1sd" id="VJr-n0-ccR"/>
+                <outlet property="timeName" destination="0wG-8a-Zax" id="Isv-Vd-0Zb"/>
             </connections>
             <point key="canvasLocation" x="131.8840579710145" y="164.0625"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <namedColor name="Color7">
+            <color red="0.40392156862745099" green="0.40392156862745099" blue="0.47450980392156861" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

@@ -13,20 +13,20 @@ public class Global{
     static let sharedInstance = Global()
     
     public static var token : String?
-    
+    public static var selectedDate : Date?
+    public static var allShifts = Array<ShiftDate>()
     //company login
     public static var companyInfo : Company?
-//    public static var staffList : [String] = []
     public static var companyShiftDateList : [String : Array<ShiftDate>?]! = [:]
+    public static var staffList = Array<Staff>()
+    public static var shiftDateNames = Array<String>()
+    public static var dayType : [String] = [] // 每個星期的日子是什麼日別
 //    public static var shiftDateNames : [String] = []
     
     
     
     public static var staffNameList : [String] = ["Anders", "Kristian", "Sofia", "John", "Jenny", "Lina", "Annie", "Katie", "Johanna"]
-    public static var staffList = Array<Staff>()
 //    public static var companyShiftDateList = ["weekday" : Array<ShiftDate>(), "weekend" : Array<ShiftDate>()]
-    public static var shiftDateNames : Array<String> = ["weekday", "weekend"]
-    public static var dayType : [String] = [] // 每個星期的日子是什麼日別
        
     
     
@@ -45,7 +45,7 @@ public class Global{
 //        Global.self.companyShiftDateList = companyShiftDateList
 //    }
     
-    init(_ staffShiftDateList : [ShiftDate], _ staffInfo : Staff, _ companyName : String, _ companyPhone : String, _ comapanyID : String, _ companyTaxID : String){
+    init(_ staffShiftDateList : [ShiftDate], _ staffInfo : Staff, _ companyName : String, _ companyPhone : String, _ comapanyID : Int, _ companyTaxID : String){
         Global.self.staffShiftList = staffShiftDateList
         Global.self.staffInfo = staffInfo
         Global.self.companyInfo?.name = companyName

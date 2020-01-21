@@ -189,19 +189,22 @@ class DateShiftAssignController: UIViewController, UICollectionViewDataSource, U
         let key = Global.shiftDateNames[indexPath.row]
         
 
-        var dateString = ""
-        for i in 0 ..< list[key]!.count{
-            dateString += list[key]![i].timeName + "     " +
-                list[key]![i].startTime + "  -  " +
-                list[key]![i].endTime + "     " +
-                list[key]![i].staffNum + "  人\n"
+        var timeString = ""
+        var startString = ""
+        var dashString = ""
+        var endString = ""
+        var staffNumString = ""
+        for i in 0 ..< list![key]!!.count{
+            timeString += list![key]!![i].timeName + "\n"
+            startString += list![key]!![i].startTime! + "\n"
+            dashString += "-\n"
+            endString += list![key]!![i].endTime! + "\n"
+            staffNumString += list![key]!![i].staffNum! + "  人\n"
             
         }
         
-        
-        cell1.dateName.text = key
-        cell1.otherInfo.text = dateString
-        
+        cell1.configureCell(dateName: key, timeName: timeString, startTime: startString, dash : dashString, endTime: endString, staffNum: staffNumString)
+                
         cell1.layer.shadowColor = UIColor.groupTableViewBackground.cgColor
         cell1.layer.shadowOffset = CGSize(width: 2, height: 7)
         cell1.layer.shadowOpacity = 2

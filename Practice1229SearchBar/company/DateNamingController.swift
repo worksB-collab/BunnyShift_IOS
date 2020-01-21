@@ -8,11 +8,11 @@
 //新增日別
 
 import UIKit
+import SwiftyJSON
 
 class DateNamingController: UIViewController, UITableViewDataSource , UITableViewDelegate {
     
     var addDateName:UITextField?
-    
     var tableViewCellArr = Array<String>()
     
     
@@ -33,6 +33,7 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
         }else{
             
             Global.shiftDateNames = tableViewCellArr
+            saveDataToDataBase()
             jumpToNext()
         }
         
@@ -73,8 +74,6 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
         
     }
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setNav()
@@ -92,16 +91,18 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
         
     }
     
-    func getDatafromDataBase(){
+    func getDataFromDataBase(){
         Global.shiftDateNames = Array<String>()
         Global.companyShiftDateList = [String : Array<ShiftDate>]()
 //        Global.companyInfo = Company()
-        NetWorkController.sharedInstance.get(api: "/search/dateshiftbycompany/" + Global.companyInfo!.ltdID!)
+        NetWorkController.sharedInstance.get(api: "/search/dateshiftbycompany/\(Global.companyInfo!.ltdID!)")
         {(jsonData) in
+            print("dateNameController can do")
             if jsonData["Status"].string == "200"{
-                let rows = jsonData["rows"].array
-                for i in rows!{
-                    let name = jsonData["date_shift_name"].string
+                let arr = jsonData["rows"]
+                for i in 0 ..< arr.count{
+                    let companyJson = arr[i]
+                    let name = companyJson["date_shift_name"].string
                     Global.shiftDateNames.append(name!)
                     
                 }
@@ -110,14 +111,22 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
                 print("not able to get data: " + jsonData.description)
             }
         }
+        print("Global.shiftDateNames \(Global.shiftDateNames.count)")
     }
     
     func saveDataToDataBase(){
-        
+        var params: Dictionary<String, Any> = [:]
+        var arr = [Any]()
         for i in tableViewCellArr{
-            NetWorkController.sharedInstance.postT(api: "/schedule/setdateshift", params: ["dataShiftName": i, "ltdID": Global.companyInfo?.ltdID])
-            {(jsonData) in }
-            print("saveDataToDataBase successful!")
+            params = ["dateShiftName" : i, "ltdID" : Global.companyInfo!.ltdID!]
+            arr.append(params)
+        }
+        
+        for _ in tableViewCellArr{
+            NetWorkController.sharedInstance.postT(api: "/schedule/setdateshift", params: ["data" : arr])
+            {(jsonData) in
+            print(jsonData.description)
+            }
         }
     }
     

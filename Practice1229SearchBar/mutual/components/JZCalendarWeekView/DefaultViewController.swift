@@ -13,7 +13,13 @@ class DefaultViewController: UIViewController {
 
     @IBOutlet weak var calendarWeekView: DefaultWeekView!
 
-
+    // billy added
+    fileprivate lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter
+    }()
+    //
     
     let viewModel = DefaultViewModel()
 
@@ -21,7 +27,7 @@ class DefaultViewController: UIViewController {
         super.viewDidLoad()
 
         setupBasic()
-        setupCalendarView()
+        setCalendarView()
     }
 
     // Support device orientation change
@@ -29,12 +35,31 @@ class DefaultViewController: UIViewController {
         JZWeekViewHelper.viewTransitionHandler(to: size, weekView: calendarWeekView)
     }
 
-    private func setupCalendarView() {
+    private func setCalendarView() {
         calendarWeekView.baseDelegate = self
+        
+        
+        //billy added
+        var date1 = dateFormatter.date(from: TakeLeaveController.selectedDate)
+                
+        let numOfDays = 1
+        let firstDayOfWeek = numOfDays == 7 ? calendarWeekView.firstDayOfWeek : nil
+        
+        var optionsSD = OptionsSelectedData(viewType: .defaultView,
+                                            date: date1!,
+        numOfDays: numOfDays,
+        scrollType: .pageScroll,
+        firstDayOfWeek: firstDayOfWeek,
+        hourGridDivision: .minutes_15, scrollableRange: (nil, nil))
 
+        viewModel.currentSelectedData = optionsSD
+        //
+        
+        
+        
         // For example only
         if viewModel.currentSelectedData != nil {
-            setupCalendarViewWithSelectedData()
+            setCalendarViewWithSelectedData()
             return
         }
         // Basic setup
@@ -47,7 +72,7 @@ class DefaultViewController: UIViewController {
     }
 
     /// For example only
-    private func setupCalendarViewWithSelectedData() {
+    private func setCalendarViewWithSelectedData() {
         guard let selectedData = viewModel.currentSelectedData else { return }
         calendarWeekView.setupCalendar(numOfDays: selectedData.numOfDays,
                                        setDate: selectedData.date,

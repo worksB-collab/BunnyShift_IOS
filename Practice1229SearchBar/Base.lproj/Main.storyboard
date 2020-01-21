@@ -1325,13 +1325,20 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="RM5-7K-Hc9"/>
                     </view>
+                    <navigationItem key="navigationItem" id="ubm-Xb-6ar">
+                        <barButtonItem key="rightBarButtonItem" title="修改班表" id="sVi-qo-HZc">
+                            <connections>
+                                <action selector="editSchedule:" destination="LBW-Of-YOd" id="uLB-vg-tmI"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="calendarWeekView" destination="F9Q-vt-n4r" id="7tw-6x-hKV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rHv-Zn-GsP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2494.202898550725" y="1320.5357142857142"/>
+            <point key="canvasLocation" x="3278" y="1321"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="7FL-Zb-qm9">
@@ -1947,6 +1954,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9FP-CI-PXz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4116" y="-2274"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="LiB-Kc-ddX">
+            <objects>
+                <navigationController storyboardIdentifier="navDayViewController" automaticallyAdjustsScrollViewInsets="NO" id="Kf2-Zr-gfM" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="0Gl-JQ-QQm">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" name="Color1"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="LBW-Of-YOd" kind="relationship" relationship="rootViewController" id="WuP-mX-zrf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cXf-dx-9Hk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2595.6521739130435" y="1320.5357142857142"/>
         </scene>
     </scenes>
     <resources>

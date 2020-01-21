@@ -11,7 +11,11 @@ import UIKit
 class ShiftSetTableViewCell: UITableViewCell {
 
     @IBOutlet weak var dateName: UILabel!
-    @IBOutlet weak var otherInfo: UILabel!
+    @IBOutlet weak var timeName: UILabel!
+    @IBOutlet weak var startTime: UILabel!
+    @IBOutlet weak var dash: UILabel!
+    @IBOutlet weak var endTime: UILabel!
+    @IBOutlet weak var staffNum: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,9 +34,13 @@ class ShiftSetTableViewCell: UITableViewCell {
             return "ShiftSetTableViewCell"
         }
         
-        func configureCell(name: String) {
-            self.dateName.text = name
-            self.otherInfo.text = name
+    func configureCell(dateName: String, timeName: String, startTime: String, dash : String, endTime: String, staffNum: String) {
+            self.dateName.text = dateName
+            self.timeName.text = timeName
+            self.startTime.text = startTime
+            self.dash.text = dash
+            self.endTime.text = endTime
+            self.staffNum.text = staffNum
             
         }
 }

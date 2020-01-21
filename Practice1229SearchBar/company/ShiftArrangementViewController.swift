@@ -44,13 +44,7 @@ class ShiftArrangementViewController: UIViewController, UITableViewDataSource , 
             controller1.addAction(cancelAction)
             present(controller1, animated: true, completion: nil)
         }else{
-//            NetWorkController.sharedInstance.postT(api: "/schedule/settimeshift", params: ["dataShiftName": i, "ltdID": Global.companyInfo?.ltdID])
-//            {(jsonData) in }
-//
-//
-//
-            
-            
+            saveDataToDataBase()
             jumpToNext()
         }
         
@@ -149,7 +143,7 @@ class ShiftArrangementViewController: UIViewController, UITableViewDataSource , 
             
             if i == self.addDateShift!.text!{
                 
-                var oldNameShift = Array<ShiftDate>( Global.companyShiftDateList[self.addDateShift!.text!]!)
+                var oldNameShift = Array<ShiftDate>( Global.companyShiftDateList[self.addDateShift!.text!]!!)
                 oldNameShift.append(shiftDate!)
                 
                 Global.companyShiftDateList.updateValue(oldNameShift, forKey: self.addDateShift!.text!)
@@ -197,10 +191,38 @@ class ShiftArrangementViewController: UIViewController, UITableViewDataSource , 
         navigationController?.navigationBar.isTranslucent = true
     }
         
+    func saveDataToDataBase(){
+        
+       //等等
+        NetWorkController.sharedInstance.get(api:"search/dateshiftbycompany/"){(jsonData) in
+            if jsonData["Status"].string == "200"{
+                let arr = jsonData["rows"]
+                for i in 0 ..< arr.count{
+                    let companyJson = arr[i]
+                    let name = companyJson["date_shift_name"].string
+                }
+            }
+        }
+        
+        // 等見得修改玩可以直接拿ＩＤ之後再做
+//        var params: Dictionary<String, Any> = [:]
+//        var arr = [Any]()
+//        for i in tableViewCellArr{
+//            params = ["dateShiftName" : i, "ltdID" : Global.companyInfo!.ltdID!]
+//            arr.append(params)
+//        }
+//
+//        for _ in tableViewCellArr{
+//            NetWorkController.sharedInstance.postT(api: "/schedule/settimeshift", params: ["data" : arr])
+//            {(jsonData) in
+//            print(jsonData.description)
+//            }
+//        }
+    }
+    
     func jumpToNext(){
        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navDateShiftAssignController") 
                 present(controller, animated: true, completion: nil)
-       
     }
     
     func registerNib() {

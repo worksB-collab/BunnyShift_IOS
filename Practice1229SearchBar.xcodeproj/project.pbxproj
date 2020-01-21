@@ -23,6 +23,10 @@
 		1125E5A923C4A0BA00E01141 /* Staff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1125E5A823C4A0BA00E01141 /* Staff.swift */; };
 		1125E5AB23C4CDC700E01141 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1125E5AA23C4CDC700E01141 /* Global.swift */; };
 		1140FD5C23CF43A0000BA013 /* ChooseDateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1140FD5B23CF43A0000BA013 /* ChooseDateController.swift */; };
+		1140FD5F23D3267A000BA013 /* RegularNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1140FD5D23D3267A000BA013 /* RegularNotificationCell.swift */; };
+		1140FD6023D3267A000BA013 /* RegularNotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1140FD5E23D3267A000BA013 /* RegularNotificationCell.xib */; };
+		1140FD6323D3268F000BA013 /* AcceptableNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1140FD6123D3268F000BA013 /* AcceptableNotificationCell.swift */; };
+		1140FD6423D3268F000BA013 /* AcceptableNotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1140FD6223D3268F000BA013 /* AcceptableNotificationCell.xib */; };
 		1141AC8923CD698C00C9FC5A /* CompanyProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1141AC8823CD698C00C9FC5A /* CompanyProfileController.swift */; };
 		114C917D23C603610074EAB6 /* testCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114C917C23C603610074EAB6 /* testCollectionViewCell.swift */; };
 		114C918023C60A800074EAB6 /* StaffCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114C917E23C60A800074EAB6 /* StaffCollectionViewCell.swift */; };
@@ -105,6 +109,10 @@
 		1125E5A823C4A0BA00E01141 /* Staff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Staff.swift; sourceTree = "<group>"; };
 		1125E5AA23C4CDC700E01141 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		1140FD5B23CF43A0000BA013 /* ChooseDateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseDateController.swift; sourceTree = "<group>"; };
+		1140FD5D23D3267A000BA013 /* RegularNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularNotificationCell.swift; sourceTree = "<group>"; };
+		1140FD5E23D3267A000BA013 /* RegularNotificationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegularNotificationCell.xib; sourceTree = "<group>"; };
+		1140FD6123D3268F000BA013 /* AcceptableNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptableNotificationCell.swift; sourceTree = "<group>"; };
+		1140FD6223D3268F000BA013 /* AcceptableNotificationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AcceptableNotificationCell.xib; sourceTree = "<group>"; };
 		1141AC8823CD698C00C9FC5A /* CompanyProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyProfileController.swift; sourceTree = "<group>"; };
 		114C917C23C603610074EAB6 /* testCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testCollectionViewCell.swift; sourceTree = "<group>"; };
 		114C917E23C60A800074EAB6 /* StaffCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -350,6 +358,10 @@
 				117E6BF323CD7211000BE43A /* StaffManagementTableViewCell.xib */,
 				1190604223CEC67B005AD6B9 /* DayViewTableViewCell.swift */,
 				1190604323CEC67B005AD6B9 /* DayViewTableViewCell.xib */,
+				1140FD5D23D3267A000BA013 /* RegularNotificationCell.swift */,
+				1140FD5E23D3267A000BA013 /* RegularNotificationCell.xib */,
+				1140FD6123D3268F000BA013 /* AcceptableNotificationCell.swift */,
+				1140FD6223D3268F000BA013 /* AcceptableNotificationCell.xib */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -493,12 +505,14 @@
 				11966CB123B876C300FA4449 /* LaunchScreen.storyboard in Resources */,
 				117E6BFD23CDB73E000BE43A /* SetupAndEdit.storyboard in Resources */,
 				117E6BFF23CDB7AC000BE43A /* Company.storyboard in Resources */,
+				1140FD6023D3267A000BA013 /* RegularNotificationCell.xib in Resources */,
 				1176CF6123BF123D0040F22A /* CompanyScheduleCollectionViewCell.xib in Resources */,
 				114C91AB23C779DA0074EAB6 /* ExpandableHeaderView.xib in Resources */,
 				1190604523CEC67B005AD6B9 /* DayViewTableViewCell.xib in Resources */,
 				114C91B723C86CC40074EAB6 /* ShiftSetTableViewCell.xib in Resources */,
 				114C91A923C779DA0074EAB6 /* OptionsTableViewCell.xib in Resources */,
 				11E15C3D23CC561400ADA452 /* ShiftCollectionViewCell.xib in Resources */,
+				1140FD6423D3268F000BA013 /* AcceptableNotificationCell.xib in Resources */,
 				1125E58323C3608C00E01141 /* ShiftTableViewCell.xib in Resources */,
 				117E6BFB23CDB591000BE43A /* Staff.storyboard in Resources */,
 				11966CAE23B876C300FA4449 /* Assets.xcassets in Resources */,
@@ -601,12 +615,14 @@
 				11E15C3523CC243200ADA452 /* TakeLeaveController.swift in Sources */,
 				1190604423CEC67B005AD6B9 /* DayViewTableViewCell.swift in Sources */,
 				11E15C3923CC541E00ADA452 /* AssignScheduleController.swift in Sources */,
+				1140FD6323D3268F000BA013 /* AcceptableNotificationCell.swift in Sources */,
 				114C91AF23C82CE00074EAB6 /* DateNamingController.swift in Sources */,
 				114C918023C60A800074EAB6 /* StaffCollectionViewCell.swift in Sources */,
 				11966CA923B876BC00FA4449 /* ViewController.swift in Sources */,
 				114C91A623C779DA0074EAB6 /* OptionsViewModel.swift in Sources */,
 				117E6BF423CD7211000BE43A /* StaffManagementTableViewCell.swift in Sources */,
 				11E15C3323CC126500ADA452 /* RoundRecButton.swift in Sources */,
+				1140FD5F23D3267A000BA013 /* RegularNotificationCell.swift in Sources */,
 				1125E58A23C419BB00E01141 /* PersonalScheduleViewController.swift in Sources */,
 				114C919723C7781F0074EAB6 /* DefaultWeekView.swift in Sources */,
 				1125E57923C1E1FE00E01141 /* codeScheduleViewController.swift in Sources */,

@@ -13,6 +13,10 @@ public class ItemSelection{
     var list : [String] = []
     var selected  : [Bool] = []
     
+    init(){
+        
+    }
+    
     init(_ list : [String]){
         self.list  = list
         selected = [Bool](repeating: false, count: list.count)

@@ -10,7 +10,7 @@
 import UIKit
 import FSCalendar
 
-class ScheduleViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class ScheduleViewController: UIViewController {
     
     fileprivate let gregorian = Calendar(identifier: .gregorian)
     
@@ -20,11 +20,26 @@ class ScheduleViewController: UIViewController, UICollectionViewDataSource, UICo
         return formatter
     }()
     
+    
+    
     fileprivate weak var calendar: FSCalendar!
     fileprivate weak var eventLabel: UILabel!
+    var selectedStaff = ""
+    
+    //test
+    var datesWithEvent = ["2020-01-03", "2020-01-05", "2020-01-07", "2020-01-10", "2020-01-15", "2020-01-21", "2020-01-26", "2020-01-29"]
+    //test
+    
+    //Used in one of the example methods
+    fileprivate lazy var dateFormatter2: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter
+    }()
+    
     
     required init?(coder aDecoder: NSCoder) {
-        staffSelected = ItemSelection(names)
+        staffSelected = ItemSelection(Global.staffNameList)
         super.init(coder: aDecoder)
     }
         
@@ -38,7 +53,6 @@ class ScheduleViewController: UIViewController, UICollectionViewDataSource, UICo
         registerNib()
         setCalendar() // calendar settings
         setNav()
-        
         
     }
     
@@ -65,17 +79,21 @@ class ScheduleViewController: UIViewController, UICollectionViewDataSource, UICo
         calendar.appearance.selectionColor = UIColor(named : "Color5")
         calendar.appearance.todayColor = UIColor(named : "Color7")
         calendar.appearance.todaySelectionColor = UIColor(named : "Color1")
+        calendar.appearance.eventDefaultColor = UIColor(named : "Color1")
+        calendar.appearance.eventSelectionColor = UIColor(named : "Color7")
+        
         
         self.calendar = calendar
-        
-        
     }
     
     // collection view
-    var names = Global.staffNameList
     var staffSelected : ItemSelection
     
     @IBOutlet weak var collectionView: UICollectionView!
+    
+}
+
+extension ScheduleViewController :  UICollectionViewDataSource, UICollectionViewDelegate{
     
     func registerNib() {
         
@@ -86,13 +104,13 @@ class ScheduleViewController: UIViewController, UICollectionViewDataSource, UICo
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // check which data should the current CollectionView should take
-            return names.count
+            return Global.staffNameList.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // check which data should the current CollectionView should take
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StaffCollectionViewCell.reuseIdentifier,for: indexPath) as? StaffCollectionViewCell {
-                let name = names[indexPath.row]
+                let name = Global.staffNameList[indexPath.row]
                 cell.configureCell(name: name)
                 cell.clipsToBounds = true
                 cell.layer.cornerRadius = cell.frame.height/2
@@ -129,8 +147,8 @@ class ScheduleViewController: UIViewController, UICollectionViewDataSource, UICo
             print(indexPath.item , "deselected")
         }
     }
-    
 }
+
 
 extension ScheduleViewController : FSCalendarDataSource, FSCalendarDelegate{
     
@@ -144,10 +162,14 @@ extension ScheduleViewController : FSCalendarDataSource, FSCalendarDelegate{
         if monthPosition == .next || monthPosition == .previous {
             calendar.setCurrentPage(date, animated: true)
         }
+//        DayViewController.selectedDate = "\(self.dateFormatter.string(from: date))"
         
+        //example
+        let selected = dateFormatter.date(from: "2020-01-03")
+        //example
+        Global.selectedDate = selected
         
         jumpToDayView()
-        
     }
     
     func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
@@ -167,7 +189,13 @@ extension ScheduleViewController : FSCalendarDataSource, FSCalendarDelegate{
     }
     
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-        return 2
+        // 修改成有班表的日期要有點點
+        for i in datesWithEvent{
+            if self.dateFormatter.string(from: date) == i{
+                return 1
+            }
+        }
+        return 0
     }
     
     
@@ -176,11 +204,11 @@ extension ScheduleViewController : FSCalendarDataSource, FSCalendarDelegate{
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
     self.calendar.frame.size.height = bounds.height
     self.eventLabel?.frame.origin.y = calendar.frame.maxY + 10
-    
+        
     }
     
     func jumpToDayView(){
-        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DayViewController")
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navDayViewController")
         
          present(controller, animated: true, completion: nil)
             

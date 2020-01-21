@@ -40,13 +40,9 @@ class CompanyProfileController: UIViewController {
         self.account.text = Global.companyInfo?.account
         self.companyTaxID.text = Global.companyInfo?.taxID
         self.phone.text = Global.companyInfo?.number
-        self.companyID.text = Global.companyInfo?.ltdID
+        self.companyID.text = "\(Global.companyInfo?.ltdID)"
         self.address.text = Global.companyInfo?.address
         self.staffNum.titleLabel?.text = "員工人數：\(Global.companyInfo?.staffList?.count)"
         
     }
-    
-
-    
-
 }

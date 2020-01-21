@@ -12,6 +12,8 @@ import FSCalendar
 class PersonalScheduleViewController: UIViewController {
 
     var selectedDate : String = ""
+    var datesWithEvent = ["2020-01-03", "2020-01-05", "2020-01-07", "2020-01-10", "2020-01-15", "2020-01-21", "2020-01-26", "2020-01-29"]
+    
     fileprivate let gregorian = Calendar(identifier: .gregorian)
     
     fileprivate lazy var dateFormatter: DateFormatter = {
@@ -54,6 +56,8 @@ class PersonalScheduleViewController: UIViewController {
         calendar.appearance.selectionColor = UIColor(named : "Color5")
         calendar.appearance.todayColor = UIColor(named : "Color7")
         calendar.appearance.todaySelectionColor = UIColor(named : "Color1")
+        calendar.appearance.eventDefaultColor = UIColor(named : "Color1")
+        calendar.appearance.eventSelectionColor = UIColor(named : "Color7")
         
         self.calendar = calendar
         
@@ -69,6 +73,10 @@ extension PersonalScheduleViewController : FSCalendarDataSource, FSCalendarDeleg
             print("did select date \(self.dateFormatter.string(from: date))")
             let selectedDates = calendar.selectedDates.map({self.dateFormatter.string(from: $0)})
             print("selected dates is \(selectedDates)")
+            
+            
+            
+            
             
             let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navPersonalDayViewController")
                 present(controller, animated: true, completion: nil)
@@ -98,7 +106,12 @@ extension PersonalScheduleViewController : FSCalendarDataSource, FSCalendarDeleg
         }
         
         func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-            return 2
+            for i in datesWithEvent{
+                if self.dateFormatter.string(from: date) == i{
+                    return 1
+                }
+            }
+            return 0
         }
         
         

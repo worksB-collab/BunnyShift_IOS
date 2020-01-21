@@ -10,13 +10,19 @@ import Foundation
 
 public class ShiftDate{
     
+    var date : String?
     var dateName : String
     var timeName : String
-    var startTime : String
-    var endTime : String
-    var staffNum : String
+    var startTime : String?
+    var endTime : String?
+    var staffNum : Int?
     
-    init(_ dateName : String, _ timeName : String, _ startTime : String, _ endTime : String, _ staffNum : String){
+    init(_ dateName : String, _ timeName : String){
+        self.dateName = dateName
+        self.timeName = timeName
+    }
+    
+    init(_ dateName : String, _ timeName : String, _ startTime : String, _ endTime : String, _ staffNum : Int){
         self.dateName = dateName
         self.timeName = timeName
         self.startTime = startTime
