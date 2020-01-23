@@ -30,7 +30,7 @@ class DayViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        viewModel.assignToEachDay()
         setupBasic()
         setCalendarView()
         setNav()
@@ -61,7 +61,7 @@ class DayViewController: UIViewController {
 
         
         //billy added
-        var date1 = dateFormatter.date(from: TakeLeaveController.selectedDate)
+        let date1 = dateFormatter.date(from: ScheduleViewController.selectedDate!)
                 
         let numOfDays = 1
         let firstDayOfWeek = numOfDays == 7 ? calendarWeekView.firstDayOfWeek : nil

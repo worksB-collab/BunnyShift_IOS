@@ -31,7 +31,6 @@
 		114C917D23C603610074EAB6 /* testCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114C917C23C603610074EAB6 /* testCollectionViewCell.swift */; };
 		114C918023C60A800074EAB6 /* StaffCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114C917E23C60A800074EAB6 /* StaffCollectionViewCell.swift */; };
 		114C918123C60A800074EAB6 /* StaffCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 114C917F23C60A800074EAB6 /* StaffCollectionViewCell.xib */; };
-		114C918323C71BDC0074EAB6 /* ItemSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114C918223C71BDC0074EAB6 /* ItemSelection.swift */; };
 		114C918523C763990074EAB6 /* DateShiftAssignController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114C918423C763990074EAB6 /* DateShiftAssignController.swift */; };
 		114C919223C7781F0074EAB6 /* DefaultEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114C918C23C7781F0074EAB6 /* DefaultEvent.swift */; };
 		114C919323C7781F0074EAB6 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114C918D23C7781F0074EAB6 /* EventCell.swift */; };
@@ -82,6 +81,7 @@
 		11ACB51623B9C89900F74655 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11ACB51523B9C89900F74655 /* LoginViewController.swift */; };
 		11B5B98C23B9D87000C1CAC0 /* ThirdTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B5B98B23B9D87000C1CAC0 /* ThirdTableViewCell.swift */; };
 		11CECEB123CDF73F00014FF8 /* testViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CECEB023CDF73F00014FF8 /* testViewController.swift */; };
+		11D3BA6D23D7342E00949EB1 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D3BA6C23D7342E00949EB1 /* NotificationController.swift */; };
 		11E15C3323CC126500ADA452 /* RoundRecButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E15C3223CC126500ADA452 /* RoundRecButton.swift */; };
 		11E15C3523CC243200ADA452 /* TakeLeaveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E15C3423CC243200ADA452 /* TakeLeaveController.swift */; };
 		11E15C3723CC26CE00ADA452 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E15C3623CC26CE00ADA452 /* Toast.swift */; };
@@ -117,7 +117,6 @@
 		114C917C23C603610074EAB6 /* testCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testCollectionViewCell.swift; sourceTree = "<group>"; };
 		114C917E23C60A800074EAB6 /* StaffCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffCollectionViewCell.swift; sourceTree = "<group>"; };
 		114C917F23C60A800074EAB6 /* StaffCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StaffCollectionViewCell.xib; sourceTree = "<group>"; };
-		114C918223C71BDC0074EAB6 /* ItemSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSelection.swift; sourceTree = "<group>"; };
 		114C918423C763990074EAB6 /* DateShiftAssignController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateShiftAssignController.swift; sourceTree = "<group>"; };
 		114C918C23C7781F0074EAB6 /* DefaultEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultEvent.swift; sourceTree = "<group>"; };
 		114C918D23C7781F0074EAB6 /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
@@ -171,6 +170,7 @@
 		11ACB51823B9C8C300F74655 /* ThirdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 		11B5B98B23B9D87000C1CAC0 /* ThirdTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdTableViewCell.swift; sourceTree = "<group>"; };
 		11CECEB023CDF73F00014FF8 /* testViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testViewController.swift; sourceTree = "<group>"; };
+		11D3BA6C23D7342E00949EB1 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		11E15C3223CC126500ADA452 /* RoundRecButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundRecButton.swift; sourceTree = "<group>"; };
 		11E15C3423CC243200ADA452 /* TakeLeaveController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeLeaveController.swift; sourceTree = "<group>"; };
 		11E15C3623CC26CE00ADA452 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
@@ -221,6 +221,7 @@
 				117E6BF623CDA7B1000BE43A /* EditOptionController.swift */,
 				1190603E23CEBFD6005AD6B9 /* DayViewController.swift */,
 				1190603F23CEBFD6005AD6B9 /* DayViewModel.swift */,
+				11D3BA6C23D7342E00949EB1 /* NotificationController.swift */,
 				11CECEB023CDF73F00014FF8 /* testViewController.swift */,
 				1190603823CEA608005AD6B9 /* FSCalendarScopeViewController.swift */,
 			);
@@ -266,7 +267,6 @@
 				1125E5A623C49E6100E01141 /* Company.swift */,
 				1125E5A823C4A0BA00E01141 /* Staff.swift */,
 				1125E5AA23C4CDC700E01141 /* Global.swift */,
-				114C918223C71BDC0074EAB6 /* ItemSelection.swift */,
 			);
 			path = "independent classes";
 			sourceTree = "<group>";
@@ -610,7 +610,6 @@
 				11ACB51623B9C89900F74655 /* LoginViewController.swift in Sources */,
 				1125E57F23C35DB700E01141 /* ShiftArrangementViewController.swift in Sources */,
 				1125E57623C1C46F00E01141 /* WeekdayCollectionViewCell.swift in Sources */,
-				114C918323C71BDC0074EAB6 /* ItemSelection.swift in Sources */,
 				114C91AA23C779DA0074EAB6 /* ExpandableHeaderView.swift in Sources */,
 				11E15C3523CC243200ADA452 /* TakeLeaveController.swift in Sources */,
 				1190604423CEC67B005AD6B9 /* DayViewTableViewCell.swift in Sources */,
@@ -624,6 +623,7 @@
 				11E15C3323CC126500ADA452 /* RoundRecButton.swift in Sources */,
 				1140FD5F23D3267A000BA013 /* RegularNotificationCell.swift in Sources */,
 				1125E58A23C419BB00E01141 /* PersonalScheduleViewController.swift in Sources */,
+				11D3BA6D23D7342E00949EB1 /* NotificationController.swift in Sources */,
 				114C919723C7781F0074EAB6 /* DefaultWeekView.swift in Sources */,
 				1125E57923C1E1FE00E01141 /* codeScheduleViewController.swift in Sources */,
 				11E15C3C23CC561400ADA452 /* ShiftCollectionViewCell.swift in Sources */,

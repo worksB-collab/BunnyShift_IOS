@@ -13,16 +13,17 @@ public class Global{
     static let sharedInstance = Global()
     
     public static var token : String?
-    public static var selectedDate : Date?
-    public static var allShifts = Array<ShiftDate>()
     //company login
     public static var companyInfo : Company?
     public static var companyShiftDateList : [String : Array<ShiftDate>?]! = [:]
     public static var staffList = Array<Staff>()
-    public static var shiftDateNames = Array<String>()
+    public static var shiftDateNames = Array<String>() // 日別名稱
     public static var dayType : [String] = [] // 每個星期的日子是什麼日別
-//    public static var shiftDateNames : [String] = []
+    public static var monthlyShiftArr : Array<ShiftDate?>? // 整個月所有的班別
     
+    public static var dailyShiftArr = Array<ShiftDate>()
+//    public static var shiftDateNames : [String] = []
+    public static var temDateShiftIDs : Dictionary<String , Int> = [:]
     
     
     public static var staffNameList : [String] = ["Anders", "Kristian", "Sofia", "John", "Jenny", "Lina", "Annie", "Katie", "Johanna"]

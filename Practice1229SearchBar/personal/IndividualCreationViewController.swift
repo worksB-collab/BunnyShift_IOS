@@ -56,7 +56,7 @@ class IndividualCreationViewController: UIViewController {
                                     let arr = jsonData["rows"]
                                     for _ in 0 ..< arr.count{
                                         let staffJson = arr[0]
-                                        let staffID = staffJson["staff_id"].int
+                                        let staffID = staffJson["staffID"].int
                                     
                                     Global.staffInfo = Staff(name : self.individual_tf_name.text!, staffID : staffID!, account: self.individual_tf_account.text!, password: self.individual_tf_password.text!, number: self.individual_tf_phone.text!)
                                     }

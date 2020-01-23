@@ -17,12 +17,13 @@ class AssignScheduleController: UIViewController{
     var selectedShift : String?
     var selectedDate : String?
     var dateID : Int?
-    var date_shift_name : String?
+    var dateShiftName : String?
     var shiftNameArr = Array<String>() //shift names
     var isMatched = false
     var shiftStaffArr = Array<Array<String>>()//related with shiftNameArr on staff who has to work
-    //    var allDateNames : [String] = []
-    //    var allTimeNames : [String] = []
+    
+    var selected : Int = 0
+    var dailyShiftArr = Array<String>()
     
     fileprivate let gregorian = Calendar(identifier: .gregorian)
     
@@ -39,12 +40,10 @@ class AssignScheduleController: UIViewController{
     fileprivate weak var eventLabel: UILabel!
     
     required init?(coder aDecoder: NSCoder) {
-        staffSelected = ItemSelection(Global.staffNameList)
         super.init(coder: aDecoder)
     }
     
     @IBAction func save(_ sender: UIBarButtonItem) {
-        
         
         jumpToSchedule()
     }
@@ -56,11 +55,18 @@ class AssignScheduleController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getAllShifts()
+        getdailyShiftArr()
         registerNib()
-        setCalendar() // calendar settings
+        setCalendar()
         setNav()
         setTableView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let indexPathForFirstRow = IndexPath(row: selected, section: 0)
+        collectionView.selectItem(at: indexPathForFirstRow, animated: true, scrollPosition: [])
+        
     }
     
     func setNav(){
@@ -87,7 +93,6 @@ class AssignScheduleController: UIViewController{
         
         self.calendar = calendar
         
-        
     }
     
     func setTableView(){
@@ -100,23 +105,9 @@ class AssignScheduleController: UIViewController{
         
         //隱藏cell灰色底線
         tableView.tableFooterView = UIView()
-        
-        //        tableView.translatesAutoresizingMaskIntoConstraints = false
-        //        tableView.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
-        //        tableView.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
-        //        tableView.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
-        //        tableView.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
-        
-        //        tableView.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
-        //        tableView.leadingAnchor.constraint(equalTo:view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        //        tableView.trailingAnchor.constraint(equalTo:view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        //        tableView.bottomAnchor.constraint(equalTo:view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
     
-    
     // collection view
-    var staffSelected : ItemSelection
-    var shiftSelected = ItemSelection()
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var shiftCollectionView: UICollectionView!
@@ -156,7 +147,7 @@ class AssignScheduleController: UIViewController{
                     let companyJson = arr[i]
                     let ltdID = companyJson["ltd_id"].string
                     if companyJson["date"].string == self.selectedDate{
-                        self.dateID = companyJson["date_id"].int
+                        self.dateID = companyJson["dateID"].int
                     }
                 }
                 // get how many shifts and staffs working on certain date
@@ -168,20 +159,20 @@ class AssignScheduleController: UIViewController{
                         let arr = jsonData["rows"]
                         for i in 0 ..< arr.count{
                             let companyJson = arr[i]
-                            self.date_shift_name = companyJson["date_shift_name"].string
+                            self.dateShiftName = companyJson["dateShiftName"].string
                             for j in self.shiftNameArr{
                                 if j == companyJson["time_shift_name"].string!{
                                     self.isMatched = true
                                 }
                             }
                             if self.isMatched == false{
-                                self.shiftNameArr.append(companyJson["time_shift_name"].string!)
+                                self.shiftNameArr.append(companyJson["timeShiftName"].string!)
                                 var currentShift = Array<String>()
                                 self.shiftStaffArr.append(currentShift)
                             }
                             for k in 0..<self.shiftNameArr.count{
                                 if companyJson["time_shift_name"].string == self.shiftNameArr[k]{
-                                    self.shiftStaffArr[k].append(companyJson["staff_name"].string!)
+                                    self.shiftStaffArr[k].append(companyJson["staffName"].string!)
                                 }
                             }
                         }
@@ -191,77 +182,25 @@ class AssignScheduleController: UIViewController{
         }
     }
     
-    func getAllShifts(){
+    func loadCertainDay(){ // 點擊某日的時候，call this func 把當日班別撈出來
+        
+        
+    }
+    
+    func getdailyShiftArr(){
         // get all shifts
         
-        print("123456789! \(Global.companyShiftDateList.count)")
         for i in 0 ..< Global.companyShiftDateList.count{
             for j in Global.companyShiftDateList![shiftNameArr[i]]!!{
-                var currentShift = ShiftDate(j.dateName, j.timeName)
-                Global.allShifts.append(currentShift)
-                //                allDateNames.append(j.dateName)
-                //                allTimeNames.append(j.timeName)
+                let currentShift = ShiftDate(j.dateName, j.timeName)
+                Global.dailyShiftArr.append(currentShift)
             }
         }
-        var allShifts = Array<String>()
-        for i in Global.allShifts{
-            allShifts.append(i.timeName)
+        for i in Global.dailyShiftArr{
+            self.dailyShiftArr.append(i.timeName)
         }
-        shiftSelected = ItemSelection(allShifts)
     }
     
-    func getMonthData(){
-        let date = selectedDate?.components(separatedBy: "-")
-        let year = date![0]
-        var month = date![1]
-        var day = date![2]
-        
-        // get dateID
-        let a = "/search/schedule/" + year + "/" + month
-        
-        NetWorkController.sharedInstance.get(api: a){(jsonData) in
-            print(a)
-            var dateArr = Array<ShiftDate>()
-            var matchDate = false
-            var match_date_shift_name = false
-            var match_time_shift_name = false
-            if jsonData["Status"].string == "200"{
-                let arr = jsonData["rows"]
-                for i in 0 ..< arr.count{
-                    let companyJson = arr[i]
-                    let date = companyJson["date"].string
-                    let date_shift_name = companyJson["date_shift_name"].string
-                    let time_shift_name = companyJson["time_shift_name"].string
-                    let start_time = companyJson["start_time"].string
-                    let end_time = companyJson["end_time"].string
-                    let staffNum = companyJson["number"].int
-                    for i in dateArr{
-                        if date == i.date{
-                            matchDate = true
-                            if date_shift_name == i.dateName{
-                                match_date_shift_name = true
-                                if time_shift_name == i.timeName{
-                                    match_time_shift_name = true
-                                }
-                            }
-                        }
-                    }
-                    if matchDate && match_date_shift_name && match_time_shift_name{
-                        var currentSD = ShiftDate(date_shift_name!, time_shift_name!)
-                        currentSD.date = date
-                        currentSD.
-                            
-                     
-                    }else{
-                        return
-                    }
-                    if date == self.selectedDate{
-                        self.dateID = companyJson["date_id"].int
-                    }
-                }
-            }
-        }
-    }
 }
 
 extension AssignScheduleController : UICollectionViewDataSource, UICollectionViewDelegate{
@@ -271,7 +210,7 @@ extension AssignScheduleController : UICollectionViewDataSource, UICollectionVie
         if collectionView == self.collectionView{
             return Global.staffNameList.count
         }else{
-            return shiftSelected.list.count// 依照日期給定某日別的班別
+            return dailyShiftArr.count// 依照日期給定某日別的班別
         }
     }
     
@@ -283,23 +222,22 @@ extension AssignScheduleController : UICollectionViewDataSource, UICollectionVie
                 cell.configureCell(name: name)
                 cell.clipsToBounds = true
                 cell.layer.cornerRadius = cell.frame.height/2
-                changeCellColor(cell, didSelectItemAt: indexPath)
+                changeCellColor(collectionView, didSelectItemAt: cell, isSelected: indexPath.item == selected ? true : false)
                 return cell
             }
         }else{
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShiftCollectionViewCell.reuseIdentifier,for: indexPath) as? ShiftCollectionViewCell {
                 
-                let dateShift =  Global.getCertainTypeShifts(typeName : date_shift_name!)[indexPath.row]
-                let timeShift = Global.companyShiftDateList[Global.getCertainTypeShifts(typeName : date_shift_name!)[indexPath.row]]
+                let dateShift =  Global.getCertainTypeShifts(typeName : dateShiftName!)[indexPath.row]
+                let timeShift = Global.companyShiftDateList[Global.getCertainTypeShifts(typeName : dateShiftName!)[indexPath.row]]
                 
                 
                 // 依照日期給定某日別的班別
-                cell.configureCell(dateShift: Global.allShifts[indexPath.row].dateName, timeShift: Global.allShifts[indexPath.row].timeName)
+                cell.configureCell(dateShift: Global.dailyShiftArr[indexPath.row].dateName, timeShift: Global.dailyShiftArr[indexPath.row].timeName)
                 
-                print("123456789?" + Global.allShifts[indexPath.row].dateName + "," + Global.allShifts[indexPath.row].timeName)
                 cell.clipsToBounds = true
                 cell.layer.cornerRadius = cell.frame.height/2
-                changeCellColor(cell, didSelectItemAt: indexPath)
+                changeCellColor(collectionView, didSelectItemAt: cell, isSelected: indexPath.item == selected ? true : false)
                 return cell
             }
         }
@@ -310,56 +248,38 @@ extension AssignScheduleController : UICollectionViewDataSource, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if collectionView == self.collectionView{
-            staffSelected.selected[indexPath.item] = true
             let selectedCell:UICollectionViewCell = self.collectionView.cellForItem(at: indexPath)!
-            changeCellColor(selectedCell, didSelectItemAt: indexPath)
-            selectedStaff = staffSelected.list[indexPath.item]
+            changeCellColor(collectionView, didSelectItemAt: self.collectionView.cellForItem(at: indexPath) as! UICollectionViewCell, isSelected: true)
+            selectedStaff = Global.staffNameList[indexPath.item]
             
             
         }else{
-            shiftSelected.selected[indexPath.item] = true
-            let selectedCell:UICollectionViewCell = self.shiftCollectionView.cellForItem(at: indexPath)!
-            changeCellColor(selectedCell, didSelectItemAt: indexPath)
+            let selectedCell:UICollectionViewCell = self.collectionView.cellForItem(at: indexPath)!
+            changeCellColor(collectionView, didSelectItemAt: self.collectionView.cellForItem(at: indexPath) as! UICollectionViewCell, isSelected: true)
             selectedShift = Global.shiftDateNames[indexPath.item]
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if collectionView == self.collectionView{
-            staffSelected.selected[indexPath.item] = false
             let selectedCell:UICollectionViewCell? = self.collectionView.cellForItem(at: indexPath)
             if selectedCell != nil {
-                changeCellColor(selectedCell, didSelectItemAt: indexPath)
+                changeCellColor(collectionView, didSelectItemAt: self.collectionView.cellForItem(at: indexPath) as! UICollectionViewCell, isSelected: false)
             }
         }else{
-            shiftSelected.selected[indexPath.item] = false
             let selectedCell:UICollectionViewCell? = self.shiftCollectionView.cellForItem(at: indexPath)
             if selectedCell != nil {
-                changeCellColor(selectedCell, didSelectItemAt: indexPath)
+                changeCellColor(collectionView, didSelectItemAt: self.collectionView.cellForItem(at: indexPath) as! UICollectionViewCell, isSelected: false)
             }
         }
     }
     
-    func changeCellColor(_ cell: UICollectionViewCell?, didSelectItemAt indexPath: IndexPath){
+    func changeCellColor(_ collectionView: UICollectionView, didSelectItemAt cell: UICollectionViewCell, isSelected : Bool){
         
-        if cell is StaffCollectionViewCell{
-            if staffSelected.selected[indexPath.item]{
-                //            selectedCell.contentView.backgroundColor = UIColor(red: 200/256, green: 105/256, blue: 125/256, alpha: 1)
-                cell?.contentView.backgroundColor = UIColor(named : "Color6")
-                print(indexPath.item , "selected")
-            }else{
-                cell?.contentView.backgroundColor = UIColor.clear
-                print(indexPath.item , "deselected")
-            }
+        if isSelected {
+            cell.contentView.backgroundColor = UIColor(named : "Color6")
         }else{
-            if shiftSelected.selected[indexPath.item]{
-                //            selectedCell.contentView.backgroundColor = UIColor(red: 200/256, green: 105/256, blue: 125/256, alpha: 1)
-                cell?.contentView.backgroundColor = UIColor(named : "Color6")
-                print(indexPath.item , "selected")
-            }else{
-                cell?.contentView.backgroundColor = UIColor.clear
-                print(indexPath.item , "deselected")
-            }
+            cell.contentView.backgroundColor = UIColor.clear
         }
     }
     
@@ -389,7 +309,7 @@ extension AssignScheduleController : UITableViewDelegate, UITableViewDataSource{
             
         }
         
-        var currentShift = Global.companyShiftDateList[date_shift_name!]!![indexPath.item]
+        var currentShift = Global.companyShiftDateList[dateShiftName!]!![indexPath.item]
         
         cell1.configureCell(dateShift: shiftNameArr[indexPath.item], staffNum: currentShift.staffNum!, startTime: currentShift.startTime!, endTime: currentShift.endTime!, staffs: shiftStaffArr[indexPath.item])
         

@@ -11,6 +11,8 @@ import FSCalendar
 
 class PersonalScheduleViewController: UIViewController {
 
+    static var date = Date()
+    static var startMonth = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: PersonalScheduleViewController.date)))!
     var selectedDate : String = ""
     var datesWithEvent = ["2020-01-03", "2020-01-05", "2020-01-07", "2020-01-10", "2020-01-15", "2020-01-21", "2020-01-26", "2020-01-29"]
     

@@ -12,6 +12,15 @@ import FSCalendar
 
 class ScheduleViewController: UIViewController {
     
+    var dailyManPower : Array<Int>?
+    var dailyStaffDemend : Array<Int>?
+    static var selectedDate : String?
+//    var selected : Int?
+    
+    //for DayViewModel
+    static var date = Date()
+    static var startMonth = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: ScheduleViewController.date)))!
+    
     fileprivate let gregorian = Calendar(identifier: .gregorian)
     
     fileprivate lazy var dateFormatter: DateFormatter = {
@@ -20,14 +29,13 @@ class ScheduleViewController: UIViewController {
         return formatter
     }()
     
-    
-    
     fileprivate weak var calendar: FSCalendar!
     fileprivate weak var eventLabel: UILabel!
     var selectedStaff = ""
     
     //test
     var datesWithEvent = ["2020-01-03", "2020-01-05", "2020-01-07", "2020-01-10", "2020-01-15", "2020-01-21", "2020-01-26", "2020-01-29"]
+    var notEnoughStaffDates : [String] = []
     //test
     
     //Used in one of the example methods
@@ -39,7 +47,6 @@ class ScheduleViewController: UIViewController {
     
     
     required init?(coder aDecoder: NSCoder) {
-        staffSelected = ItemSelection(Global.staffNameList)
         super.init(coder: aDecoder)
     }
         
@@ -51,8 +58,15 @@ class ScheduleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         registerNib()
-        setCalendar() // calendar settings
+        getMonthData()
         setNav()
+        setCalendar()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+//        let indexPathForFirstRow = IndexPath(row: selected, section: 0)
+//        collectionView.selectItem(at: indexPathForFirstRow, animated: true, scrollPosition: [])
         
     }
     
@@ -80,17 +94,122 @@ class ScheduleViewController: UIViewController {
         calendar.appearance.todayColor = UIColor(named : "Color7")
         calendar.appearance.todaySelectionColor = UIColor(named : "Color1")
         calendar.appearance.eventDefaultColor = UIColor(named : "Color1")
-        calendar.appearance.eventSelectionColor = UIColor(named : "Color7")
+        calendar.appearance.eventSelectionColor = UIColor(named : "Color3")
         
         
         self.calendar = calendar
     }
     
     // collection view
-    var staffSelected : ItemSelection
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    // 從後端把所有當月班表撈出來
+    func getMonthData(){
+        if ScheduleViewController.selectedDate == nil{
+            let today = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "YYYY-MM-DD"
+            ScheduleViewController.selectedDate = dateFormatter.string(from: today)
+        }
+        let date = ScheduleViewController.selectedDate?.components(separatedBy: "-")
+        let year = date![0]
+        let month = date![1]
+        _ = date![2]
+        var dateArr = Array<ShiftDate>()
+        var first = true // 確認是否第一次拿資料，用以判斷dateArr是否為空值
+        // get dateID
+        let a = "/search/schedule/" + year + "/" + month + "/\(Global.companyInfo?.ltdID)"
+            
+        NetWorkController.sharedInstance.get(api: a){(jsonData) in
+            if jsonData["Status"].string == "200"{
+                let arr = jsonData["rows"]
+                for i in 0 ..< arr.count{
+                    let companyJson = arr[i]
+                    
+                    let date = companyJson["date"].string
+                    let dateShiftName = companyJson["dateShiftName"].string
+                    let timeShiftName = companyJson["timeShiftName"].string
+                    let startTime = companyJson["startTime"].string
+                    let endTime = companyJson["endTime"].string
+                    let staffNum = companyJson["number"].int
+                    let staffName = companyJson["staffName"].string
+                    var matchDateArr = true
+                    
+                    if first {
+                        dateArr.append(ShiftDate(date!, dateShiftName!, timeShiftName!, startTime!, endTime!, staffNum!, staffName!))
+                        first = false
+                    }else{
+                        for j in dateArr{
+                            if date != j.date || dateShiftName != j.dateName || timeShiftName != j.timeName{
+                                matchDateArr = false
+                            }
+                        }
+                        if !matchDateArr{
+                            dateArr.append(ShiftDate(date!, dateShiftName!, timeShiftName!, startTime!, endTime!, staffNum!, staffName!))
+                            matchDateArr = true
+                        }
+                    }
+                }
+                self.setCompanyShiftDateList(dateArr : dateArr )
+                Global.monthlyShiftArr = dateArr
+                self.seeNotEnoughDates()
+            }
+        }
+    }
+    
+    //把Global.companyShiftDateList資料也建好
+    func setCompanyShiftDateList(dateArr : Array<ShiftDate>){
+        var matched = false
+        for i in dateArr{
+            if Global.companyShiftDateList[i.dateName] != nil{
+                var temArr = Array<ShiftDate>()
+                for j in Global.companyShiftDateList![i.dateName]!!{
+                    temArr.append(j)
+                }
+                Global.companyShiftDateList.updateValue(temArr, forKey: i.dateName)
+                matched = true
+            }
+            if !matched{
+                var temArr = Array<ShiftDate>()
+                temArr.append(i)
+                Global.companyShiftDateList.updateValue(temArr, forKey: i.dateName)
+            }
+        }
+    }
+    
+    //原本要做人數不夠標記紅點的方法，但時間關係目前改為製作已排班日期標記紅點
+    func seeNotEnoughDates(){
+        dailyManPower = Array(repeating : 0, count : countOfDaysInCurrentMonth())
+        dailyStaffDemend = Array(repeating : 0, count : countOfDaysInCurrentMonth())
+        let daysinMonth = countOfDaysInCurrentMonth()
+        for i in 0 ..< daysinMonth {
+            for j in Global.monthlyShiftArr!{
+                let date = j?.date!.components(separatedBy: "-")
+                let day = Int(date![2])
+                if day == i{
+                    dailyManPower![i] += 1
+                }
+                
+            }
+        }
+        //有安排班表的日子 （紅點會標記這些日子）
+        for i in 0 ..< dailyManPower!.count{
+            
+            if dailyManPower![i] > 0{
+                let theDay = dateFormatter.string(from: calendar.currentPage.startOfDay.add(component: .day, value: i))
+                notEnoughStaffDates.append(theDay)
+                print("LLL" + theDay)
+            }
+            
+        }
+    }
+    
+    func countOfDaysInCurrentMonth() ->Int {
+        let calendar = Calendar(identifier:Calendar.Identifier.gregorian)
+        let range = (calendar as NSCalendar?)?.range(of: NSCalendar.Unit.day, in: NSCalendar.Unit.month, for:  self.calendar.currentPage)
+        return (range?.length)!
+    }
 }
 
 extension ScheduleViewController :  UICollectionViewDataSource, UICollectionViewDelegate{
@@ -114,7 +233,7 @@ extension ScheduleViewController :  UICollectionViewDataSource, UICollectionView
                 cell.configureCell(name: name)
                 cell.clipsToBounds = true
                 cell.layer.cornerRadius = cell.frame.height/2
-                changeCellColor(cell, didSelectItemAt: indexPath)
+                changeCellColor(collectionView, didSelectItemAt: cell, isSelected: false)
                 return cell
             }
             return UICollectionViewCell()
@@ -122,37 +241,31 @@ extension ScheduleViewController :  UICollectionViewDataSource, UICollectionView
     
     // 點選 cell 後執行的動作
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        staffSelected.selected[indexPath.item] = true
         let selectedCell:UICollectionViewCell = self.collectionView.cellForItem(at: indexPath)!
-        changeCellColor(selectedCell, didSelectItemAt: indexPath)
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        staffSelected.selected[indexPath.item] = false
-        let selectedCell:UICollectionViewCell? = self.collectionView.cellForItem(at: indexPath)
         if selectedCell != nil {
-        changeCellColor(selectedCell, didSelectItemAt: indexPath)
+            changeCellColor(collectionView, didSelectItemAt: self.collectionView.cellForItem(at: indexPath) as! UICollectionViewCell, isSelected: true)
+            selectedStaff = Global.staffNameList[indexPath.item]
         }
     }
     
-    func changeCellColor(_ cell: UICollectionViewCell?, didSelectItemAt indexPath: IndexPath){
-        
-        if staffSelected.selected[indexPath.item]{
-//            selectedCell.contentView.backgroundColor = UIColor(red: 200/256, green: 105/256, blue: 125/256, alpha: 1)
-            cell?.contentView.backgroundColor = UIColor(named : "Color6")
-            print(indexPath.item , "selected")
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let selectedCell:UICollectionViewCell? = self.collectionView.cellForItem(at: indexPath)
+        if selectedCell != nil {
+            changeCellColor(collectionView, didSelectItemAt: self.collectionView.cellForItem(at: indexPath) as! UICollectionViewCell, isSelected: false)
+        }
+    }
+    
+    func changeCellColor(_ collectionView: UICollectionView, didSelectItemAt cell: UICollectionViewCell, isSelected : Bool){
+        if isSelected {
+            cell.contentView.backgroundColor = UIColor(named : "Color6")
         }else{
-            cell?.contentView.backgroundColor = UIColor.clear
-            print(indexPath.item , "deselected")
+            cell.contentView.backgroundColor = UIColor.clear
         }
     }
 }
 
-
 extension ScheduleViewController : FSCalendarDataSource, FSCalendarDelegate{
     
-
     //data source
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
@@ -165,9 +278,9 @@ extension ScheduleViewController : FSCalendarDataSource, FSCalendarDelegate{
 //        DayViewController.selectedDate = "\(self.dateFormatter.string(from: date))"
         
         //example
-        let selected = dateFormatter.date(from: "2020-01-03")
+        let selected = "\(self.dateFormatter.string(from: date))"
         //example
-        Global.selectedDate = selected
+        ScheduleViewController.selectedDate = selected
         
         jumpToDayView()
     }
@@ -190,14 +303,13 @@ extension ScheduleViewController : FSCalendarDataSource, FSCalendarDelegate{
     
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
         // 修改成有班表的日期要有點點
-        for i in datesWithEvent{
+        for i in notEnoughStaffDates{
             if self.dateFormatter.string(from: date) == i{
                 return 1
             }
         }
         return 0
     }
-    
     
     //delegate
     

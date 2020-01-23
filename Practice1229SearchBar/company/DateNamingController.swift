@@ -81,7 +81,7 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
         //監聽tap鍵盤的事件 -> 點擊螢幕關閉pickerView
         // An object that is the recipient of action messages sent by the receiver when it recognizes a gesture.
         hideKeyboardWhenTappedAround()
-//        getDatafromDataBase()
+//        getDataFromDataBase()
         
         Global.shiftDateNames = Array<String>()
         
@@ -91,18 +91,18 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
         
     }
     
-    func getDataFromDataBase(){
+    func getDataFromDataBase(){ // 應該要放在修改的controller
         Global.shiftDateNames = Array<String>()
         Global.companyShiftDateList = [String : Array<ShiftDate>]()
 //        Global.companyInfo = Company()
-        NetWorkController.sharedInstance.get(api: "/search/dateshiftbycompany/\(Global.companyInfo!.ltdID!)")
+        NetWorkController.sharedInstance.get(api: "/search/dateshiftbycompany/")
         {(jsonData) in
-            print("dateNameController can do")
+            print("dateNameController can do>> \(jsonData)")
             if jsonData["Status"].string == "200"{
                 let arr = jsonData["rows"]
                 for i in 0 ..< arr.count{
                     let companyJson = arr[i]
-                    let name = companyJson["date_shift_name"].string
+                    let name = companyJson["dateShiftName"].string
                     Global.shiftDateNames.append(name!)
                     
                 }
@@ -118,14 +118,26 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
         var params: Dictionary<String, Any> = [:]
         var arr = [Any]()
         for i in tableViewCellArr{
-            params = ["dateShiftName" : i, "ltdID" : Global.companyInfo!.ltdID!]
+            params = ["dateShiftName" : i]
             arr.append(params)
         }
         
         for _ in tableViewCellArr{
             NetWorkController.sharedInstance.postT(api: "/schedule/setdateshift", params: ["data" : arr])
             {(jsonData) in
-            print(jsonData.description)
+                print("\(jsonData["message"].string)")
+                
+                Global.temDateShiftIDs = [:]
+                
+                let arr = jsonData["rows"]
+                for i in 0 ..< arr.count{
+                    let companyJson = arr[i]
+                    let dateShiftID = companyJson["dateShiftID"].int
+                    let dateShiftName = companyJson["dateShiftName"].string
+                    let ltdID = companyJson["ltdID"].int
+                    Global.companyInfo?.ltdID = ltdID
+                    Global.temDateShiftIDs.updateValue(dateShiftID!, forKey: dateShiftName!)
+                }
             }
         }
     }
@@ -140,10 +152,8 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
     
     
     func jumpToNext(){
-        
         let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navShiftArrangementViewController")
         present(controller, animated: true, completion: nil)
-        
     }
     
     func registerNib() {
@@ -187,7 +197,6 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
         if section == 0 {
             return tableViewCellArr.count
         }
-        
         return addItem
     }
     
@@ -196,7 +205,6 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
         // 把 tableView 中叫 datacell 的畫面部分跟 TestTableViewCell 類別做連結
         // 用 as！轉型(轉成需要顯示的cell : TestTableViewCell)
         let cell1 = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! DateNamingTableViewCell
-        
         
         cell1.dateName.text = tableViewCellArr[indexPath.row]
         
@@ -207,17 +215,14 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
             cell1.layer.masksToBounds = false
         
             return cell1
-        
     }
     
     func tableView(_ tableView: UITableView,
                       commit editingStyle: UITableViewCell.EditingStyle,
                                forRowAt indexPath: IndexPath)
        {
-        
         tableViewCellArr.remove(at: indexPath.row)
            tableView.deleteRows(at: [indexPath], with: .automatic)
            tableView.reloadData() // 更新tableView
        }
-    
 }

@@ -53,13 +53,13 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
                             for _ in 0 ..< arr.count{
                                 let companyJson = arr[0]
                                 
-                                let account = companyJson["ltd_account"].string
-                                let password = companyJson["ltd_password"].string
-                                let ltdID = companyJson["ltd_id"].int
-                                let name = companyJson["ltd_name"].string
-                                let number = companyJson["ltd_number"].string
+                                let account = companyJson["ltdAccount"].string
+                                let password = companyJson["ltdPassword"].string
+                                let ltdID = companyJson["ltdID"].int
+                                let name = companyJson["ltdName"].string
+                                let number = companyJson["ltdNumber"].string
                                 let address = companyJson["address"].string
-                                let taxID = companyJson["tax_id"].string
+                                let taxID = companyJson["taxID"].string
                                 
                                 
                                 Global.companyInfo = Company(name: name!, number: number!, address: address!, taxID: taxID!)
@@ -69,7 +69,7 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
                             }
                         }
                     }
-                    NetWorkController.sharedInstance.get(api: "search/shiftbycompany/")
+                    NetWorkController.sharedInstance.get(api: "/search/shiftbycompany/")
                     {(jsonData) in
                         
                         if jsonData["Status"].string == "200"{
@@ -78,18 +78,18 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
                             for i in 0 ..< arr.count{
                                 let companyJson = arr[i]
                                 
-                                let date_shift_name = companyJson["date_shift_name"].string
-                                let time_shift_name = companyJson["time_shift_name"].string
-                                let start_time = companyJson["start_time"].string
-                                let end_time = companyJson["end_time"].string
+                                let date_shift_name = companyJson["dateShiftName"].string
+                                let time_shift_name = companyJson["timeShiftName"].string
+                                let start_time = companyJson["startTime"].string
+                                let end_time = companyJson["endTime"].string
                                 let number = companyJson["number"].int
                                 
                                 if Global.companyShiftDateList[date_shift_name!] != nil{
-                                    Global.companyShiftDateList[date_shift_name!]!?.append(ShiftDate(date_shift_name!,time_shift_name!, start_time!, end_time!, "\(number!)"))
+                                    Global.companyShiftDateList[date_shift_name!]!?.append(ShiftDate(date_shift_name!,time_shift_name!, start_time!, end_time!, number!))
                                     
                                 }else{
                                     var shiftDateArr = Array<ShiftDate>()
-                                    shiftDateArr.append(ShiftDate(date_shift_name!,time_shift_name!, start_time!, end_time!, "\(number!)"))
+                                    shiftDateArr.append(ShiftDate(date_shift_name!,time_shift_name!, start_time!, end_time!, number!))
                                     Global.companyShiftDateList.updateValue(shiftDateArr, forKey: date_shift_name!)
                                 }
                             }
@@ -112,45 +112,41 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
             {(jsonData) in
                 if jsonData.description.contains("200"){
                     
-                    let token = jsonData["token"].string
-                    Global.token = token
-                    
-                    NetWorkController.sharedInstance.get(api: "/search/companyinfo"){(jsonData) in
+                    let arr = jsonData["rows"]
+                    for _ in 0 ..< arr.count{
+                        let companyJson = arr[0]
                         
-                        if jsonData["Status"].string == "200"{
+                        let ltdID = companyJson["ltdID"].int
+                        let name = companyJson["ltdName"].string
+                        let number = companyJson["ltdNumber"].string
+                        let address = companyJson["address"].string
+                        let taxID = companyJson["taxID"].string
+                        
+                        Global.companyInfo = Company(name: name!, number: number!, address: address!, taxID: taxID!)
+                        
+                        Global.companyInfo?.ltdID = ltdID
+                        
+                        let token = jsonData["token"].string
+                        Global.token = token
+                        
+                        NetWorkController.sharedInstance.get(api: "/search/staffinfo")
+                        {(jsonData) in
                             
-                            let arr = jsonData["rows"]
-                            for _ in 0 ..< arr.count{
-                                let companyJson = arr[0]
+                            if jsonData["Status"].string == "200"{
                                 
-                                let ltdID = companyJson["ltd_id"].int
-                                let name = companyJson["ltd_name"].string
-                                let number = companyJson["ltd_number"].string
-                                let address = companyJson["address"].string
-                                let taxID = companyJson["tax_id"].string
-                                
-                                Global.companyInfo = Company(name: name!, number: number!, address: address!, taxID: taxID!)
-                                
-                                Global.companyInfo?.ltdID = ltdID
-                                NetWorkController.sharedInstance.get(api: "/search/staffinfo")
-                                {(jsonData) in
+                                let arr = jsonData["rows"]
+                                for _ in 0 ..< arr.count{
+                                    let staffJson = arr[0]
                                     
-                                    if jsonData["Status"].string == "200"{
-                                        
-                                        let arr = jsonData["rows"]
-                                        for _ in 0 ..< arr.count{
-                                            let staffJson = arr[0]
-                                            
-                                            let staffName = staffJson["staff_name"].string
-                                            let staffAccount = staffJson["staff_account"].string
-                                            let staffPassword = staffJson["staff_password"].string
-                                            let staffnumber = staffJson["staff_number"].string
-                                            let staffID = staffJson["staff_id"].int
-                                            
-                                            Global.staffInfo = Staff(name : staffName!, staffID : staffID!, account: staffAccount!, password: staffPassword!, number: staffnumber!)
-                                        }
-                                    }
+                                    let staffName = staffJson["staffName"].string
+                                    let staffAccount = staffJson["staffAccount"].string
+                                    let staffPassword = staffJson["staffPassword"].string
+                                    let staffnumber = staffJson["staffNumber"].string
+                                    let staffID = staffJson["staffID"].int
+                                    
+                                    Global.staffInfo = Staff(name : staffName!, staffID : staffID!, account: staffAccount!, password: staffPassword!, number: staffnumber!)
                                 }
+                                
                             }
                         }
                     }
@@ -161,7 +157,6 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
                     //儲存
                     let didSave = preferencesSave.synchronize()
                     self.jumpToStaff()
-                    
                     
                 }else{
                     Toast.showToast(self.view, "錯誤的帳號或密碼")
@@ -207,6 +202,7 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
     }
     
     
+    var date = Date()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
@@ -214,7 +210,8 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
         //google sign in
         GIDSignIn.sharedInstance().presentingViewController = self
         
-        
+        var r = Calendar.current.date(byAdding: DateComponents(month: 0, day: 1), to: self.startOfMonth())!
+        print("firstDay  \(r.add(component: .hour, value: -16))")
         
         //        // networkcontroller example start
         //        NetWorkController.sharedInstance.connectApiByPost(api: "/members/login", params: ["email": "123@", "password": "123"])
@@ -230,6 +227,14 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
         //        }
         //        // test get end
         
+    }
+    func startOfMonth() -> Date {
+        return Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: date)))!
+    }
+    
+    func getThisMonthStart() -> Date? {
+        let components = Calendar.current.dateComponents([.year, .month], from: date)
+        return Calendar.current.date(from: components)!
     }
     
     
@@ -262,7 +267,7 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
     
     func identifyPickerSettings(){
         //設定代理人和資料來源為viewController
-        loginIdentify?.text = "個人登入"
+        loginIdentify?.text = "公司登入" // 預設登入身份
         pickerView.dataSource = self//告訴pickerView要從哪個view controller中取得要顯示的資料
         pickerView.delegate = self //告訴pickerView當使用者選了選項後 要讓哪一個view controller知道使用者的選擇
         
@@ -366,5 +371,14 @@ extension LoginViewController: UITextFieldDelegate {
         UIView.animate(withDuration: 0.5, animations: {
             self.view.frame.origin.y = 0
         })
+    }
+}
+extension Date {
+    func startOfMonth() -> Date {
+        return Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: self)))!
+    }
+
+    func endOfMonth() -> Date {
+        return Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: self.startOfMonth())!
     }
 }

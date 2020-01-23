@@ -34,7 +34,7 @@ class DayViewTableViewCell: UITableViewCell {
     }
     
     //有bug拉幹
-    func configureCell(dateShift: String, staffNum : String, startTime : String, endTime : String, staffs : Array<String>) {
+    func configureCell(dateShift: String, staffNum : Int, startTime : String, endTime : String, staffs : Array<String>) {
         self.dateShift.text = dateShift
         self.staffNum.text = "需求 \(staffNum) 人"
         self.startTime.text = startTime
