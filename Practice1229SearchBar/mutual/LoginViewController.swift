@@ -69,32 +69,81 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
                             }
                         }
                     }
+                    //查詢所有班別
                     NetWorkController.sharedInstance.get(api: "/search/shiftbycompany/")
                     {(jsonData) in
                         
                         if jsonData["Status"].string == "200"{
-                            
+
+                            var matchShiftDateNames = true
+                            var matchShiftTimeNames = true
                             let arr = jsonData["rows"]
                             for i in 0 ..< arr.count{
                                 let companyJson = arr[i]
                                 
-                                let date_shift_name = companyJson["dateShiftName"].string
-                                let time_shift_name = companyJson["timeShiftName"].string
-                                let start_time = companyJson["startTime"].string
-                                let end_time = companyJson["endTime"].string
+                                let dateShiftName = companyJson["dateShiftName"].string
+                                let timeShiftName = companyJson["timeShiftName"].string
+                                let startTime = companyJson["startTime"].string
+                                let endTime = companyJson["endTime"].string
                                 let number = companyJson["number"].int
                                 
-                                if Global.companyShiftDateList[date_shift_name!] != nil{
-                                    Global.companyShiftDateList[date_shift_name!]!?.append(ShiftDate(date_shift_name!,time_shift_name!, start_time!, end_time!, number!))
+                                if Global.companyShiftDateList[dateShiftName!] != nil{
+                                    Global.companyShiftDateList[dateShiftName!]!?.append(ShiftDate(dateShiftName!,timeShiftName!, startTime!, endTime!, number!))
                                     
                                 }else{
                                     var shiftDateArr = Array<ShiftDate>()
-                                    shiftDateArr.append(ShiftDate(date_shift_name!,time_shift_name!, start_time!, end_time!, number!))
-                                    Global.companyShiftDateList.updateValue(shiftDateArr, forKey: date_shift_name!)
+                                    shiftDateArr.append(ShiftDate(dateShiftName!,timeShiftName!, startTime!, endTime!, number!))
+                                    Global.companyShiftDateList.updateValue(shiftDateArr, forKey: dateShiftName!)
                                 }
+                                if Global.shiftDateNames.count == 0 {
+                                    Global.shiftDateNames.append(dateShiftName!)
+                                }
+                                for i in Global.shiftDateNames{
+                                    if i != dateShiftName{
+                                        matchShiftDateNames = false
+                                    }
+                                }
+                                if !matchShiftDateNames{
+                                    Global.shiftDateNames.append(dateShiftName!)
+                                    matchShiftDateNames = true
+                                }
+                                
+                                if Global.shiftTimeNames.count == 0 {
+                                    Global.shiftTimeNames.append(timeShiftName!)
+                                }
+                                for i in Global.shiftTimeNames{
+                                    if i != dateShiftName{
+                                        matchShiftTimeNames = false
+                                    }
+                                }
+                                if !matchShiftTimeNames{
+                                    Global.shiftTimeNames.append(timeShiftName!)
+                                    matchShiftTimeNames = true
+                                }
+                                
                             }
                         }
                     }
+                    
+                    //  查詢所有員工
+                    NetWorkController.sharedInstance.get(api: "/search/staffinfobycompany")
+                    {(jsonData) in
+                        
+                        if jsonData["Status"].string == "200"{
+
+                            let arr = jsonData["rows"]
+                            for i in 0 ..< arr.count{
+                                let companyJson = arr[i]
+                                let staffName = companyJson["staffName"].string
+                                let staffID = companyJson["staffID"].int
+                                let staffNumber = companyJson["staffNumber"].string
+                                let staff = Staff(name : staffName!, staffID : staffID!, number: staffNumber!)
+                                Global.staffList.append(staff)
+                                print("??? \(Global.staffList.count)")
+                            }
+                        }
+                    }
+                    
                     let preferencesSave = UserDefaults.standard
                     preferencesSave.set(self.login_tf_account.text!, forKey: "account")
                     preferencesSave.set(self.login_tf_password.text! , forKey: "password")

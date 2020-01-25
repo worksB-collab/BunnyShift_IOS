@@ -24,7 +24,6 @@ class DayViewModel: NSObject {
     
     
     func assignToEachDay(){
-        print("assignToEachDay")
         var count = 1
         for i in 0 ..< Global.monthlyShiftArr!.count{
             if Global.monthlyShiftArr?[i] == nil{
@@ -47,7 +46,6 @@ class DayViewModel: NSObject {
                 endDate: currentDay.add(component: .hour, value: hourE).add(component: .hour, value: minE) ,
                 location: Global.monthlyShiftArr![i]!.staffName!))
             count += 1
-            print("?>? \(count)")
         }
         
     }

@@ -22,6 +22,7 @@ class AssignScheduleController: UIViewController{
     var isMatched = false
     var shiftStaffArr = Array<Array<String>>()//related with shiftNameArr on staff who has to work
     
+    
     var selected : Int = 0
     var dailyShiftArr = Array<String>()
     
@@ -55,6 +56,7 @@ class AssignScheduleController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setShiftNameArr()
         getdailyShiftArr()
         registerNib()
         setCalendar()
@@ -64,8 +66,10 @@ class AssignScheduleController: UIViewController{
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let indexPathForFirstRow = IndexPath(row: selected, section: 0)
-        collectionView.selectItem(at: indexPathForFirstRow, animated: true, scrollPosition: [])
+        //讓初始為collectionView第一個選項
+//        let indexPathForFirstRow = IndexPath(row: selected, section: 0)
+//        collectionView.selectItem(at: indexPathForFirstRow, animated: true, scrollPosition: [])
+//        shiftCollectionView.selectItem(at: indexPathForFirstRow, animated: true, scrollPosition: [])
         
     }
     
@@ -82,14 +86,17 @@ class AssignScheduleController: UIViewController{
         calendar.dataSource = self
         calendar.delegate = self
         calendar.register(FSCalendarCell.self, forCellReuseIdentifier: "CELL")
-        view.addSubview(calendar)
         calendar.allowsMultipleSelection = true;
+        calendar.swipeToChooseGesture.isEnabled = true
+        view.addSubview(calendar)
         
         calendar.appearance.weekdayTextColor = UIColor(named : "Color3")
         calendar.appearance.headerTitleColor = UIColor(named : "Color3")
         calendar.appearance.selectionColor = UIColor(named : "Color5")
         calendar.appearance.todayColor = UIColor(named : "Color7")
         calendar.appearance.todaySelectionColor = UIColor(named : "Color1")
+        calendar.appearance.eventDefaultColor = UIColor(named : "Color1")
+        calendar.appearance.eventSelectionColor = UIColor(named : "Color3")
         
         self.calendar = calendar
         
@@ -145,13 +152,13 @@ class AssignScheduleController: UIViewController{
                 let arr = jsonData["rows"]
                 for i in 0 ..< arr.count{
                     let companyJson = arr[i]
-                    let ltdID = companyJson["ltd_id"].string
+                    let ltdID = companyJson["ltdID"].string
                     if companyJson["date"].string == self.selectedDate{
                         self.dateID = companyJson["dateID"].int
                     }
                 }
                 // get how many shifts and staffs working on certain date
-                let b = "/search/schedulebydate/\(self.dateID!)"
+                let b = "/search/schedulebydate/\(self.dateID!)\(Global.companyInfo?.ltdID)"
                 print(b)
                 NetWorkController.sharedInstance.get(api: b)
                 {(jsonData) in
@@ -161,7 +168,7 @@ class AssignScheduleController: UIViewController{
                             let companyJson = arr[i]
                             self.dateShiftName = companyJson["dateShiftName"].string
                             for j in self.shiftNameArr{
-                                if j == companyJson["time_shift_name"].string!{
+                                if j == companyJson["timeShiftName"].string!{
                                     self.isMatched = true
                                 }
                             }
@@ -171,7 +178,7 @@ class AssignScheduleController: UIViewController{
                                 self.shiftStaffArr.append(currentShift)
                             }
                             for k in 0..<self.shiftNameArr.count{
-                                if companyJson["time_shift_name"].string == self.shiftNameArr[k]{
+                                if companyJson["timeShiftName"].string == self.shiftNameArr[k]{
                                     self.shiftStaffArr[k].append(companyJson["staffName"].string!)
                                 }
                             }
@@ -185,6 +192,13 @@ class AssignScheduleController: UIViewController{
     func loadCertainDay(){ // 點擊某日的時候，call this func 把當日班別撈出來
         
         
+    }
+    
+
+    func setShiftNameArr(){
+        if shiftNameArr.count == 0 {
+            shiftNameArr = Global.shiftDateNames
+        }
     }
     
     func getdailyShiftArr(){
@@ -208,9 +222,9 @@ extension AssignScheduleController : UICollectionViewDataSource, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // check which data should the current CollectionView should take
         if collectionView == self.collectionView{
-            return Global.staffNameList.count
+            return Global.staffList.count
         }else{
-            return dailyShiftArr.count// 依照日期給定某日別的班別
+            return Global.shiftDateNames.count// 依照日期給定某日別的班別
         }
     }
     
@@ -218,26 +232,20 @@ extension AssignScheduleController : UICollectionViewDataSource, UICollectionVie
         // check which data should the current CollectionView should take
         if collectionView == self.collectionView{
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StaffCollectionViewCell.reuseIdentifier,for: indexPath) as? StaffCollectionViewCell {
-                let name = Global.staffNameList[indexPath.row]
+                let name = Global.staffList[indexPath.row].name
                 cell.configureCell(name: name)
                 cell.clipsToBounds = true
                 cell.layer.cornerRadius = cell.frame.height/2
-                changeCellColor(collectionView, didSelectItemAt: cell, isSelected: indexPath.item == selected ? true : false)
+                changeCellColor(collectionView, didSelectItemAt: cell, isSelected: false)
                 return cell
             }
         }else{
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShiftCollectionViewCell.reuseIdentifier,for: indexPath) as? ShiftCollectionViewCell {
-                
-                let dateShift =  Global.getCertainTypeShifts(typeName : dateShiftName!)[indexPath.row]
-                let timeShift = Global.companyShiftDateList[Global.getCertainTypeShifts(typeName : dateShiftName!)[indexPath.row]]
-                
-                
-                // 依照日期給定某日別的班別
                 cell.configureCell(dateShift: Global.dailyShiftArr[indexPath.row].dateName, timeShift: Global.dailyShiftArr[indexPath.row].timeName)
                 
                 cell.clipsToBounds = true
                 cell.layer.cornerRadius = cell.frame.height/2
-                changeCellColor(collectionView, didSelectItemAt: cell, isSelected: indexPath.item == selected ? true : false)
+                changeCellColor(collectionView, didSelectItemAt: cell, isSelected: false)
                 return cell
             }
         }
@@ -250,14 +258,40 @@ extension AssignScheduleController : UICollectionViewDataSource, UICollectionVie
         if collectionView == self.collectionView{
             let selectedCell:UICollectionViewCell = self.collectionView.cellForItem(at: indexPath)!
             changeCellColor(collectionView, didSelectItemAt: self.collectionView.cellForItem(at: indexPath) as! UICollectionViewCell, isSelected: true)
-            selectedStaff = Global.staffNameList[indexPath.item]
+            selectedStaff = Global.staffList[indexPath.item].name
             
             
         }else{
-            let selectedCell:UICollectionViewCell = self.collectionView.cellForItem(at: indexPath)!
-            changeCellColor(collectionView, didSelectItemAt: self.collectionView.cellForItem(at: indexPath) as! UICollectionViewCell, isSelected: true)
-            selectedShift = Global.shiftDateNames[indexPath.item]
+            let selectedCell:UICollectionViewCell = self.shiftCollectionView.cellForItem(at: indexPath)!
+            changeCellColor(collectionView, didSelectItemAt: self.shiftCollectionView.cellForItem(at: indexPath) as! UICollectionViewCell, isSelected: true)
+            selectedShift = Global.shiftTimeNames[indexPath.item]
         }
+        if selectedStaff != nil , selectedShift != nil{
+            showCurrentSelection()
+        }
+    }
+    
+    //顯示已選班別跟人員的目前上班日期
+    func showCurrentSelection(){
+
+        calendar.allowsSelection = true
+        var selectedDates = calendar.selectedDates
+        for i in 0 ..< calendar!.selectedDates.count{
+            calendar.deselect(calendar!.selectedDates[i])
+            selectedDates.removeAll()
+        }
+        for i in 0 ..< Global.monthlyShiftArr!.count{
+            let arr = Global.monthlyShiftArr?[i]
+            print("sd \(arr?.staffName) \(selectedStaff) \(arr?.timeName) \(selectedShift)")
+            if arr?.staffName == selectedStaff , arr?.timeName == selectedShift{
+                selectedDates.append(dateFormatter.date(from: arr!.date!)!)
+            }
+        }
+        calendar.select(selectedDates[0])
+        let sd = calendar.selectedDates.map({self.dateFormatter.string(from: $0)})
+        print("sd \(sd)")
+        calendar.reloadData()
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -269,7 +303,7 @@ extension AssignScheduleController : UICollectionViewDataSource, UICollectionVie
         }else{
             let selectedCell:UICollectionViewCell? = self.shiftCollectionView.cellForItem(at: indexPath)
             if selectedCell != nil {
-                changeCellColor(collectionView, didSelectItemAt: self.collectionView.cellForItem(at: indexPath) as! UICollectionViewCell, isSelected: false)
+                changeCellColor(collectionView, didSelectItemAt: self.shiftCollectionView.cellForItem(at: indexPath) as! UICollectionViewCell, isSelected: false)
             }
         }
     }
@@ -365,6 +399,7 @@ extension AssignScheduleController : FSCalendarDataSource, FSCalendarDelegate{
         
         if selectedShift == nil || selectedStaff == nil {
             calendar.allowsMultipleSelection = false
+            Toast.showToast(self.view, "請點選上兩排資訊以開始排班")
         }else{
             calendar.allowsMultipleSelection = true
         }
@@ -378,7 +413,6 @@ extension AssignScheduleController : FSCalendarDataSource, FSCalendarDelegate{
         if monthPosition == .next || monthPosition == .previous {
             calendar.setCurrentPage(date, animated: true)
         }
-        
     }
     
     func calendar(_ calendar: FSCalendar, titleFor date: Date) -> String? {
@@ -389,7 +423,13 @@ extension AssignScheduleController : FSCalendarDataSource, FSCalendarDelegate{
     }
     
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-        return 2
+        // 修改成有班表的日期要有點點
+        for i in Global.eventDotsArr{
+            if self.dateFormatter.string(from: date) == i{
+                return 1
+            }
+        }
+        return 0
     }
     
     //delegate

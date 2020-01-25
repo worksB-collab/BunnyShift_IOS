@@ -9,8 +9,8 @@
 import Foundation
 public class Staff{
     var name: String
-    var account: String
-    var password: String
+    var account: String?
+    var password: String?
     var number: String
     var shiftList : [ShiftDate]?
     var salaryHourly : Int?
@@ -25,6 +25,12 @@ public class Staff{
         self.staffID = staffID
         self.account = account
         self.password = password
+        self.number = number
+    }
+    
+    init(name : String, staffID : Int, number: String){
+        self.name = name
+        self.staffID = staffID
         self.number = number
     }
 
