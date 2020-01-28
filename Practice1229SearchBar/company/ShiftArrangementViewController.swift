@@ -209,7 +209,7 @@ class ShiftArrangementViewController: UIViewController, UITableViewDataSource , 
     }
     
     func jumpToNext(){
-        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navDateShiftAssignController")
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navWeekdayAssignController")
         present(controller, animated: true, completion: nil)
     }
     

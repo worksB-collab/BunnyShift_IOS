@@ -15,7 +15,6 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
     var addDateName:UITextField?
     var tableViewCellArr = Array<String>()
     
-    
     var shiftCells = 1
     var shiftAdd = false
     var addItem = 1
@@ -31,12 +30,10 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
             present(controller1, animated: true, completion: nil)
             
         }else{
-            
             Global.shiftDateNames = tableViewCellArr
             saveDataToDataBase()
             jumpToNext()
         }
-        
     }
     
     @IBOutlet weak var shift_tableView: UITableView!
@@ -57,9 +54,6 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
         let okAction = UIAlertAction(title: "儲存", style: .default) { (_) in
             self.tableViewCellArr.append( self.addDateName!.text!)
             Global.companyShiftDateList.updateValue( Array<ShiftDate>() , forKey: self.addDateName!.text!)
-            
-            Global.shiftDateNames.append( self.addDateName!.text!)
-            
           
             self.shift_tableView.reloadData()
             
@@ -103,15 +97,13 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
                 for i in 0 ..< arr.count{
                     let companyJson = arr[i]
                     let name = companyJson["dateShiftName"].string
-                    Global.shiftDateNames.append(name!)
+                    self.tableViewCellArr.append(name!)
                     
                 }
-                self.tableViewCellArr = Global.shiftDateNames
             }else{
                 print("not able to get data: " + jsonData.description)
             }
         }
-        print("Global.shiftDateNames \(Global.shiftDateNames.count)")
     }
     
     func saveDataToDataBase(){

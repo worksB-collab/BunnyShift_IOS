@@ -17,7 +17,7 @@ public class Toast{
         
         // this is just one of many style options
         style.messageColor = .white
-        style.backgroundColor = UIColor(named: "Color3")!
+        style.backgroundColor = UIColor(named: "Color1")!
         
         // present the toast with the new style
         view.makeToast(name, duration: 1.0, position: .bottom, style: style)

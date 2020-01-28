@@ -33,16 +33,16 @@ class testViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setCalendar()
-        setTableView()
-        self.calendar.select(Date())
+//        setCalendar()
+//        setTableView()
+//        self.calendar.select(Date())
         
 //        self.view.addGestureRecognizer(self.scopeGesture)
 //        self.tableView.panGestureRecognizer.require(toFail: self.scopeGesture)
-        self.calendar.scope = .week
+//        self.calendar.scope = .week
         
         // For UITest
-        self.calendar.accessibilityIdentifier = "calendar"
+//        self.calendar.accessibilityIdentifier = "calendar"
     }
     
     deinit {

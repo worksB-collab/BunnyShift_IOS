@@ -33,16 +33,49 @@ class CompanyProfileController: UIViewController {
         present(controller1, animated: true, completion: nil)
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        reloadStaffList()
+    }
+    
+    func viewWillAppear(){
+        reloadStaffList()
+    }
+    
+    func setInfo(){
         self.name.text = Global.companyInfo?.name
         self.account.text = Global.companyInfo?.account
         self.companyTaxID.text = Global.companyInfo?.taxID
         self.phone.text = Global.companyInfo?.number
-        self.companyID.text = "\(Global.companyInfo?.ltdID)"
+        if let cID = Global.companyInfo!.ltdID{
+            self.companyID.text = "\(cID)"
+        }
         self.address.text = Global.companyInfo?.address
-        self.staffNum.titleLabel?.text = "員工人數：\(Global.companyInfo?.staffList?.count)"
+        self.staffNum.titleLabel?.text = "員工人數：\(Global.companyInfo?.staffList?.count ?? 0)"
+
+    }
+    
+    func reloadStaffList(){
         
+        Global.staffList = Array<Staff>()
+        NetWorkController.sharedInstance.get(api: "/search/staffinfobycompany")
+        {(jsonData) in
+            
+            if jsonData["Status"].string == "200"{
+                
+                let arr = jsonData["rows"]
+                for _ in 0 ..< arr.count{
+                    let staffJson = arr[0]
+                    
+                    let staffName = staffJson["staffName"].string
+                    let staffnumber = staffJson["staffNumber"].string
+                    let staffID = staffJson["staffID"].int
+                    
+                    let staffInfo = Staff(name : staffName!, staffID : staffID!, number: staffnumber!)
+                    Global.staffList.append(staffInfo)
+                }
+                self.setInfo()
+            }
+        }
     }
 }

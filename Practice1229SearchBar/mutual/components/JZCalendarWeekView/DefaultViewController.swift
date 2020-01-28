@@ -20,14 +20,22 @@ class DefaultViewController: UIViewController {
         return formatter
     }()
     //
-    
     let viewModel = DefaultViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        viewModel.assignToEachDay()
         setupBasic()
         setCalendarView()
+        setNav()
+    }
+    
+    func setNav(){
+        navigationItem.title = "當日班表"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(named: "Color7")! ]
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationBar.isTranslucent = true
+
     }
 
     // Support device orientation change
@@ -40,7 +48,7 @@ class DefaultViewController: UIViewController {
         
         
         //billy added
-        var date1 = dateFormatter.date(from: TakeLeaveController.selectedDate)
+        var date1 = dateFormatter.date(from: TakeLeaveController.selectedDate!)
                 
         let numOfDays = 1
         let firstDayOfWeek = numOfDays == 7 ? calendarWeekView.firstDayOfWeek : nil

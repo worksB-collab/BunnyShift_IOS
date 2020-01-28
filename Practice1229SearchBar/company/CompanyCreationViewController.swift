@@ -53,24 +53,12 @@ class CompanyCreationViewController: UIViewController{
                         print(jsonData.description)
                         if jsonData["Status"].string == "200"{
                             
+                            Global.identity = "公司"
                             let token = jsonData["token"].string
                             Global.token = token
-                            
-                            //希望可以改成直接可以拿到ＩＤ
-                            let companyID = jsonData["ltd_id"].int
+                            let companyID = jsonData["ltdID"].int
                             Global.companyInfo!.ltdID = companyID
-                            //希望可以改成直接可以拿到ＩＤ
                             
-//                            //上面有的話這個就可以刪了
-//                            NetWorkController.sharedInstance.get(api: "/search/companyinfo")
-//                            {(jsonData) in
-//                                let arr = jsonData["rows"]
-//                                for i in 0 ..< arr.count{
-//                                    let companyJson = arr[i]
-//                                    let companyID = companyJson["ltd_id"].int
-//                                    Global.companyInfo!.ltdID = companyID
-//                                }
-//                            }
                         }
                     }
                     self.jumpToNext()

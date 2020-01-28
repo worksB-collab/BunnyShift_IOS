@@ -1,5 +1,5 @@
 //
-//  DateShiftAssignController.swift
+//  WeekdayAssignController.swift
 //  Practice1229SearchBar
 //
 //  Created by cm0521 on 2020/1/9.
@@ -9,24 +9,31 @@
 
 import UIKit
 
-class DateShiftAssignController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate{
+class WeekdayAssignController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate{
     
+    var selectedWeekday : String?
+    var selectedDayType : String?
     var dateCount : Int
-    var selected : Int = 0
-    var selectedArr  = Array(repeating: "", count: 7)
+    var selected : Int = 0 // 預設選第一個
     
+    fileprivate lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter
+    }()
     
     @IBOutlet weak var tableView: UITableView!
+    
     @IBAction func save(_ sender: RoundRecButton) {
-        Global.dayType = selectedArr
-        
-        NetWorkController.sharedInstance.postT(api: "/schedule/setweekshift", params: ["monday": selectedArr[0], "tuesday": selectedArr[1],"wednesday": selectedArr[2], "thursday": selectedArr[3],"friday": selectedArr[4], "saturday": selectedArr[5],"sunday": selectedArr[6], "ltdID": Global.companyInfo?.ltdID])
+        searchAndScheduleAPI()
+        NetWorkController.sharedInstance.postT(api: "/schedule/setweekshift", params: ["monday": Global.dayType[0], "tuesday": Global.dayType[1],"wednesday": Global.dayType[2], "thursday": Global.dayType[3],"friday": Global.dayType[4], "saturday": Global.dayType[5],"sunday": Global.dayType[6], "ltdID": Global.companyInfo?.ltdID])
         {(jsonData) in
             print(jsonData.description)
-            
-            
+            if jsonData["Status"].string == "200"{
+                self.searchAndScheduleAPI()
+                
+            }
         }
-        
         jumpToSchedule()
     }
     
@@ -34,9 +41,6 @@ class DateShiftAssignController: UIViewController, UICollectionViewDataSource, U
         super.viewDidLoad()
         registerNib()
         setNav()
-        
-        //test
-        Global.shiftDateNames.append("ada")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -66,6 +70,77 @@ class DateShiftAssignController: UIViewController, UICollectionViewDataSource, U
         
     }
     
+    func searchAndScheduleAPI(){
+        let date = self.dateFormatter.string(from: Date()).components(separatedBy: "-")
+        let year = date[0]
+        let month = date[1]
+        
+        var dateIDs = Array<Int>() // 整個月的ＩＤ
+        
+        // get dateID
+        let api1 = "/search/calendar/" + year + "/" + month
+        NetWorkController.sharedInstance.get(api: api1){(jsonData) in
+            if jsonData["Status"].string == "200"{
+                let arr = jsonData["rows"]
+                for i in 0 ..< arr.count{
+                    let companyJson = arr[i]
+                    let dateID = companyJson["dateID"].int
+                    dateIDs.append(dateID!)
+                }
+                // arr為目前有的日別
+                for i in dateIDs{
+                    let firstDay = Date().startOfDay
+                    let dateComponents = Calendar.current.dateComponents(in: TimeZone.current, from: self.dateFormatter.date(from: self.dateFormatter.string(from: firstDay))!)
+                    let weekday = dateComponents.weekday!
+                    
+                    var arr = Array<String>()
+                    var matched = false
+                    for i in Global.shiftDateNames{
+                        for j in arr{
+                            if i == j{
+                                matched = true
+                            }
+                        }
+                        if !matched{
+                            arr.append(i)
+                        }
+                        matched = false
+                    }
+                    for j in 0 ..< Global.companyShiftDateList[Global.dayType[weekday-1]]!!.count{
+                        
+                        var params: Dictionary<String, String> = [:]
+                        var arr = [Any]()
+                        if let dateShiftName = Global.companyShiftDateList[Global.dayType[weekday-1]]??[j].dateName{
+                            if let timeShiftName = Global.companyShiftDateList[Global.dayType[weekday-1]]??[j].timeName{
+                                if let startTime = Global.companyShiftDateList[Global.dayType[weekday-1]]??[j].startTime{
+                                    if let endTime = Global.companyShiftDateList[Global.dayType[weekday-1]]!![j].endTime{
+                                        if let staffNumber = Global.companyShiftDateList[Global.dayType[weekday-1]]!![j].staffNum{
+                                            params = ["dateShiftName": "\(dateShiftName)", "timeShiftName" : "\(timeShiftName)", "startTime" : "\(startTime)", "endTime" : "\(endTime)", "staffNumber" : "\(staffNumber)"]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        arr.append(params)
+                        let data = ["data" : arr]
+                        print(data)
+                        NetWorkController.sharedInstance.postT(api: "/schedule/setschedule", params: data){(jsonData) in
+                            if jsonData["Status"].string == "200"{
+                                let msg = jsonData["message"].string
+                                print(msg!)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func countOfDaysInCurrentMonth() ->Int {
+        let calendar = Calendar(identifier:Calendar.Identifier.gregorian)
+        let range = (calendar as NSCalendar?)?.range(of: NSCalendar.Unit.day, in: NSCalendar.Unit.month, for:  Date())
+        return (range?.length)!
+    }
     
     // collection view
     var weekDayNames = ["週一", "週二", "週三", "週四", "週五", "週六", "週日"]
@@ -74,7 +149,7 @@ class DateShiftAssignController: UIViewController, UICollectionViewDataSource, U
     
     func registerNib() {
         
-        // register cell
+        //first cv
         collectionView?.register(UINib(nibName: WeekdayCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: WeekdayCollectionViewCell.reuseIdentifier)
         collectionView?.contentInsetAdjustmentBehavior = .never
         
@@ -93,7 +168,6 @@ class DateShiftAssignController: UIViewController, UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        // check which data should the current CollectionView should take
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeekdayCollectionViewCell.reuseIdentifier,for: indexPath) as? WeekdayCollectionViewCell {
             let name = weekDayNames[indexPath.row]
             cell.configureCell(name: name)
@@ -101,6 +175,7 @@ class DateShiftAssignController: UIViewController, UICollectionViewDataSource, U
             cell.layer.cornerRadius = cell.frame.height/2
             changeCellColor(collectionView, didSelectItemAt: cell, isSelected: indexPath.item == selected ? true : false)
             return cell
+            
         }
         return UICollectionViewCell()
     }
@@ -108,9 +183,23 @@ class DateShiftAssignController: UIViewController, UICollectionViewDataSource, U
     // 點選 cell 後執行的動作
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selected = indexPath.item
-        let selectedCell:UICollectionViewCell = self.collectionView.cellForItem(at: indexPath)!
+        let selectedCell: WeekdayCollectionViewCell = self.collectionView.cellForItem(at: indexPath) as! WeekdayCollectionViewCell
         changeCellColor(collectionView, didSelectItemAt: self.collectionView.cellForItem(at: indexPath) as! UICollectionViewCell, isSelected: true)
+        selectedWeekday = selectedCell.nameLabel.text
         
+        var indexP : IndexPath?
+        for i in tableView!.visibleCells{
+            let cell = i as! ShiftSetTableViewCell
+            indexP = tableView.indexPath(for: cell)
+            tableView.deselectRow(at: indexP!, animated: true)
+            tableView.cellForRow(at: indexP!)?.contentView.backgroundColor = UIColor.clear
+            print("CCC deselect")
+            if Global.dayType[indexPath.item] == cell.dateName.text{
+                tableView.selectRow(at: indexP, animated: true, scrollPosition: .top)
+                tableView.cellForRow(at: indexP!)?.contentView.backgroundColor = UIColor(named : "Color1")
+                print("CCC select")
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -127,7 +216,7 @@ class DateShiftAssignController: UIViewController, UICollectionViewDataSource, U
     
 }
 
-extension DateShiftAssignController : UITableViewDelegate, UITableViewDataSource{
+extension WeekdayAssignController : UITableViewDelegate, UITableViewDataSource{
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -138,18 +227,15 @@ extension DateShiftAssignController : UITableViewDelegate, UITableViewDataSource
         return Global.companyShiftDateList.count
     }
     
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "ShiftSetTableViewCell"
         // 把 tableView 中叫 datacell 的畫面部分跟 TestTableViewCell 類別做連結
         // 用 as！轉型(轉成需要顯示的cell : TestTableViewCell)
         let cell1 = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! ShiftSetTableViewCell
         
-        
         let list = Global.companyShiftDateList
         print("indexPath.row" , indexPath.row)
         let key = Global.shiftDateNames[indexPath.row]
-        
         
         var timeString = ""
         var startString = ""
@@ -182,10 +268,15 @@ extension DateShiftAssignController : UITableViewDelegate, UITableViewDataSource
         print("selected" , indexPath.item)
         let cell1 = tableView.cellForRow(at: indexPath) as! ShiftSetTableViewCell
         
-        selectedArr[indexPath.item] = cell1.dateName.text!
+        for i in 0 ..< weekDayNames.count{
+            if weekDayNames[i] == selectedWeekday{
+                Global.dayType[i] = cell1.dateName.text!
+            }
+        }
+        
         cell1.contentView.backgroundColor = UIColor (named : "Color1")
-//        cell1.backgroundColor = UIColor (named : "Color1")
-//        cell1.tintColor = UIColor (named : "Color5")
+        selectedDayType = cell1.dateName.text!
+        
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

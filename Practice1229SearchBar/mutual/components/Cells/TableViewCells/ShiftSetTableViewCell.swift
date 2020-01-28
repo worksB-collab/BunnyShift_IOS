@@ -28,19 +28,19 @@ class ShiftSetTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     class var reuseIdentifier: String {
-            return "ShiftSetTableViewCell"
-        }
-        class var nibName: String {
-            return "ShiftSetTableViewCell"
-        }
-        
+        return "ShiftSetTableViewCell"
+    }
+    class var nibName: String {
+        return "ShiftSetTableViewCell"
+    }
+    
     func configureCell(dateName: String, timeName: String, startTime: String, dash : String, endTime: String, staffNum: String) {
-            self.dateName.text = dateName
-            self.timeName.text = timeName
-            self.startTime.text = startTime
-            self.dash.text = dash
-            self.endTime.text = endTime
-            self.staffNum.text = staffNum
-            
-        }
+        self.dateName.text = dateName
+        self.timeName.text = timeName
+        self.startTime.text = startTime
+        self.dash.text = dash
+        self.endTime.text = endTime
+        self.staffNum.text = staffNum
+        
+    }
 }

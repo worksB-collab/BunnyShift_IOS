@@ -60,13 +60,15 @@ class PersonalProfileController: UIViewController {
         self.account?.text = Global.staffInfo?.account
         self.phone?.text = Global.staffInfo?.number
         self.companyName?.text = Global.companyInfo?.name
-        self.companyID?.text = "\(Global.companyInfo?.ltdID)"
+        if let cID = Global.companyInfo!.ltdID{
+            self.companyID?.text = "\(cID)"
+        }
         self.companyPhone?.text = Global.companyInfo?.number
         self.companyTaxID?.text = Global.companyInfo?.taxID
         self.companyAddress?.text = Global.companyInfo?.address
-        self.salaryHourly?.text = "\(Global.staffInfo!.salaryHourly)" ?? "尚無資料"
-        self.currentWorkingHours?.text = "\(Global.staffInfo!.currentWorkingHours)" ?? "尚無資料"
-        self.salaryMonthly?.text = "\(Global.staffInfo!.getSalary())" ?? "尚無資料"
+//        self.salaryHourly?.text = "\(Global.staffInfo!.salaryHourly)" ?? "尚無資料"
+//        self.currentWorkingHours?.text = "\(Global.staffInfo!.currentWorkingHours)" ?? "尚無資料"
+//        self.salaryMonthly?.text = "\(Global.staffInfo!.getSalary())" ?? "尚無資料"
         
     }
     

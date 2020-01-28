@@ -18,7 +18,7 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
     
     @IBOutlet weak var loginIdentify: UITextField!
     let pickerView = UIPickerView()
-    let identifyList = ["個人登入","公司登入"]
+    let identifyList = ["員工登入","公司登入"]
     
     @IBAction func login_btn_GoogleLogin(_ sender: GIDSignInButton) {
         GIDSignIn.sharedInstance().signIn()
@@ -40,7 +40,7 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
             NetWorkController.sharedInstance.post(api: "/login/company", params: ["account": login_tf_account.text, "password": login_tf_password.text])
             {(jsonData) in
                 if jsonData.description.contains("200"){
-                    
+                    Global.identity = "公司"
                     let token = jsonData["token"].string
                     Global.token = token
                     
@@ -66,90 +66,91 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
                                 Global.companyInfo?.account = account
                                 Global.companyInfo?.password = password
                                 Global.companyInfo?.ltdID = ltdID
+
                             }
                         }
-                    }
-                    //查詢所有班別
-                    NetWorkController.sharedInstance.get(api: "/search/shiftbycompany/")
-                    {(jsonData) in
-                        
-                        if jsonData["Status"].string == "200"{
+                        //查詢所有班別
+                        NetWorkController.sharedInstance.get(api: "/search/shiftbycompany/")
+                        {(jsonData) in
+                            
+                            if jsonData["Status"].string == "200"{
 
-                            var matchShiftDateNames = true
-                            var matchShiftTimeNames = true
-                            let arr = jsonData["rows"]
-                            for i in 0 ..< arr.count{
-                                let companyJson = arr[i]
-                                
-                                let dateShiftName = companyJson["dateShiftName"].string
-                                let timeShiftName = companyJson["timeShiftName"].string
-                                let startTime = companyJson["startTime"].string
-                                let endTime = companyJson["endTime"].string
-                                let number = companyJson["number"].int
-                                
-                                if Global.companyShiftDateList[dateShiftName!] != nil{
-                                    Global.companyShiftDateList[dateShiftName!]!?.append(ShiftDate(dateShiftName!,timeShiftName!, startTime!, endTime!, number!))
+                                var matchShiftDateNames = true
+                                var matchShiftTimeNames = true
+                                let arr = jsonData["rows"]
+                                for i in 0 ..< arr.count{
+                                    let companyJson = arr[i]
                                     
-                                }else{
-                                    var shiftDateArr = Array<ShiftDate>()
-                                    shiftDateArr.append(ShiftDate(dateShiftName!,timeShiftName!, startTime!, endTime!, number!))
-                                    Global.companyShiftDateList.updateValue(shiftDateArr, forKey: dateShiftName!)
-                                }
-                                if Global.shiftDateNames.count == 0 {
-                                    Global.shiftDateNames.append(dateShiftName!)
-                                }
-                                for i in Global.shiftDateNames{
-                                    if i != dateShiftName{
-                                        matchShiftDateNames = false
+                                    let dateShiftName = companyJson["dateShiftName"].string
+                                    let timeShiftName = companyJson["timeShiftName"].string
+                                    let startTime = companyJson["startTime"].string
+                                    let endTime = companyJson["endTime"].string
+                                    let number = companyJson["number"].int
+                                    
+                                    if Global.companyShiftDateList[dateShiftName!] != nil{
+                                        Global.companyShiftDateList[dateShiftName!]!?.append(ShiftDate(dateShiftName!,timeShiftName!, startTime!, endTime!, number!))
+                                        
+                                    }else{
+                                        var shiftDateArr = Array<ShiftDate>()
+                                        shiftDateArr.append(ShiftDate(dateShiftName!,timeShiftName!, startTime!, endTime!, number!))
+                                        Global.companyShiftDateList.updateValue(shiftDateArr, forKey: dateShiftName!)
                                     }
-                                }
-                                if !matchShiftDateNames{
-                                    Global.shiftDateNames.append(dateShiftName!)
-                                    matchShiftDateNames = true
-                                }
-                                
-                                if Global.shiftTimeNames.count == 0 {
-                                    Global.shiftTimeNames.append(timeShiftName!)
-                                }
-                                for i in Global.shiftTimeNames{
-                                    if i != dateShiftName{
-                                        matchShiftTimeNames = false
+                                    if Global.shiftDateNames.count == 0 {
+                                        Global.shiftDateNames.append(dateShiftName!)
                                     }
+                                    for i in Global.shiftDateNames{
+                                        if i != dateShiftName{
+                                            matchShiftDateNames = false
+                                        }
+                                    }
+                                    if !matchShiftDateNames{
+                                        Global.shiftDateNames.append(dateShiftName!)
+                                        matchShiftDateNames = true
+                                    }
+                                    
+                                    if Global.shiftTimeNames.count == 0 {
+                                        Global.shiftTimeNames.append(timeShiftName!)
+                                    }
+                                    for i in Global.shiftTimeNames{
+                                        if i != dateShiftName{
+                                            matchShiftTimeNames = false
+                                        }
+                                    }
+                                    if !matchShiftTimeNames{
+                                        Global.shiftTimeNames.append(timeShiftName!)
+                                        matchShiftTimeNames = true
+                                    }
+                                    
                                 }
-                                if !matchShiftTimeNames{
-                                    Global.shiftTimeNames.append(timeShiftName!)
-                                    matchShiftTimeNames = true
-                                }
+                            }
+                            //  查詢所有員工
+                            NetWorkController.sharedInstance.get(api: "/search/staffinfobycompany")
+                            {(jsonData) in
                                 
+                                if jsonData["Status"].string == "200"{
+                                    print(jsonData.description)
+
+                                    let arr = jsonData["rows"]
+                                    for i in 0 ..< arr.count{
+                                        let companyJson = arr[i]
+                                        let staffName = companyJson["staffName"].string
+                                        let staffID = companyJson["staffID"].int
+                                        let staffNumber = companyJson["staffNumber"].string
+                                        let staff = Staff(name : staffName!, staffID : staffID!, number: staffNumber!)
+                                        Global.staffList.append(staff)
+                                    }
+                                    self.jumpToCompany()
+                                }
                             }
                         }
                     }
                     
-                    //  查詢所有員工
-                    NetWorkController.sharedInstance.get(api: "/search/staffinfobycompany")
-                    {(jsonData) in
-                        
-                        if jsonData["Status"].string == "200"{
-
-                            let arr = jsonData["rows"]
-                            for i in 0 ..< arr.count{
-                                let companyJson = arr[i]
-                                let staffName = companyJson["staffName"].string
-                                let staffID = companyJson["staffID"].int
-                                let staffNumber = companyJson["staffNumber"].string
-                                let staff = Staff(name : staffName!, staffID : staffID!, number: staffNumber!)
-                                Global.staffList.append(staff)
-                                print("??? \(Global.staffList.count)")
-                            }
-                        }
-                    }
                     
                     let preferencesSave = UserDefaults.standard
                     preferencesSave.set(self.login_tf_account.text!, forKey: "account")
                     preferencesSave.set(self.login_tf_password.text! , forKey: "password")
                     //儲存
                     let didSave = preferencesSave.synchronize()
-                    self.jumpToCompany()
                     
                 }else{
                     Toast.showToast(self.view, "錯誤的帳號或密碼")
@@ -161,6 +162,7 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
             {(jsonData) in
                 if jsonData.description.contains("200"){
                     
+                    Global.identity = "員工"
                     let arr = jsonData["rows"]
                     for _ in 0 ..< arr.count{
                         let companyJson = arr[0]
@@ -193,9 +195,9 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
                                     let staffnumber = staffJson["staffNumber"].string
                                     let staffID = staffJson["staffID"].int
                                     
-                                    Global.staffInfo = Staff(name : staffName!, staffID : staffID!, account: staffAccount!, password: staffPassword!, number: staffnumber!)
+                                    let staffInfo = Staff(name : staffName!, staffID : staffID!, account: staffAccount!, password: staffPassword!, number: staffnumber!)
+                                    Global.staffList.append(staffInfo)
                                 }
-                                
                             }
                         }
                     }
@@ -316,7 +318,7 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
     
     func identifyPickerSettings(){
         //設定代理人和資料來源為viewController
-        loginIdentify?.text = "公司登入" // 預設登入身份
+        loginIdentify?.text = "員工登入" // 預設登入身份
         pickerView.dataSource = self//告訴pickerView要從哪個view controller中取得要顯示的資料
         pickerView.delegate = self //告訴pickerView當使用者選了選項後 要讓哪一個view controller知道使用者的選擇
         

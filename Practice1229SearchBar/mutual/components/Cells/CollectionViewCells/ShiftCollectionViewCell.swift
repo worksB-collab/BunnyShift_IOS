@@ -11,7 +11,7 @@ import UIKit
 class ShiftCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var dateShift: UILabel!
-    @IBOutlet weak var timeShift: UILabel!
+//    @IBOutlet weak var timeShift: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -24,10 +24,16 @@ class ShiftCollectionViewCell: UICollectionViewCell {
         return "ShiftCollectionViewCell"
     }
     
-    func configureCell(dateShift: String, timeShift: String) {
+    func configureCell(dateShift: String) {
         self.dateShift?.text = dateShift
-        self.timeShift?.text = timeShift
+//        self.timeShift?.text = timeShift
         
     }
+    
+//    func configureCell(dateShift: String, timeShift: String) {
+//        self.dateShift?.text = dateShift
+//        self.timeShift?.text = timeShift
+//        
+//    }
 
 }

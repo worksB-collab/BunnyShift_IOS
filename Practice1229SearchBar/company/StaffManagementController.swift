@@ -30,12 +30,13 @@ class StaffManagementController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func setNav(){
-        navigationItem.title = "班表排程設定"
+        navigationItem.title = "員工清單"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(named: "Color7")! ]
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationBar.isTranslucent = true
         
     }
+    
     func jumpToSchedule(){
         let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navAssignScheduleController")
         present(controller, animated: true, completion: nil)
@@ -58,14 +59,8 @@ class StaffManagementController: UIViewController, UITableViewDelegate, UITableV
             let cellIdentifier = "StaffManagementTableViewCell"
             let cell1 = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! StaffManagementTableViewCell
             
-            var staff = Global.staffList[indexPath.item]
-            cell1.name.titleLabel!.text = staff.name
-            
-            cell1.currentWorkingHours.titleLabel!.text = "\(staff.currentWorkingHours)"
-            
-            cell1.assignedWorkingHours.titleLabel!.text = "\(staff.assignedWorkingHours)"
-            cell1.salaryHourly.titleLabel!.text = "\(staff.salaryHourly)/hr"
-            cell1.salaryMonthly.titleLabel!.text = "\(staff.getSalary())"
+            let staff = Global.staffList[indexPath.item]
+            cell1.configureCell(name: staff.name, currentWorkingHours : staff.currentWorkingHours ?? 0, assignedWorkingHours : staff.assignedWorkingHours ?? 0, salaryHourly : staff.salaryHourly ?? 0, salaryMonthly : staff.getSalary())
             
             cell1.layer.shadowColor = UIColor.groupTableViewBackground.cgColor
             cell1.layer.shadowOffset = CGSize(width: 2, height: 7)

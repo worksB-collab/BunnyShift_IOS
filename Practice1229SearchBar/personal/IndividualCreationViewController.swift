@@ -10,7 +10,7 @@ import UIKit
 import SwiftUI
 
 class IndividualCreationViewController: UIViewController {
-
+    
     @IBOutlet weak var individual_tf_name: UITextField!
     @IBOutlet weak var individual_tf_phone: UITextField!
     @IBOutlet weak var individual_tf_account: UITextField!
@@ -24,62 +24,28 @@ class IndividualCreationViewController: UIViewController {
     }
     @IBOutlet weak var IndividualCreation_confirm: RoundRecButton!
     @IBAction func IndividualCreation_confirm(_ sender: UIButton) {
-
+        
         let controller1 = UIAlertController(title: "好了嗎？", message: "請確認資訊正確", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "沒問題", style: .default) { (_) in
             if self.individual_tf_account.text == "" || self.individual_tf_password.text == "" || self.individual_tf_name.text == "" || self.individual_tf_phone.text == "" || self.individual_tf_companyID.text == ""{
                 Toast.showToast(self.view, "請完整填寫空白處")
             }else{
-            
+                
                 NetWorkController.sharedInstance.post(api: "/register/staff", params: ["account": self.individual_tf_account.text, "password": self.individual_tf_password.text, "name": self.individual_tf_name.text, "number": self.individual_tf_phone.text, "ltdID": self.individual_tf_companyID.text, "authority" : 0])
                 {(jsonData) in
                     print(jsonData.description)
                     if jsonData["Status"].string == "200"{
-                        
-                        NetWorkController.sharedInstance.get(api: "/search/companyinfo")
-                        {(jsonData) in
-                            
-                            if jsonData["Status"].string == "200"{
-                                
-                                let arr = jsonData["rows"]
-                                for _ in 0 ..< arr.count{
-                                    let companyJson = arr[0]
-                                    
-                                    let ltdID = companyJson["ltd_id"].string
-                                    let name = companyJson["ltd_name"].string
-                                    let number = companyJson["ltd_number"].string
-                                    let address = companyJson["address"].string
-                                    let taxID = companyJson["tax_id"].string
-                                    
-                                    Global.companyInfo = Company(name: name!, number: number!, address: address!, taxID: taxID!)
-                                    
-                                    let arr = jsonData["rows"]
-                                    for _ in 0 ..< arr.count{
-                                        let staffJson = arr[0]
-                                        let staffID = staffJson["staffID"].int
-                                    
-                                    Global.staffInfo = Staff(name : self.individual_tf_name.text!, staffID : staffID!, account: self.individual_tf_account.text!, password: self.individual_tf_password.text!, number: self.individual_tf_phone.text!)
-                                    }
-                                }
-                            }
-                        }
-                        
-                        
                         NetWorkController.sharedInstance.post(api: "/login/staff", params: ["account": self.individual_tf_account.text, "password": self.individual_tf_password.text])
                         {(jsonData) in
-                            
-                            let token = jsonData["token"].string
-                            Global.token = token
+                            if jsonData["Status"].string == "200"{
+                                Global.identity = "公司"
+                                let token = jsonData["token"].string
+                                Global.token = token
+                                self.getCompanyInfo()
+                            }
                         }
-                        
-                        let companyID = jsonData["ltd_id"].int
-                        Global.companyInfo?.ltdID = companyID
-                        
-                        
-                        self.jumpToSchedule()
-                        
                     }else{
-                        Toast.showToast(self.view, "wrong info")
+                        Toast.showToast(self.view, jsonData["message"].string!)
                     }
                 }
             }
@@ -89,30 +55,70 @@ class IndividualCreationViewController: UIViewController {
         }
         controller1.addAction(cancelAction)
         present(controller1, animated: true, completion: nil)
-        
+    }
+    
+    func getCompanyInfo(){
+        NetWorkController.sharedInstance.get(api: "/search/companyinfo")
+        {(jsonData) in
+            
+            if jsonData["Status"].string == "200"{
+                
+                let arr = jsonData["rows"]
+                for _ in 0 ..< arr.count{
+                    let companyJson = arr[0]
+                    
+                    let ltdID = companyJson["ltdID"].string
+                    let name = companyJson["ltdName"].string
+                    let number = companyJson["ltdNumber"].string
+                    let address = companyJson["address"].string
+                    let taxID = companyJson["taxID"].string
+                    
+                    Global.companyInfo = Company(name: name!, number: number!, address: address!, taxID: taxID!)
+                    
+                    self.getStaffID()
+                }
+            }
+        }
+    }
+    
+    func getStaffID(){
+        NetWorkController.sharedInstance.get(api: "/search/staffinfo")
+        {(jsonData) in
+            
+            if jsonData["Status"].string == "200"{
+                let arr = jsonData["rows"]
+                for _ in 0 ..< arr.count{
+                    let staffJson = arr[0]
+                    let staffID = staffJson["staffID"].int
+                    
+                    Global.staffInfo = Staff(name : self.individual_tf_name.text!, staffID : staffID!, account: self.individual_tf_account.text!, password: self.individual_tf_password.text!, number: self.individual_tf_phone.text!)
+                    self.jumpToSchedule()
+                }
+            }
+        }
     }
     
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-      if textField == individual_tf_name {
-         textField.resignFirstResponder()
-         individual_tf_phone.becomeFirstResponder()
-      } else if textField == individual_tf_phone {
-         textField.resignFirstResponder()
-         individual_tf_account.becomeFirstResponder()
-      }else if textField == individual_tf_account {
-         textField.resignFirstResponder()
-         individual_tf_password.becomeFirstResponder()
-      }else if textField == individual_tf_password {
-         textField.resignFirstResponder()
-         individual_tf_companyID.becomeFirstResponder()
-      }else if textField == individual_tf_companyID {
-         textField.resignFirstResponder()
-      }
-     return true
+        if textField == individual_tf_account {
+            textField.resignFirstResponder()
+            individual_tf_password.becomeFirstResponder()
+        } else if textField == individual_tf_password {
+            textField.resignFirstResponder()
+            individual_tf_name.becomeFirstResponder()
+        }else if textField == individual_tf_name {
+            textField.resignFirstResponder()
+            individual_tf_phone.becomeFirstResponder()
+        }else if textField == individual_tf_phone {
+            textField.resignFirstResponder()
+            individual_tf_companyID.becomeFirstResponder()
+        }else if textField == individual_tf_companyID {
+            textField.resignFirstResponder()
+        }
+        return true
     }
     
-
+    
 }
 
 extension IndividualCreationViewController: UITextFieldDelegate {
@@ -121,11 +127,11 @@ extension IndividualCreationViewController: UITextFieldDelegate {
     /// - Parameter textField: _
     func textFieldDidBeginEditing(_ textField: UITextField) {
         UIView.animate(withDuration: 0.5, animations: {
-           self.view.frame.origin.y = -50
+            self.view.frame.origin.y = -50
         })
         
     }
-
+    
     /// 結束輸入
     ///
     /// - Parameter textField: _

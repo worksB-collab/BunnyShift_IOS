@@ -17,19 +17,21 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pp6-B8-Ce2">
-                        <rect key="frame" x="10" y="10" width="42" height="24"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pp6-B8-Ce2">
+                        <rect key="frame" x="10" y="10" width="31" height="24"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" name="Color7"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dvH-XC-cZO">
-                        <rect key="frame" x="238" y="10" width="31" height="24"/>
+                        <rect key="frame" x="240" y="10" width="30" height="24"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="tintColor" name="Color3"/>
                         <state key="normal" title="同意"/>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kio-ag-xOO">
-                        <rect key="frame" x="279" y="10" width="31" height="24"/>
+                        <rect key="frame" x="280" y="10" width="30" height="24"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="tintColor" name="Color3"/>
                         <state key="normal" title="拒絕"/>
                     </button>

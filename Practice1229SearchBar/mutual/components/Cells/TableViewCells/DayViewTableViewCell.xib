@@ -24,7 +24,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="人數" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQ7-wU-pmv">
-                        <rect key="frame" x="98" y="10" width="25" height="15"/>
+                        <rect key="frame" x="98" y="18.5" width="25" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" name="Color3"/>
                         <nil key="highlightedColor"/>
@@ -64,23 +64,23 @@
                     <constraint firstItem="mAj-5T-Aw0" firstAttribute="leading" secondItem="xQ7-wU-pmv" secondAttribute="trailing" constant="13" id="A6e-Ep-0fG"/>
                     <constraint firstItem="Icr-2F-xal" firstAttribute="leading" secondItem="Wy1-gq-w8e" secondAttribute="trailing" constant="7" id="HFt-6f-8Vk"/>
                     <constraint firstItem="Wy1-gq-w8e" firstAttribute="leading" secondItem="Mlq-ou-ydr" secondAttribute="trailing" constant="7" id="IYD-xm-XCy"/>
-                    <constraint firstItem="xQ7-wU-pmv" firstAttribute="top" secondItem="Ovo-HB-vYC" secondAttribute="top" id="Lhe-Rn-DtL"/>
                     <constraint firstItem="Ovo-HB-vYC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="MWZ-WV-16H"/>
                     <constraint firstItem="Ovo-HB-vYC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="NeB-0i-vve"/>
                     <constraint firstItem="xQ7-wU-pmv" firstAttribute="leading" secondItem="Ovo-HB-vYC" secondAttribute="trailing" constant="14" id="Ok3-5h-Fd3"/>
                     <constraint firstItem="Icr-2F-xal" firstAttribute="centerY" secondItem="Mlq-ou-ydr" secondAttribute="centerY" id="PJI-hF-Zv3"/>
                     <constraint firstItem="Wy1-gq-w8e" firstAttribute="centerY" secondItem="Mlq-ou-ydr" secondAttribute="centerY" id="TPD-3Z-AVM"/>
                     <constraint firstItem="Mlq-ou-ydr" firstAttribute="top" secondItem="Ovo-HB-vYC" secondAttribute="bottom" constant="5" id="hvQ-pM-V7o"/>
-                    <constraint firstItem="xQ7-wU-pmv" firstAttribute="centerY" secondItem="Ovo-HB-vYC" secondAttribute="centerY" id="y62-NE-jzH"/>
+                    <constraint firstItem="xQ7-wU-pmv" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="osV-pr-L5V"/>
+                    <constraint firstItem="xQ7-wU-pmv" firstAttribute="leading" secondItem="Icr-2F-xal" secondAttribute="trailing" constant="10" id="s4b-Rs-Azw"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="dateShift" destination="Ovo-HB-vYC" id="wOo-aq-ZyK"/>
-                <outlet property="endTime" destination="Icr-2F-xal" id="MVv-gY-PBf"/>
-                <outlet property="staffNum" destination="xQ7-wU-pmv" id="F0N-KQ-N1M"/>
-                <outlet property="staffs" destination="mAj-5T-Aw0" id="tu4-dw-LLB"/>
-                <outlet property="startTime" destination="Mlq-ou-ydr" id="Wuz-dr-4oz"/>
+                <outlet property="dateShift" destination="Ovo-HB-vYC" id="36u-aM-hUG"/>
+                <outlet property="endTime" destination="Icr-2F-xal" id="e3b-bV-koi"/>
+                <outlet property="staffNum" destination="xQ7-wU-pmv" id="pPw-Ac-mIs"/>
+                <outlet property="staffs" destination="mAj-5T-Aw0" id="XgL-nW-ddt"/>
+                <outlet property="startTime" destination="Mlq-ou-ydr" id="QBH-d2-yzG"/>
             </connections>
             <point key="canvasLocation" x="143.47826086956522" y="130.58035714285714"/>
         </tableViewCell>

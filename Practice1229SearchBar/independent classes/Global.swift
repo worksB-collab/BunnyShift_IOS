@@ -12,6 +12,7 @@ public class Global{
     
     static let sharedInstance = Global()
     
+    public static var identity : String?
     public static var token : String?
     //company login
     public static var companyInfo : Company?
@@ -19,7 +20,7 @@ public class Global{
     public static var staffList = Array<Staff>()
     public static var shiftDateNames = Array<String>() // 日別名稱
     public static var shiftTimeNames = Array<String>() // 班別名稱
-    public static var dayType : [String] = [] // 每個星期的日子是什麼日別
+    public static var dayType = Array(repeating: "", count: 7) // 每個星期的日子是什麼日別
     public static var monthlyShiftArr : Array<ShiftDate?>? // 整個月所有的班別
     public static var eventDotsArr : [String] = []
     

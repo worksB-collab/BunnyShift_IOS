@@ -43,6 +43,7 @@ class StaffManagementTableViewCell: UITableViewCell {
         self.salaryHourly.titleLabel?.text = "\(salaryHourly)/hr"
         self.salaryMonthly.titleLabel?.text = "\(salaryMonthly)"
         
+        print("AAA " + self.name.titleLabel!.text!)
     }
     
 }

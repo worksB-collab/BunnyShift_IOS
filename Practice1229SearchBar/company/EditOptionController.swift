@@ -42,9 +42,9 @@ class EditOptionController: UIViewController, UITableViewDataSource , UITableVie
         present(controller, animated: true, completion: nil)
         
     }
-    func jumpToDateShiftAssignController(){
+    func jumpToWeekdayAssignController(){
         
-        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navDateShiftAssignController")
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navWeekdayAssignController")
         present(controller, animated: true, completion: nil)
         
     }
@@ -112,7 +112,7 @@ class EditOptionController: UIViewController, UITableViewDataSource , UITableVie
         case 1:
             jumpToShiftArrangementViewController()
         case 2:
-            jumpToDateShiftAssignController()
+            jumpToWeekdayAssignController()
         case 3:
             jumpToCertainDayTypeController()
         case 4:

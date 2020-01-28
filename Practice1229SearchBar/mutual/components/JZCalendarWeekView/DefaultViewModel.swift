@@ -11,7 +11,7 @@ import JZCalendarWeekView
 
 class DefaultViewModel: NSObject {
 
-    private var firstDay = Calendar.current.date(byAdding: DateComponents(month: 0, day: 1), to: ScheduleViewController.startMonth)!
+    private var firstDay = Calendar.current.date(byAdding: DateComponents(month: 0, day: 1), to: PersonalScheduleViewController.startMonth)!
         private let firstDate = Date().add(component: .hour, value: 0)
         private let secondDate = Date().add(component: .day, value: 1)
         private let thirdDate = Date().add(component: .day, value: 2)
