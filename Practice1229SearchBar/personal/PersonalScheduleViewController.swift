@@ -35,6 +35,7 @@ class PersonalScheduleViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        Updates.getStaffList()
     }
     
     override func viewDidLoad() {
@@ -113,10 +114,9 @@ extension PersonalScheduleViewController : FSCalendarDataSource, FSCalendarDeleg
                         TakeLeaveController.dateID = companyJson["dateID"].int
                     }
                 }
+                self.jumpToDayView()
             }
         }
-        
-        jumpToDayView()
         
         TakeLeaveController.selectedDate = "\(self.dateFormatter.string(from: date))"
         
@@ -167,5 +167,8 @@ extension PersonalScheduleViewController : FSCalendarDataSource, FSCalendarDeleg
         
     }
     
+    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+        Updates.getMonthData(calendar : calendar)
+    }
     
 }

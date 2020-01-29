@@ -20,6 +20,7 @@ public class Updates{
     static var dailyManPower : Array<Int>?
     static var dailyStaffDemend : Array<Int>?
     // 從後端把所有當月班表撈出來
+    
     @objc static func getMonthData(calendar : FSCalendar){
         //停止更新
         
@@ -146,5 +147,52 @@ public class Updates{
         let calendar = Calendar(identifier:Calendar.Identifier.gregorian)
         let range = (calendar as NSCalendar?)?.range(of: NSCalendar.Unit.day, in: NSCalendar.Unit.month, for:  fscalendar.currentPage)
         return (range?.length)!
+    }
+    
+    static func getWeekshiftbycompanyAPI(){
+        NetWorkController.sharedInstance.get(api: "/search/weekshiftbycompany"){(jsonData) in
+            if jsonData["Status"].string == "200"{
+                let arr = jsonData["rows"]
+                for i in 0 ..< arr.count{
+                    let companyJson = arr[i]
+                    
+                    let monday = companyJson["monday"].string
+                    let tuesday = companyJson["tuesday"].string
+                    let wednesday = companyJson["wednesday"].string
+                    let thursday = companyJson["thursday"].string
+                    let friday = companyJson["friday"].string
+                    let saturday = companyJson["saturday"].string
+                    let sunday = companyJson["sunday"].string
+                    Global.dayType[0] = monday!
+                    Global.dayType[1] = tuesday!
+                    Global.dayType[2] = wednesday!
+                    Global.dayType[3] = thursday!
+                    Global.dayType[4] = friday!
+                    Global.dayType[5] = saturday!
+                    Global.dayType[6] = sunday!
+                }
+            }
+        }
+    }
+    
+    static func getStaffList(){
+        //  查詢所有員工
+        NetWorkController.sharedInstance.get(api: "/search/staffinfobycompany")
+        {(jsonData) in
+            
+            if jsonData["Status"].string == "200"{
+                print(jsonData.description)
+
+                let arr = jsonData["rows"]
+                for i in 0 ..< arr.count{
+                    let companyJson = arr[i]
+                    let staffName = companyJson["staffName"].string
+                    let staffID = companyJson["staffID"].int
+                    let staffNumber = companyJson["staffNumber"].string
+                    let staff = Staff(name : staffName!, staffID : staffID!, number: staffNumber!)
+                    Global.staffList.append(staff)
+                }
+            }
+        }
     }
 }

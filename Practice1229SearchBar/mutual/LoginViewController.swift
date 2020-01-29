@@ -15,6 +15,11 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
     
     @IBOutlet weak var login_tf_account: UITextField!
     @IBOutlet weak var login_tf_password: UITextField!
+    fileprivate lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter
+    }()
     
     @IBOutlet weak var loginIdentify: UITextField!
     let pickerView = UIPickerView()
@@ -70,7 +75,11 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
                             }
                         }
                         //查詢所有班別
-                        NetWorkController.sharedInstance.get(api: "/search/shiftbycompany/")
+                        let date = self.dateFormatter.string(from: Date()).components(separatedBy: "-")
+                        let year = date[0]
+                        let month = date[1]
+                        let api2 = "/search/preschedule/" + year + "/" + month + "/"
+                        NetWorkController.sharedInstance.get(api: api2)
                         {(jsonData) in
                             
                             if jsonData["Status"].string == "200"{
@@ -86,7 +95,7 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
                                     let startTime = companyJson["startTime"].string
                                     let endTime = companyJson["endTime"].string
                                     let number = companyJson["number"].int
-                                    
+
                                     if Global.companyShiftDateList[dateShiftName!] != nil{
                                         Global.companyShiftDateList[dateShiftName!]!?.append(ShiftDate(dateShiftName!,timeShiftName!, startTime!, endTime!, number!))
                                         
@@ -94,12 +103,13 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
                                         var shiftDateArr = Array<ShiftDate>()
                                         shiftDateArr.append(ShiftDate(dateShiftName!,timeShiftName!, startTime!, endTime!, number!))
                                         Global.companyShiftDateList.updateValue(shiftDateArr, forKey: dateShiftName!)
+                                        
                                     }
                                     if Global.shiftDateNames.count == 0 {
                                         Global.shiftDateNames.append(dateShiftName!)
                                     }
-                                    for i in Global.shiftDateNames{
-                                        if i != dateShiftName{
+                                    for j in Global.shiftDateNames{
+                                        if j != dateShiftName{
                                             matchShiftDateNames = false
                                         }
                                     }
@@ -108,11 +118,13 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
                                         matchShiftDateNames = true
                                     }
                                     
+                                    
                                     if Global.shiftTimeNames.count == 0 {
                                         Global.shiftTimeNames.append(timeShiftName!)
+                                        continue
                                     }
-                                    for i in Global.shiftTimeNames{
-                                        if i != dateShiftName{
+                                    for j in Global.shiftTimeNames{
+                                        if j != dateShiftName{
                                             matchShiftTimeNames = false
                                         }
                                     }
@@ -120,28 +132,9 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
                                         Global.shiftTimeNames.append(timeShiftName!)
                                         matchShiftTimeNames = true
                                     }
-                                    
                                 }
                             }
-                            //  查詢所有員工
-                            NetWorkController.sharedInstance.get(api: "/search/staffinfobycompany")
-                            {(jsonData) in
-                                
-                                if jsonData["Status"].string == "200"{
-                                    print(jsonData.description)
-
-                                    let arr = jsonData["rows"]
-                                    for i in 0 ..< arr.count{
-                                        let companyJson = arr[i]
-                                        let staffName = companyJson["staffName"].string
-                                        let staffID = companyJson["staffID"].int
-                                        let staffNumber = companyJson["staffNumber"].string
-                                        let staff = Staff(name : staffName!, staffID : staffID!, number: staffNumber!)
-                                        Global.staffList.append(staff)
-                                    }
-                                    self.jumpToCompany()
-                                }
-                            }
+                            self.jumpToCompany()
                         }
                     }
                     
@@ -196,7 +189,8 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
                                     let staffID = staffJson["staffID"].int
                                     
                                     let staffInfo = Staff(name : staffName!, staffID : staffID!, account: staffAccount!, password: staffPassword!, number: staffnumber!)
-                                    Global.staffList.append(staffInfo)
+                                    Global.staffInfo = staffInfo
+                                    self.jumpToStaff()
                                 }
                             }
                         }
@@ -207,7 +201,6 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
                     preferencesSave.set(self.login_tf_password.text! , forKey: "password")
                     //儲存
                     let didSave = preferencesSave.synchronize()
-                    self.jumpToStaff()
                     
                 }else{
                     Toast.showToast(self.view, "錯誤的帳號或密碼")
@@ -261,8 +254,10 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
         //google sign in
         GIDSignIn.sharedInstance().presentingViewController = self
         
-        var r = Calendar.current.date(byAdding: DateComponents(month: 0, day: 1), to: self.startOfMonth())!
-        print("firstDay  \(r.add(component: .hour, value: -16))")
+//        //test
+//        var r = Calendar.current.date(byAdding: DateComponents(month: 0, day: 1), to: self.startOfMonth())!
+//        print("firstDay  \(r.add(component: .hour, value: -16))")
+//        //test
         
         //        // networkcontroller example start
         //        NetWorkController.sharedInstance.connectApiByPost(api: "/members/login", params: ["email": "123@", "password": "123"])

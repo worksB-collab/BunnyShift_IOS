@@ -25,6 +25,12 @@ class WeekdayAssignController: UIViewController, UICollectionViewDataSource, UIC
     @IBOutlet weak var tableView: UITableView!
     
     @IBAction func save(_ sender: RoundRecButton) {
+        for i in Global.dayType{
+            if i == ""{
+                Toast.showToast(self.view, "請選擇每天的班別")
+                return
+            }
+        }
         searchAndScheduleAPI()
         NetWorkController.sharedInstance.postT(api: "/schedule/setweekshift", params: ["monday": Global.dayType[0], "tuesday": Global.dayType[1],"wednesday": Global.dayType[2], "thursday": Global.dayType[3],"friday": Global.dayType[4], "saturday": Global.dayType[5],"sunday": Global.dayType[6], "ltdID": Global.companyInfo?.ltdID])
         {(jsonData) in

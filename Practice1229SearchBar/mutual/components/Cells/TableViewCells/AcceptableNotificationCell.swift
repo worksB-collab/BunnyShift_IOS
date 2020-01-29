@@ -23,14 +23,16 @@ class AcceptableNotificationCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
     class var reuseIdentifier: String {
         return "AcceptableNotificationCell"
     }
+    
     class var nibName: String {
         return "AcceptableNotificationCell"
     }
     
     func configureCell(notification: String) {
-        self.notification.text = notification
+        self.notification?.text = notification
     }
 }

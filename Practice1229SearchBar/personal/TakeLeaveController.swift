@@ -10,6 +10,12 @@ import UIKit
 
 class TakeLeaveController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    fileprivate lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd hh:mm"
+        return formatter
+    }()
+    
     fileprivate lazy var dateFormatterS: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd hh:mm"
@@ -20,9 +26,11 @@ class TakeLeaveController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     static var dateID : Int?
     static var selectedScheduleID : Int?
     static var deputyID : Int?
+    var deputyArr = Array<String>()
+    var shiftArr = Array<String>()
     
     let shiftPicker = UIPickerView()
-    let alterPicker = UIPickerView()
+    let deputyPicker = UIPickerView()
     
     @IBOutlet weak var tf_date: UITextField!
     @IBOutlet weak var tf_shift: UITextField!
@@ -31,57 +39,43 @@ class TakeLeaveController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         if tf_date.text == "" || tf_shift.text == "" || tf_deputy.text == "" {
             Toast.showToast(self.view, "請完整填寫資訊")
         }else{
-            searchSchedulebydateAPI()
-            getStaffIDAPI()
-            //還差時間的參數
-//            getScheduleIDAPI()
-            
-            let controller1 = UIAlertController(title: "確認送出？", message: "請確認資訊正確", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "沒問題", style: .default) { (_) in
-                
-                let time = self.dateFormatterS.string(from: Date())
-                NetWorkController.sharedInstance.postT(api: "/leave/leaveneeddeputy", params: ["ltdScheduleID": TakeLeaveController.selectedScheduleID, "time": time, "deputyID": TakeLeaveController.deputyID, "approverLtdID": Global.companyInfo?.ltdID])
-                {(jsonData) in
-                    
-                    if TakeLeaveController.selectedScheduleID != nil, TakeLeaveController.dateID != nil, ((Global.companyInfo?.ltdID) != nil) {
-                        Toast.showToast(self.view, "已成功送出申請")
-                        self.dismiss(animated: true, completion: nil)
-                        
-                    }else{
-                        Toast.showToast(self.view, jsonData["message"].string!)
-                    }
-                    
-                }
-            }
-            controller1.addAction(okAction)
-            let cancelAction = UIAlertAction(title: "取消", style: .cancel) { (_) in
-            }
-            controller1.addAction(cancelAction)
-            present(controller1, animated: true, completion: nil)
+            sendOutApplication()
         }
     }
     
-//    func getScheduleIDAPI(){
-//        //獲得Schedule ID
-//        let date1 = TakeLeaveController.selectedDate.components(separatedBy: "-")
-//        let year = date1[0]
-//        let month = date1[1]
-//        let api2 = "/search/preschedule/" + year + "/" + month + "/"
-//        NetWorkController.sharedInstance.get(api: api2){(jsonData) in
-//            if jsonData["Status"].string == "200"{
-//                let arr = jsonData["rows"]
-//                for i in 0 ..< arr.count{
-//                    let companyJson = arr[i]
-//                    let date = companyJson["date"].string
-//                    if date == TakeLeaveController.self.selectedDate{
-//                        let ltdScheduleID = companyJson["ltdScheduleID"].int
-//                        TakeLeaveController.selectedScheduleID = ltdScheduleID
-//                        print("TakeLeaveController.selectedScheduleID \(TakeLeaveController.selectedScheduleID)")
-//                    }
-//                }
-//            }
-//        }
-//    }
+    func sendOutApplication(){
+        let controller1 = UIAlertController(title: "確認送出？", message: "請確認資訊正確", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "沒問題", style: .default) { (_) in
+            if TakeLeaveController.selectedScheduleID == nil || Global.companyInfo?.ltdID == nil {
+                Toast.showToast(self.view, "資料不完整")
+                return
+            }else if  self.tf_deputy.text == "無人可代班" {
+                Toast.showToast(self.view, "目前無人可協助代班")
+                return
+            }else if  self.tf_shift.text == "無需代班" {
+                Toast.showToast(self.view, "你沒有上今天的班喔")
+                return
+            }
+            
+            let time = self.dateFormatterS.string(from: Date())
+            NetWorkController.sharedInstance.postT(api: "/leave/leaveneeddeputy", params: ["ltdScheduleID": TakeLeaveController.selectedScheduleID, "time": time, "deputyID": TakeLeaveController.deputyID, "approverLtdID": Global.companyInfo?.ltdID])
+            {(jsonData) in
+                
+                if jsonData["Status"].string == "200"{
+                    Toast.showToast(self.view, "已成功送出申請")
+                    self.dismiss(animated: true, completion: nil)
+                }else{
+                    Toast.showToast(self.view, jsonData["message"].string!)
+                }
+                
+            }
+        }
+        controller1.addAction(okAction)
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel) { (_) in
+        }
+        controller1.addAction(cancelAction)
+        present(controller1, animated: true, completion: nil)
+    }
     
     func getStaffIDAPI(){
         NetWorkController.sharedInstance.get(api: "/search/staffinfobycompany")
@@ -106,7 +100,9 @@ class TakeLeaveController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         // get how many shifts and staffs working on certain date
         var b = ""
         if let abs = Global.companyInfo!.ltdID{
-            b += "/search/schedulebydate/\(TakeLeaveController.self.dateID!)/\(abs)"
+            if let dateID = TakeLeaveController.dateID{
+                b += "/search/schedulebydate/\(dateID)/\(abs)"
+            }
         }
         NetWorkController.sharedInstance.get(api: b)
         {(jsonData) in
@@ -115,7 +111,8 @@ class TakeLeaveController: UIViewController, UIPickerViewDelegate, UIPickerViewD
                 for i in 0 ..< arr.count{
                     let companyJson = arr[i]
                     let ltdScheduleID = companyJson["ltdScheduleID"].int
-                    if ltdScheduleID == TakeLeaveController.selectedScheduleID{
+                    let timeShiftName = companyJson["timeShiftName"].string
+                    if timeShiftName == self.tf_shift.text{
                         TakeLeaveController.selectedScheduleID = ltdScheduleID
                     }
                 }
@@ -125,10 +122,7 @@ class TakeLeaveController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setPickerView()
-        view.setNeedsDisplay()
-        setDefaultData()
-        print("view did load")
+//        view.setNeedsDisplay()
 //        NotificationCenter.default.addObserver(self, selector: #selector(disconnectPaxiSocket(_:)), name: Notification.Name(rawValue: "disconnectPaxiSockets"), object: nil)
     }
     
@@ -136,25 +130,133 @@ class TakeLeaveController: UIViewController, UIPickerViewDelegate, UIPickerViewD
 //        setDefaultData()
 //    }
     
-    //居然有用啊幹
+    //居然有用啊幹（很重要的參考資源，不准刪除）
 //    override func viewWillAppear(_ animated: Bool) {
 //        super.viewWillAppear(true)
 //        view.setNeedsDisplay()
 //        setDefaultData()
-//        print("view will appear")
 //    }
     
+    override func viewWillAppear(_ animated: Bool) {
+        getDateIDAPI()
+        setDefaultData()
+        setPickerView()
+        getStaffIDAPI()
+    }
+    
+    func getDateIDAPI(){
+        let date1 = TakeLeaveController.selectedDate!.components(separatedBy: "-")
+        let year = date1[0]
+        let month = date1[1]
+        
+        // get dateID
+        let api1 = "/search/calendar/" + year + "/" + month
+        NetWorkController.sharedInstance.get(api: api1){(jsonData) in
+            if jsonData["Status"].string == "200"{
+                let arr = jsonData["rows"]
+                for i in 0 ..< arr.count{
+                    let companyJson = arr[i]
+                    if companyJson["date"].string == TakeLeaveController.selectedDate{
+                        TakeLeaveController.dateID = companyJson["dateID"].int
+                        self.searchSchedulebydateAPI()
+                    }
+                }
+            }
+        }
+    }
     
     func setDefaultData(){
-//        print("1ww" + TakeLeaveController.selectedDate)
-//        print("hi \(tf_date.text)")
         tf_date.text = TakeLeaveController.selectedDate
-
-        tf_shift.text = Global.shiftDateNames[0]
-        tf_deputy.text = "Arumin" // 給定目前可選擇員工的第一個員工
         tf_date.addTarget(self, action: #selector(myTargetFunction), for: .touchDown)
+        shiftArr = currentShift()
+    }
+    
+    func currentShift() -> Array<String>{
+        
+        var a = ""
+        if let abs = Global.companyInfo!.ltdID{
+            if let dateID = TakeLeaveController.dateID{
+                a += "/search/schedulebydate/" + "\(dateID)" + "/\(abs)"
+            }
+        }
+        
+        var arrShift = Array<String>()
+        NetWorkController.sharedInstance.get(api: a){(jsonData) in
+            if jsonData["Status"].string == "200"{
+                let arr = jsonData["rows"]
+                for i in 0 ..< arr.count{
+                    let companyJson = arr[i]
+                    if let name = Global.staffInfo?.name{
+                        if companyJson["date"].string == self.tf_date.text, companyJson["staffName"].string == name{
+                            
+                            let shift = companyJson["timeShiftName"].string
+                            arrShift.append(shift!)
+                        }
+                    }
+                }
+                if arrShift.count == 0 {
+                    self.tf_shift.text = "無需代班"
+                }else{
+                    self.tf_shift.text = arrShift[0]
+                }
+                self.deputyArr = self.freeDeputy()
+            }
+            self.shiftPicker.reloadAllComponents()
+        }
+        return arrShift
+    }
+    
+    func freeDeputy() -> Array<String>{
+        
+        var a = ""
+        if let abs = Global.companyInfo!.ltdID{
+            if let dateID = TakeLeaveController.dateID{
+                a += "/search/schedulebydate/" + "\(dateID)" + "/\(abs)"
+            }
+        }
+        
+        var arrStaff = Array<String>()
+
+        NetWorkController.sharedInstance.get(api: a){(jsonData) in
+            if jsonData["Status"].string == "200"{
+                
+                for i in Global.staffList{
+                    arrStaff.append(i.name)
+                }
+                
+                let arr = jsonData["rows"]
+                var arrCount = arr.count
+                for i in 0 ..< arrCount{
+                    let companyJson = arr[i]
+                    if companyJson["date"].string == self.tf_date.text, companyJson["timeShiftName"].string == self.tf_shift.text{
+                        if let name = companyJson["staffName"].string{
+                            arrStaff.removeAll { (j) -> Bool in
+                                let isRemove = j == name
+                                return isRemove
+                            }
+                            continue
+                        }
+                        if let name = Global.staffInfo?.name{
+                            arrStaff.removeAll { (j) -> Bool in
+                                let isRemove = j == name
+                                return isRemove
+                            }
+                        }
+                    }
+                }
+                
+                if arrStaff.count == 0 {
+                    self.tf_deputy.text = "無人可代班"
+                }else{
+                    self.tf_deputy.text = arrStaff[0]
+                }
+            }
+            self.deputyPicker.reloadAllComponents()
+        }
+        return arrStaff
         
     }
+    
     @objc func myTargetFunction(textField: UITextField) {
         let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ChooseDateController")
         self.navigationController?.pushViewController(controller, animated: true)
@@ -165,12 +267,12 @@ class TakeLeaveController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         //設定代理人和資料來源為viewController
         shiftPicker.dataSource = self//告訴pickerView要從哪個view controller中取得要顯示的資料
         shiftPicker.delegate = self //告訴pickerView當使用者選了選項後 要讓哪一個view controller知道使用者的選擇
-        alterPicker.dataSource = self
-        alterPicker.delegate = self
+        deputyPicker.dataSource = self
+        deputyPicker.delegate = self
                         
         //讓textfiled的輸入方式改為pickerView
         tf_shift?.inputView = self.shiftPicker
-        tf_deputy.inputView = self.alterPicker
+        tf_deputy.inputView = self.deputyPicker
         let tap = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
         view.addGestureRecognizer(tap)
         
@@ -186,11 +288,11 @@ class TakeLeaveController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         //0代表最左邊的滾輪
         if pickerView == self.shiftPicker{
             if component == 0{
-                return Global.shiftDateNames.count
+                return shiftArr.count
             }
         }else{
             if component == 0{
-                return Global.shiftDateNames.count //需要改成目前可選擇員工的array
+                return deputyArr.count //需要改成目前可選擇員工的array
             }
         }
         return 0
@@ -200,10 +302,10 @@ class TakeLeaveController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView == self.shiftPicker{
             if component == 0{
-                return Global.shiftDateNames[row]
+                return shiftArr[row]
             }}else{
             if component == 0{
-                return Global.shiftDateNames[row]//需要改成目前可選擇員工的array
+                return deputyArr[row]//需要改成目前可選擇員工的array
             }
         }
         return nil
@@ -212,12 +314,18 @@ class TakeLeaveController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     //定義選取後的行為
     func pickerView(_ pickerView: UIPickerView, didSelectRow row:Int, inComponent component:Int){
         if pickerView == self.shiftPicker{
-        if component == 0{
-            tf_shift?.text = Global.shiftDateNames[row]
-        }
+            if component == 0{
+                if shiftArr.count != 0{
+                    tf_shift?.text = shiftArr[row]
+                    getDateIDAPI()
+                }
+            }
         }else{
             if component == 0{
-                tf_deputy?.text = Global.shiftDateNames[row]//需要改成目前可選擇員工的array
+                if deputyArr.count != 0{
+                    tf_deputy?.text = deputyArr[row]//需要改成目前可選擇員工的array
+                    getStaffIDAPI()
+                }
             }
         }
     }
@@ -264,6 +372,11 @@ extension TakeLeaveController: UITextFieldDelegate {
         UIView.animate(withDuration: 0.5, animations: {
             self.view.frame.origin.y = 0
         })
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        setDefaultData()
+        setPickerView()
     }
 }
 

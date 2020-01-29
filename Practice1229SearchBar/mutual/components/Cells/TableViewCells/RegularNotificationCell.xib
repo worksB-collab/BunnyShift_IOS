@@ -44,7 +44,7 @@
                 <outlet property="notification" destination="ghg-ac-YIf" id="LpA-h4-ZgL"/>
                 <outlet property="time" destination="lYa-O2-Vzs" id="GOQ-a5-wuJ"/>
             </connections>
-            <point key="canvasLocation" x="132" y="129"/>
+            <point key="canvasLocation" x="131.8840579710145" y="127.90178571428571"/>
         </tableViewCell>
     </objects>
     <resources>

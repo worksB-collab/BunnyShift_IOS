@@ -40,8 +40,9 @@ class CNotificationController: UIViewController {
 
     func setTableView(){
         view.addSubview(tableView)
-        self.tableView.register(DayViewTableViewCell.self, forCellReuseIdentifier: "DayViewTableViewCell")
-        tableView.frame = CGRect(x: 10, y: 700, width: view.frame.width-20, height: 650);
+        self.tableView.register(RegularNotificationCell.self, forCellReuseIdentifier: "RegularNotificationCell")
+        self.tableView.register(AcceptableNotificationCell.self, forCellReuseIdentifier: "AcceptableNotificationCell")
+        tableView.frame = CGRect(x: 10, y: 200, width: view.frame.width-20, height: 650);
         tableView.dataSource = self
         tableView.delegate = self
         tableView.allowsMultipleSelection = false
@@ -161,11 +162,11 @@ extension CNotificationController : UITableViewDelegate, UITableViewDataSource{
             cell1.accept.addTarget(self, action: #selector(acceptAction), for: .touchUpInside)
             cell1.reject.addTarget(self, action: #selector(acceptAction), for: .touchUpInside)
             
-            //            cell1.layer.shadowColor = UIColor.groupTableViewBackground.cgColor
-            //            cell1.layer.shadowOffset = CGSize(width: 2, height: 7)
-            //            cell1.layer.shadowOpacity = 2
-            //            cell1.layer.shadowRadius = 2
-            //            cell1.layer.masksToBounds = false
+                        cell1.layer.shadowColor = UIColor.groupTableViewBackground.cgColor
+                        cell1.layer.shadowOffset = CGSize(width: 2, height: 7)
+                        cell1.layer.shadowOpacity = 2
+                        cell1.layer.shadowRadius = 2
+                        cell1.layer.masksToBounds = false
             
             return cell1
         }else{
@@ -178,7 +179,8 @@ extension CNotificationController : UITableViewDelegate, UITableViewDataSource{
                 "由\(leaveData.deputy)協助\(leaveData.staffName)代班\n" +
             "時間為\(leaveData.date) \(leaveData.timeShiftName) \(leaveData.startTime)-\(leaveData.endTime)\n" +
                            "\(leaveData.submitTime)"
-            cell1.configureCell(notification: notification, time: "")
+            let time = leaveData.submitTime
+            cell1.configureCell(notification: notification, time: time!)
             
             //            cell1.layer.shadowColor = UIColor.groupTableViewBackground.cgColor
             //            cell1.layer.shadowOffset = CGSize(width: 2, height: 7)
@@ -190,23 +192,23 @@ extension CNotificationController : UITableViewDelegate, UITableViewDataSource{
         }
     }
     
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("selected" , indexPath.item)
-        let cell1 = tableView.cellForRow(at: indexPath) as! DayViewTableViewCell
-        
-        
-        cell1.contentView.backgroundColor = UIColor (named : "Color1")
-        cell1.tintColor = UIColor (named : "Color5")
-    }
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        
-        print("deSelected" , indexPath.item)
-        
-        let cell1 = tableView.cellForRow(at: indexPath) as! DayViewTableViewCell
-        
-        cell1.contentView.backgroundColor = UIColor.clear
-    }
+
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        print("selected" , indexPath.item)
+//        let cell1 = tableView.cellForRow(at: indexPath) as! DayViewTableViewCell
+//
+//
+//        cell1.contentView.backgroundColor = UIColor (named : "Color1")
+//        cell1.tintColor = UIColor (named : "Color5")
+//    }
+//
+//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+//
+//        print("deSelected" , indexPath.item)
+//
+//        let cell1 = tableView.cellForRow(at: indexPath) as! DayViewTableViewCell
+//
+//        cell1.contentView.backgroundColor = UIColor.clear
+//    }
 }
 

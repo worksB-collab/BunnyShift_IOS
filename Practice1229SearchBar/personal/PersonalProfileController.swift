@@ -15,7 +15,7 @@ class PersonalProfileController: UIViewController {
         let controller1 = UIAlertController(title: "登出", message: "確認登出？", preferredStyle: .alert)
         
         let okAction = UIAlertAction(title: "登出", style: .default) { (_) in
-            
+            Global.clearData()
             Toast.showToast(self.view, "登出")
             self.present(controller, animated: true, completion: nil)
         }

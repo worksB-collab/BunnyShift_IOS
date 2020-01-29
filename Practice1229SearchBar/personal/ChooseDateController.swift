@@ -10,6 +10,8 @@ import UIKit
 import FSCalendar
 
 class ChooseDateController: UIViewController {
+    
+    var dateWannaLeave = TakeLeaveController.selectedDate
     var selectedDate : String = ""
     fileprivate let gregorian = Calendar(identifier: .gregorian)
     
@@ -52,6 +54,8 @@ class ChooseDateController: UIViewController {
         calendar.appearance.selectionColor = UIColor(named : "Color5")
         calendar.appearance.todayColor = UIColor(named : "Color7")
         calendar.appearance.todaySelectionColor = UIColor(named : "Color1")
+        calendar.appearance.eventDefaultColor = UIColor(named : "Color1")
+        calendar.appearance.eventSelectionColor = UIColor(named : "Color7")
         
         self.calendar = calendar
         
@@ -74,7 +78,6 @@ extension ChooseDateController : FSCalendarDataSource, FSCalendarDelegate{
         }
         
         TakeLeaveController.selectedDate = "\(self.dateFormatter.string(from: date))"
-//            print("2ww" + TakeLeaveController.selectedDate)
 //        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TakeLeaveController") as! TakeLeaveController
         //        self.presentingViewController?.children[]
         
@@ -85,7 +88,6 @@ extension ChooseDateController : FSCalendarDataSource, FSCalendarDelegate{
             var CV = previousViewController as! TakeLeaveController
             
             CV.setDefaultData()
-            print("going back")
         }
         
         
@@ -112,7 +114,12 @@ extension ChooseDateController : FSCalendarDataSource, FSCalendarDelegate{
     }
     
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-        return 2
+        for i in Global.eventDotsArr{
+            if self.dateFormatter.string(from: date) == i{
+                return 1
+            }
+        }
+        return 0
     }
     
     
@@ -122,6 +129,10 @@ extension ChooseDateController : FSCalendarDataSource, FSCalendarDelegate{
     self.calendar.frame.size.height = bounds.height
     self.eventLabel?.frame.origin.y = calendar.frame.maxY + 10
     
+    }
+    
+    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+        Updates.getMonthData(calendar : calendar)
     }
 }
 

@@ -22,15 +22,17 @@ class RegularNotificationCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
     class var reuseIdentifier: String {
         return "RegularNotificationCell"
     }
+    
     class var nibName: String {
         return "RegularNotificationCell"
     }
     
     func configureCell(notification: String, time : String) {
-        self.notification.text = notification
-        self.time.text = time
+        self.notification?.text = notification
+        self.time?.text = time
     }
 }

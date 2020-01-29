@@ -12,9 +12,9 @@ import JZCalendarWeekView
 class DefaultViewModel: NSObject {
 
     private var firstDay = Calendar.current.date(byAdding: DateComponents(month: 0, day: 1), to: PersonalScheduleViewController.startMonth)!
-        private let firstDate = Date().add(component: .hour, value: 0)
-        private let secondDate = Date().add(component: .day, value: 1)
-        private let thirdDate = Date().add(component: .day, value: 2)
+//        private let firstDate = Date().add(component: .hour, value: 0)
+//        private let secondDate = Date().add(component: .day, value: 1)
+//        private let thirdDate = Date().add(component: .day, value: 2)
 
         var shifts : [DefaultEvent] = []
     //    lazy var events = [DefaultEvent(id: "0", title: "One", startDate: firstDate, endDate: firstDate.add(component: .hour, value: 5), location: "Ada"),
@@ -28,6 +28,9 @@ class DefaultViewModel: NSObject {
         
         
         func assignToEachDay(){
+            if Global.monthlyShiftArr == nil{
+                return
+            }
             print("assignToEachDay")
             var count = 1
             for i in 0 ..< Global.monthlyShiftArr!.count{
@@ -51,7 +54,6 @@ class DefaultViewModel: NSObject {
                     endDate: currentDay.add(component: .hour, value: hourE).add(component: .hour, value: minE) ,
                     location: Global.monthlyShiftArr![i]!.staffName!))
                 count += 1
-                print("?>? \(count)")
             }
             
         }

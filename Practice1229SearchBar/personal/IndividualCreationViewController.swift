@@ -38,10 +38,24 @@ class IndividualCreationViewController: UIViewController {
                         NetWorkController.sharedInstance.post(api: "/login/staff", params: ["account": self.individual_tf_account.text, "password": self.individual_tf_password.text])
                         {(jsonData) in
                             if jsonData["Status"].string == "200"{
-                                Global.identity = "公司"
-                                let token = jsonData["token"].string
-                                Global.token = token
-                                self.getCompanyInfo()
+                                
+                                let arr = jsonData["rows"]
+                                for _ in 0 ..< arr.count{
+                                    let companyJson = arr[0]
+                                    
+                                    Global.identity = "公司"
+                                    let token = companyJson["token"].string
+                                    
+                                    let ltdID = companyJson["ltdID"].int
+                                    let name = companyJson["ltdName"].string
+                                    let number = companyJson["ltdNumber"].string
+                                    let address = companyJson["address"].string
+                                    let taxID = companyJson["taxID"].string
+                                    Global.token = token
+                                    Global.companyInfo = Company(name: name!, number: number!, address: address!, taxID: taxID!)
+                                    Global.companyInfo?.ltdID = ltdID
+                                    self.getStaffID()
+                                }
                             }
                         }
                     }else{
@@ -56,31 +70,7 @@ class IndividualCreationViewController: UIViewController {
         controller1.addAction(cancelAction)
         present(controller1, animated: true, completion: nil)
     }
-    
-    func getCompanyInfo(){
-        NetWorkController.sharedInstance.get(api: "/search/companyinfo")
-        {(jsonData) in
-            
-            if jsonData["Status"].string == "200"{
-                
-                let arr = jsonData["rows"]
-                for _ in 0 ..< arr.count{
-                    let companyJson = arr[0]
-                    
-                    let ltdID = companyJson["ltdID"].string
-                    let name = companyJson["ltdName"].string
-                    let number = companyJson["ltdNumber"].string
-                    let address = companyJson["address"].string
-                    let taxID = companyJson["taxID"].string
-                    
-                    Global.companyInfo = Company(name: name!, number: number!, address: address!, taxID: taxID!)
-                    
-                    self.getStaffID()
-                }
-            }
-        }
-    }
-    
+  
     func getStaffID(){
         NetWorkController.sharedInstance.get(api: "/search/staffinfo")
         {(jsonData) in

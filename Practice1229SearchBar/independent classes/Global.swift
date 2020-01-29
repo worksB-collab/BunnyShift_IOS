@@ -41,11 +41,6 @@ public class Global{
     init(){
         
     }
-//    init(_ companyInfo : Company, _ staffList : [String], _ companyShiftDateList : [String : Array<ShiftDate>?.self]){
-//        Global.self.companyInfo = companyInfo
-//        Global.self.staffList = staffList
-//        Global.self.companyShiftDateList = companyShiftDateList
-//    }
     
     init(_ staffShiftDateList : [ShiftDate], _ staffInfo : Staff, _ companyName : String, _ companyPhone : String, _ comapanyID : Int, _ companyTaxID : String){
         Global.self.staffShiftList = staffShiftDateList
@@ -72,5 +67,26 @@ public class Global{
             arr.append(Global.companyShiftDateList[typeName]!![i].timeName)
         }
         return arr
+    }
+    
+    static func clearData(){ // call it when logging out
+        identity = nil
+        token = nil
+        
+        companyInfo = nil
+        companyShiftDateList = [:]
+        staffList = Array<Staff>()
+        shiftDateNames = Array<String>() // 日別名稱
+        shiftTimeNames = Array<String>() // 班別名稱
+        dayType = Array(repeating: "", count: 7) // 每個星期的日子是什麼日別
+        monthlyShiftArr = nil // 整個月所有的班別
+        eventDotsArr = []
+        
+        dailyShiftArr = Array<ShiftDate>()
+        temDateShiftIDs = [:]
+        
+        staffShiftList  = []
+        staffInfo = nil
+        date = nil
     }
 }

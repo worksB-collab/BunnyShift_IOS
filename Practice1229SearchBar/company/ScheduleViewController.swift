@@ -55,6 +55,7 @@ class ScheduleViewController: UIViewController {
         registerNib()
         setNav()
         setCalendar()
+        Updates.getWeekshiftbycompanyAPI()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -62,15 +63,16 @@ class ScheduleViewController: UIViewController {
         //讓初始為collectionView第一個選項
 //        let indexPathForFirstRow = IndexPath(row: selected, section: 0)
 //        collectionView.selectItem(at: indexPathForFirstRow, animated: true, scrollPosition: [])
-        
+        Updates.getStaffList()
     }
+    
+    
     override func viewDidDisappear(_ animated: Bool) {
          // 將timer的執行緒停止
          if self.timer != nil {
               self.timer?.invalidate()
          }
     }
-    
     
     func setTimer(){
         self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(reload), userInfo: nil, repeats: true)
@@ -239,6 +241,10 @@ extension ScheduleViewController : FSCalendarDataSource, FSCalendarDelegate{
     self.calendar.frame.size.height = bounds.height
     self.eventLabel?.frame.origin.y = calendar.frame.maxY + 10
         
+    }
+    
+    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+        reload()
     }
     
     func jumpToDayView(){

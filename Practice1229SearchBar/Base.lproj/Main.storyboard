@@ -1511,7 +1511,7 @@
                         <barButtonItem key="rightBarButtonItem" title="請假" id="8z1-YQ-47F">
                             <color key="tintColor" name="Color3"/>
                             <connections>
-                                <action selector="take_leave:" destination="PAL-Cd-b4i" id="H3A-s0-mc6"/>
+                                <action selector="btn_take_leave:" destination="PAL-Cd-b4i" id="ePs-Yq-END"/>
                                 <segue destination="uk8-3B-w66" kind="show" id="cxv-dQ-wkP"/>
                             </connections>
                         </barButtonItem>
@@ -1599,8 +1599,8 @@
                     </view>
                     <navigationItem key="navigationItem" title="請假申請" id="v4n-uM-9Xc"/>
                     <connections>
-                        <outlet property="tf_alter" destination="VmB-P5-HFQ" id="pAr-b6-ECR"/>
                         <outlet property="tf_date" destination="82P-Z8-dph" id="3nc-Ns-Jkq"/>
+                        <outlet property="tf_deputy" destination="VmB-P5-HFQ" id="O7C-cp-mFC"/>
                         <outlet property="tf_shift" destination="Iwm-cD-Lae" id="74I-8Z-zH2"/>
                     </connections>
                 </viewController>

@@ -16,6 +16,8 @@ class AssignScheduleController: UIViewController{
     var selectedStaff : String?
     var selectedStaffID : Int?
     var selectedScheduleID : Int?
+    var deselectedScheduleID : Int?
+    var deselectedDate : String?
     var selectedShift : String?
     var selectedDate : String?
     var dateID : Int?
@@ -454,13 +456,13 @@ extension AssignScheduleController : FSCalendarDataSource, FSCalendarDelegate{
             calendar.setCurrentPage(date, animated: true)
         }
         selectedDate = "\(self.dateFormatter.string(from: date))"
-        getDateData()
         
         if selectedShift == nil || selectedStaff == nil {
             calendar.allowsMultipleSelection = false
             Toast.showToast(self.view, "請點選上兩排資訊以開始排班")
         }else{
             calendar.allowsMultipleSelection = true
+            getDateData()
         }
         
     }
@@ -471,6 +473,36 @@ extension AssignScheduleController : FSCalendarDataSource, FSCalendarDelegate{
         print("selected dates is \(selectedDates)")
         if monthPosition == .next || monthPosition == .previous {
             calendar.setCurrentPage(date, animated: true)
+        }
+        self.deselectedDate = dateFormatter.string(from:date)
+        removeStaffShift()
+    }
+    
+    func removeStaffShift(){
+        
+        let date = dateFormatter.string(from:Date()).components(separatedBy: "-")
+        let year = date[0]
+        let month = date[1]
+        //需要先獲得Schedule ID
+        let api2 = "/search/preschedule/" + year + "/" + month + "/"
+        NetWorkController.sharedInstance.get(api: api2){(jsonData) in
+            if jsonData["Status"].string == "200"{
+                let arr = jsonData["rows"]
+                for i in 0 ..< arr.count{
+                    let companyJson = arr[i]
+                    let date = companyJson["date"].string
+                    if date == self.deselectedDate{
+                        let ltdScheduleID = companyJson["ltdScheduleID"].int
+                        self.deselectedScheduleID = ltdScheduleID
+                        print("self.selectedScheduleID \(self.deselectedScheduleID)")
+                        self.scheduleSetWorkerAPI()
+                    }
+                }
+            }
+        }
+        NetWorkController.sharedInstance.postT(api: "/schedule/removeworkerinschedule", params: ["ltdScheduleID" : self.deselectedScheduleID, "staffID" : selectedStaffID])
+        {(jsonData) in
+            print("\(jsonData["message"].string)")
         }
     }
     
@@ -496,5 +528,9 @@ extension AssignScheduleController : FSCalendarDataSource, FSCalendarDelegate{
         self.calendar.frame.size.height = bounds.height
         self.eventLabel?.frame.origin.y = calendar.frame.maxY + 10
         
+    }
+    
+    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+        Updates.getMonthData(calendar : calendar)
     }
 }

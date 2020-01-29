@@ -11,9 +11,18 @@ import JZCalendarWeekView
 
 class DefaultViewController: UIViewController {
 
+    //因為isEnable = false所以不會有效果
+    @IBAction func btn_take_leave(_ sender: UIBarButtonItem) {
+        Toast.showToast(self.view, "今天沒有班喔")
+    }
+    
     @IBOutlet weak var calendarWeekView: DefaultWeekView!
 
     // billy added
+    var timer: Timer?
+    var presentingDate : Date?
+    var presentingDateID : Int?
+    
     fileprivate lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
@@ -28,6 +37,22 @@ class DefaultViewController: UIViewController {
         setupBasic()
         setCalendarView()
         setNav()
+        presentingDate = viewModel.currentSelectedData.date
+    }
+    
+    func setTimer(){
+        self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(stopTimer), userInfo: nil, repeats: true)
+    }
+    
+    var countStop = 0
+    @objc func stopTimer() {
+        viewModel.assignToEachDay()
+        countStop += 1
+        if countStop == 3{
+            if self.timer != nil {
+                self.timer?.invalidate()
+            }
+        }
     }
     
     func setNav(){
@@ -35,7 +60,59 @@ class DefaultViewController: UIViewController {
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(named: "Color7")! ]
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationBar.isTranslucent = true
+        navigationItem.rightBarButtonItem?.isEnabled = true
+        if currentShift().count == 0{
+            navigationItem.rightBarButtonItem?.isEnabled = false
+        }else{
+            navigationItem.rightBarButtonItem?.isEnabled = true
+        }
+    }
+    
+    func currentShift() -> Array<String>{
 
+        var arrShift = Array<String>()
+        let date = dateFormatter.string(from : presentingDate!)
+        
+        for i in Global.monthlyShiftArr!{
+            if i?.staffName == Global.staffInfo?.name, i?.date == date{
+                arrShift.append(i!.timeName)
+            }
+        }
+//        // get dateID
+//        let api1 = "/search/calendar/" + year + "/" + month
+//        NetWorkController.sharedInstance.get(api: api1){(jsonData) in
+//            if jsonData["Status"].string == "200"{
+//                let arr = jsonData["rows"]
+//                for i in 0 ..< arr.count{
+//                    let companyJson = arr[i]
+//                    if companyJson["date"].string == date{
+//                        self.presentingDateID = companyJson["dateID"].int
+//
+//                        var a = ""
+//                        if let abs = Global.companyInfo!.ltdID{
+//                            if let id = self.presentingDateID{
+//                                a += "/search/schedulebydate/" + "\(id)" + "/\(abs)"
+//                            }
+//                        }
+//
+//                        NetWorkController.sharedInstance.get(api: a){(jsonData) in
+//                            if jsonData["Status"].string == "200"{
+//                                let arr = jsonData["rows"]
+//                                for i in 0 ..< arr.count{
+//                                    let companyJson = arr[i]
+//                                    if companyJson["staffName"].string == Global.staffInfo?.name{
+//                                        let shift = companyJson["timeShiftName"].string
+//                                        arrShift.append(shift!)
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+        
+        return arrShift
     }
 
     // Support device orientation change
@@ -119,6 +196,7 @@ extension DefaultViewController: OptionsViewDelegate {
     }
 
     private func getSelectedData() -> OptionsSelectedData {
+        
         let numOfDays = calendarWeekView.numOfDays!
         let firstDayOfWeek = numOfDays == 7 ? calendarWeekView.firstDayOfWeek : nil
         viewModel.currentSelectedData = OptionsSelectedData(viewType: .defaultView,
@@ -132,7 +210,8 @@ extension DefaultViewController: OptionsViewDelegate {
     }
 
     func finishUpdate(selectedData: OptionsSelectedData) {
-
+        
+        
         // Update numOfDays
         if selectedData.numOfDays != viewModel.currentSelectedData.numOfDays {
             calendarWeekView.numOfDays = selectedData.numOfDays
@@ -163,8 +242,13 @@ extension DefaultViewController: OptionsViewDelegate {
     }
 
     private func updateNaviBarTitle() {
+        
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM "
+        dateFormatter.dateFormat = "YYYY-MM"
         self.navigationItem.title = dateFormatter.string(from: calendarWeekView.initDate.add(component: .day, value: calendarWeekView.numOfDays))
+        
+        presentingDate = calendarWeekView.initDate.add(component: .day, value: calendarWeekView.numOfDays)
+        setNav()
+        navigationController?.navigationBar.reloadInputViews()
     }
 }

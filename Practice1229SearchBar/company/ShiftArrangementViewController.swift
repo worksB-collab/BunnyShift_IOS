@@ -203,8 +203,9 @@ class ShiftArrangementViewController: UIViewController, UITableViewDataSource , 
             arr.append(params)
             NetWorkController.sharedInstance.postT(api: "/schedule/settimeshift", params: ["dataShiftID": "\(id)", "data" : arr])
             {(jsonData) in
-                print(jsonData.description)
+                print("xxx \(jsonData.description)")
             }
+            Global.shiftTimeNames.append(i.timeName)
         }
     }
     

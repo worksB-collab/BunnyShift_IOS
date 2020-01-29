@@ -26,9 +26,11 @@ class DayViewTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
     class var reuseIdentifier: String {
         return "DayViewTableViewCell"
     }
+    
     class var nibName: String {
         return "DayViewTableViewCell"
     }
