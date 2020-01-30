@@ -1,21 +1,20 @@
 //
-//  AcceptableNotificationCell.swift
+//  NormalNotificationCell.swift
 //  Practice1229SearchBar
 //
-//  Created by cm0521 on 2020/1/18.
+//  Created by cm0521 on 2020/1/31.
 //  Copyright © 2020 cm0521. All rights reserved.
 //
 
 import UIKit
 
-class AcceptableNotificationCell: UITableViewCell {
-    
+class NormalNotificationCell: UITableViewCell {
+
+    @IBOutlet weak var status: UILabel!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var shift: UILabel!
     @IBOutlet weak var time: UILabel!
     @IBOutlet weak var submitTime: UILabel!
-    @IBOutlet weak var accept: UIButton!
-    @IBOutlet weak var reject: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -28,17 +27,19 @@ class AcceptableNotificationCell: UITableViewCell {
     }
     
     class var reuseIdentifier: String {
-        return "AcceptableNotificationCell"
+        return "NormalNotificationCell"
     }
     
     class var nibName: String {
-        return "AcceptableNotificationCell"
+        return "NormalNotificationCell"
     }
     
-    func configureCell(title: String, shift: String, time: String, submitTime: String) {
+    func configureCell(status: String, title: String, shift: String, time: String, submitTime: String) {
+        self.status?.text = status
         self.title?.text = title
         self.shift?.text = shift
         self.time?.text = time
         self.submitTime?.text = submitTime
     }
+    
 }

@@ -85,7 +85,7 @@ class AssignScheduleController: UIViewController{
     }
     
     func setCalendar(){
-        let calendar = FSCalendar(frame: CGRect(x: 5, y: 200, width: view.frame.width-10, height: view.frame.height-400))
+        let calendar = FSCalendar(frame: CGRect(x: 5, y: 300, width: view.frame.width-10, height: view.frame.height-350))
         calendar.dataSource = self
         calendar.delegate = self
         calendar.register(FSCalendarCell.self, forCellReuseIdentifier: "CELL")
@@ -107,7 +107,7 @@ class AssignScheduleController: UIViewController{
     func setTableView(){
         view.addSubview(tableView)
         self.tableView.register(DayViewTableViewCell.self, forCellReuseIdentifier: "DayViewTableViewCell")
-        tableView.frame = CGRect(x: 10, y: 700, width: view.frame.width-20, height: 650);
+        tableView.frame = CGRect(x: 10, y: 700, width: view.frame.width-20, height: 700);
         tableView.dataSource = self
         tableView.delegate = self
         tableView.allowsMultipleSelection = false
@@ -364,7 +364,7 @@ extension AssignScheduleController : UICollectionViewDataSource, UICollectionVie
     func changeCellColor(_ collectionView: UICollectionView, didSelectItemAt cell: UICollectionViewCell, isSelected : Bool){
         
         if isSelected {
-            cell.contentView.backgroundColor = UIColor(named : "Color6")
+            cell.contentView.backgroundColor = UIColor(named : "Color7")
         }else{
             cell.contentView.backgroundColor = UIColor.clear
         }

@@ -183,6 +183,8 @@ public class Updates{
             if jsonData["Status"].string == "200"{
                 print(jsonData.description)
 
+                Global.staffList = Array<Staff>()
+                
                 let arr = jsonData["rows"]
                 for i in 0 ..< arr.count{
                     let companyJson = arr[i]

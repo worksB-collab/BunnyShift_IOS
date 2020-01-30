@@ -119,7 +119,7 @@ class ScheduleViewController: UIViewController {
     }
     
     func setCalendar(){
-        let calendar = FSCalendar(frame: CGRect(x: 5, y: 150, width: view.frame.width-10, height: view.frame.height-300))
+        let calendar = FSCalendar(frame: CGRect(x: 5, y: 230, width: view.frame.width-10, height: view.frame.height-350))
         calendar.dataSource = self
         calendar.delegate = self
         calendar.register(FSCalendarCell.self, forCellReuseIdentifier: "CELL")
@@ -237,7 +237,7 @@ extension ScheduleViewController :  UICollectionViewDataSource, UICollectionView
     
     func changeCellColor(_ collectionView: UICollectionView, didSelectItemAt cell: UICollectionViewCell, isSelected : Bool){
         if isSelected {
-            cell.contentView.backgroundColor = UIColor(named : "Color6")
+            cell.contentView.backgroundColor = UIColor(named : "Color7")
         }else{
             cell.contentView.backgroundColor = UIColor.clear
         }

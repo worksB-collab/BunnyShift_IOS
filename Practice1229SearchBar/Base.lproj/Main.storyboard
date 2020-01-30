@@ -209,7 +209,7 @@
         <scene sceneID="ZWI-Vi-M6E">
             <objects>
                 <navigationController storyboardIdentifier="RootNavigationController" modalPresentationStyle="fullScreen" id="TCl-dv-4aj" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="f2r-EI-vtu">
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="f2r-EI-vtu">
                         <barButtonItem key="backBarButtonItem" title="返回" id="I8H-nw-gSu"/>
                     </navigationItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="h7U-uk-ASm">
@@ -585,7 +585,7 @@
                             <color key="textColor" name="Color7"/>
                         </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" name="Color7"/>
+                            <color key="textColor" name="Color1"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -606,7 +606,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="eCQ-VL-nxw">
-                                <rect key="frame" x="0.0" y="50" width="414" height="50"/>
+                                <rect key="frame" x="0.0" y="30" width="414" height="50"/>
                                 <color key="backgroundColor" name="Color1"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="28D-pc-eng"/>
@@ -633,7 +633,7 @@
                                 </connections>
                             </collectionView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="y6F-wk-jGT">
-                                <rect key="frame" x="0.0" y="108" width="414" height="50"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="50"/>
                                 <color key="backgroundColor" name="Color1"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="WtF-FV-4tv"/>
@@ -664,7 +664,7 @@
                         <constraints>
                             <constraint firstItem="y6F-wk-jGT" firstAttribute="top" secondItem="eCQ-VL-nxw" secondAttribute="bottom" constant="8" id="I64-EN-LYu"/>
                             <constraint firstItem="y6F-wk-jGT" firstAttribute="leading" secondItem="bcl-KV-tzR" secondAttribute="leading" id="LiE-p4-epW"/>
-                            <constraint firstItem="eCQ-VL-nxw" firstAttribute="top" secondItem="bcl-KV-tzR" secondAttribute="top" constant="50" id="WNN-5X-VJi"/>
+                            <constraint firstItem="eCQ-VL-nxw" firstAttribute="top" secondItem="bcl-KV-tzR" secondAttribute="top" constant="30" id="WNN-5X-VJi"/>
                             <constraint firstItem="bcl-KV-tzR" firstAttribute="trailing" secondItem="eCQ-VL-nxw" secondAttribute="trailing" id="bka-8T-7u4"/>
                             <constraint firstItem="eCQ-VL-nxw" firstAttribute="leading" secondItem="bcl-KV-tzR" secondAttribute="leading" id="of9-hp-2z0"/>
                             <constraint firstItem="bcl-KV-tzR" firstAttribute="trailing" secondItem="y6F-wk-jGT" secondAttribute="trailing" id="zXQ-k6-D8r"/>
@@ -705,10 +705,10 @@
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" name="Color7"/>
+                            <color key="textColor" name="Color1"/>
                         </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" name="Color7"/>
+                            <color key="textColor" name="Color1"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -779,7 +779,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="w0U-on-JFq">
-                                <rect key="frame" x="0.0" y="138" width="414" height="50"/>
+                                <rect key="frame" x="0.0" y="118" width="414" height="50"/>
                                 <color key="backgroundColor" name="Color1"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="IJw-a4-qr3"/>
@@ -806,7 +806,7 @@
                                 </connections>
                             </collectionView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PNy-mw-T8h">
-                                <rect key="frame" x="17" y="208" width="380" height="555"/>
+                                <rect key="frame" x="17" y="188" width="380" height="555"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="380" id="1p3-Jx-w2k"/>
@@ -834,7 +834,7 @@
                         <constraints>
                             <constraint firstItem="0a9-2w-ndl" firstAttribute="trailing" secondItem="w0U-on-JFq" secondAttribute="trailing" id="15k-Ef-sRC"/>
                             <constraint firstItem="PNy-mw-T8h" firstAttribute="top" secondItem="w0U-on-JFq" secondAttribute="bottom" constant="20" id="Gdo-8k-kie"/>
-                            <constraint firstItem="w0U-on-JFq" firstAttribute="top" secondItem="0a9-2w-ndl" secondAttribute="top" constant="50" id="OTe-HT-04K"/>
+                            <constraint firstItem="w0U-on-JFq" firstAttribute="top" secondItem="0a9-2w-ndl" secondAttribute="top" constant="30" id="OTe-HT-04K"/>
                             <constraint firstItem="w0U-on-JFq" firstAttribute="leading" secondItem="0a9-2w-ndl" secondAttribute="leading" id="cGc-C0-Ag3"/>
                             <constraint firstItem="tFW-aQ-lss" firstAttribute="centerX" secondItem="0a9-2w-ndl" secondAttribute="centerX" id="nli-O9-6ZB"/>
                             <constraint firstItem="0a9-2w-ndl" firstAttribute="bottom" secondItem="tFW-aQ-lss" secondAttribute="bottom" constant="30" id="noI-dM-EJy"/>
@@ -924,7 +924,7 @@
                             <color key="textColor" name="Color7"/>
                         </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" name="Color7"/>
+                            <color key="textColor" name="Color1"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -948,7 +948,7 @@
                             <color key="textColor" name="Color7"/>
                         </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" name="Color7"/>
+                            <color key="textColor" name="Color1"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1004,7 +1004,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="g5o-rb-yUc">
-                                <rect key="frame" x="0.0" y="138" width="414" height="50"/>
+                                <rect key="frame" x="0.0" y="118" width="414" height="50"/>
                                 <color key="backgroundColor" name="Color1"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="g7Z-4h-0M6"/>
@@ -1033,7 +1033,7 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="g5o-rb-yUc" firstAttribute="top" secondItem="bTy-BH-mAt" secondAttribute="top" constant="50" id="1lM-Px-RFe"/>
+                            <constraint firstItem="g5o-rb-yUc" firstAttribute="top" secondItem="bTy-BH-mAt" secondAttribute="top" constant="30" id="1lM-Px-RFe"/>
                             <constraint firstItem="g5o-rb-yUc" firstAttribute="leading" secondItem="bTy-BH-mAt" secondAttribute="leading" id="Pfv-5Z-CbC"/>
                             <constraint firstItem="bTy-BH-mAt" firstAttribute="trailing" secondItem="g5o-rb-yUc" secondAttribute="trailing" id="SBK-xk-dge"/>
                         </constraints>
@@ -1114,7 +1114,7 @@
                             <color key="textColor" name="Color7"/>
                         </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" name="Color7"/>
+                            <color key="textColor" name="Color1"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1135,7 +1135,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="doc.text.magnifyingglass" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="KCq-wI-WgI">
-                                <rect key="frame" x="157" y="188" width="100" height="101.5"/>
+                                <rect key="frame" x="157" y="158" width="100" height="101.5"/>
                                 <color key="tintColor" name="Color1"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="YSf-zX-t8y"/>
@@ -1143,37 +1143,37 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公司名稱" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLe-XW-O4n">
-                                <rect key="frame" x="166" y="304.5" width="82" height="24"/>
+                                <rect key="frame" x="166" y="274.5" width="82" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" name="Color3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="帳號" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gJa-r8-Q7W">
-                                <rect key="frame" x="68" y="368" width="35" height="21"/>
+                                <rect key="frame" x="68" y="338" width="35" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公司代碼" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tGf-Oj-Ifr">
-                                <rect key="frame" x="68" y="399" width="70" height="21"/>
+                                <rect key="frame" x="68" y="369" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公司電話" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3um-sY-oeJ">
-                                <rect key="frame" x="68" y="430" width="70" height="21"/>
+                                <rect key="frame" x="68" y="400" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公司統編" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="56t-LA-Rb4">
-                                <rect key="frame" x="68" y="461" width="70" height="21"/>
+                                <rect key="frame" x="68" y="431" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公司地址" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jcm-0L-ajI">
-                                <rect key="frame" x="68" y="492" width="70" height="21"/>
+                                <rect key="frame" x="68" y="462" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color3"/>
                                 <nil key="highlightedColor"/>
@@ -1192,31 +1192,31 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="帳號" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="irp-U4-QZQ">
-                                <rect key="frame" x="196" y="368" width="35" height="21"/>
+                                <rect key="frame" x="196" y="338" width="35" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color7"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公司代碼" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zU9-1n-FdA">
-                                <rect key="frame" x="196" y="399" width="70" height="21"/>
+                                <rect key="frame" x="196" y="369" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color7"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公司電話" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qqs-5J-OZz">
-                                <rect key="frame" x="196" y="430" width="70" height="21"/>
+                                <rect key="frame" x="196" y="400" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color7"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公司統編" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hEq-7b-ErP">
-                                <rect key="frame" x="196" y="461" width="70" height="21"/>
+                                <rect key="frame" x="196" y="431" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color7"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公司地址" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ddf-CX-CD4">
-                                <rect key="frame" x="196" y="492" width="70" height="21"/>
+                                <rect key="frame" x="196" y="462" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color7"/>
                                 <nil key="highlightedColor"/>
@@ -1237,7 +1237,7 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="gJa-r8-Q7W" firstAttribute="top" secondItem="arb-CD-fS5" secondAttribute="top" constant="280" id="01J-A9-dMB"/>
+                            <constraint firstItem="gJa-r8-Q7W" firstAttribute="top" secondItem="arb-CD-fS5" secondAttribute="top" constant="250" id="01J-A9-dMB"/>
                             <constraint firstItem="irp-U4-QZQ" firstAttribute="leading" secondItem="gJa-r8-Q7W" secondAttribute="trailing" constant="93" id="0CX-EA-qVl"/>
                             <constraint firstItem="ddf-CX-CD4" firstAttribute="leading" secondItem="irp-U4-QZQ" secondAttribute="leading" id="0cP-Kl-Geo"/>
                             <constraint firstItem="EDa-jG-2Nd" firstAttribute="top" secondItem="eJk-ki-fCf" secondAttribute="bottom" constant="41" id="2aT-Nj-VnY"/>
@@ -1259,7 +1259,7 @@
                             <constraint firstItem="jcm-0L-ajI" firstAttribute="leading" secondItem="gJa-r8-Q7W" secondAttribute="leading" id="cUz-72-2Wy"/>
                             <constraint firstItem="jcm-0L-ajI" firstAttribute="top" secondItem="56t-LA-Rb4" secondAttribute="bottom" constant="10" id="dfn-wW-E5c"/>
                             <constraint firstItem="EDa-jG-2Nd" firstAttribute="leading" secondItem="arb-CD-fS5" secondAttribute="leading" constant="132" id="ks6-4E-Ngy"/>
-                            <constraint firstItem="KCq-wI-WgI" firstAttribute="top" secondItem="arb-CD-fS5" secondAttribute="top" constant="100" id="lUk-Dx-iKn"/>
+                            <constraint firstItem="KCq-wI-WgI" firstAttribute="top" secondItem="arb-CD-fS5" secondAttribute="top" constant="70" id="lUk-Dx-iKn"/>
                             <constraint firstItem="irp-U4-QZQ" firstAttribute="top" secondItem="gJa-r8-Q7W" secondAttribute="top" id="llX-sk-eYV"/>
                             <constraint firstItem="eJk-ki-fCf" firstAttribute="top" secondItem="arb-CD-fS5" secondAttribute="top" constant="515" id="nNm-oA-ySK"/>
                             <constraint firstItem="Qqs-5J-OZz" firstAttribute="top" secondItem="zU9-1n-FdA" secondAttribute="bottom" constant="10" id="xKG-N7-xiC"/>
@@ -1405,7 +1405,7 @@
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" name="Color7"/>
+                            <color key="textColor" name="Color1"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1612,6 +1612,9 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="uaf-Gf-WVk">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" name="Color1"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1631,43 +1634,43 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="電話" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Yh-aL-yIY">
-                                <rect key="frame" x="68" y="399" width="35" height="21"/>
+                                <rect key="frame" x="68" y="369" width="35" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公司名稱" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FwD-R4-nOD">
-                                <rect key="frame" x="68" y="450" width="70" height="21"/>
+                                <rect key="frame" x="68" y="420" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公司統編" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RQe-Bc-Mbk">
-                                <rect key="frame" x="68" y="543" width="70" height="21"/>
+                                <rect key="frame" x="68" y="513" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公司電話" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ON8-yx-wBY">
-                                <rect key="frame" x="68" y="512" width="70" height="21"/>
+                                <rect key="frame" x="68" y="482" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公司地址" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="omI-Z8-eSY">
-                                <rect key="frame" x="68" y="574" width="70" height="21"/>
+                                <rect key="frame" x="68" y="544" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="帳號" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TyY-Pe-wuZ">
-                                <rect key="frame" x="68" y="368" width="35" height="21"/>
+                                <rect key="frame" x="68" y="338" width="35" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公司代碼" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZXb-IY-109">
-                                <rect key="frame" x="68" y="481" width="70" height="21"/>
+                                <rect key="frame" x="68" y="451" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color3"/>
                                 <nil key="highlightedColor"/>
@@ -1691,31 +1694,31 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="電話" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="epw-HJ-VpZ">
-                                <rect key="frame" x="196" y="399" width="35" height="21"/>
+                                <rect key="frame" x="196" y="369" width="35" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color7"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公司名稱" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OHS-zw-AO8">
-                                <rect key="frame" x="196" y="450" width="70" height="21"/>
+                                <rect key="frame" x="196" y="420" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color7"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公司統編" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FtG-TM-bia">
-                                <rect key="frame" x="196" y="543" width="70" height="21"/>
+                                <rect key="frame" x="196" y="513" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color7"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公司電話" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pND-gr-bu1">
-                                <rect key="frame" x="196" y="512" width="70" height="21"/>
+                                <rect key="frame" x="196" y="482" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color7"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公司地址" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qr4-Yi-w9m">
-                                <rect key="frame" x="196" y="574" width="158" height="20.5"/>
+                                <rect key="frame" x="196" y="544" width="158" height="20.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="158" id="hXz-ST-YTR"/>
                                 </constraints>
@@ -1724,13 +1727,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="帳號" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tEM-4O-LqN">
-                                <rect key="frame" x="196" y="368" width="35" height="21"/>
+                                <rect key="frame" x="196" y="338" width="35" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color7"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公司代碼" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iAe-86-OvV">
-                                <rect key="frame" x="196" y="481" width="70" height="21"/>
+                                <rect key="frame" x="196" y="451" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="Color7"/>
                                 <nil key="highlightedColor"/>
@@ -1754,7 +1757,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="eGW-sX-sgU">
-                                <rect key="frame" x="157" y="188.5" width="100" height="99"/>
+                                <rect key="frame" x="157" y="158.5" width="100" height="99"/>
                                 <color key="tintColor" name="Color1"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="6ge-Mx-Evt"/>
@@ -1762,7 +1765,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aK2-Vd-PhI">
-                                <rect key="frame" x="183" y="304.5" width="48.5" height="24"/>
+                                <rect key="frame" x="183" y="274.5" width="48.5" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" name="Color3"/>
                                 <nil key="highlightedColor"/>
@@ -1820,11 +1823,11 @@
                             <constraint firstItem="oV3-39-1ea" firstAttribute="centerX" secondItem="2zR-Wn-eMG" secondAttribute="centerX" id="nRQ-Y9-fX8"/>
                             <constraint firstItem="Qr4-Yi-w9m" firstAttribute="top" secondItem="FtG-TM-bia" secondAttribute="bottom" constant="10" id="opJ-gq-9eF"/>
                             <constraint firstItem="ON8-yx-wBY" firstAttribute="leading" secondItem="FwD-R4-nOD" secondAttribute="leading" id="qLe-oQ-sq0"/>
-                            <constraint firstItem="TyY-Pe-wuZ" firstAttribute="top" secondItem="2zR-Wn-eMG" secondAttribute="top" constant="280" id="rZu-OI-art"/>
+                            <constraint firstItem="TyY-Pe-wuZ" firstAttribute="top" secondItem="2zR-Wn-eMG" secondAttribute="top" constant="250" id="rZu-OI-art"/>
                             <constraint firstItem="cIR-ji-LGl" firstAttribute="leading" secondItem="5oq-Tf-fqT" secondAttribute="leading" id="tDM-wA-K6L"/>
                             <constraint firstItem="FwD-R4-nOD" firstAttribute="leading" secondItem="6Yh-aL-yIY" secondAttribute="leading" id="u7F-bQ-gtf"/>
                             <constraint firstItem="FtG-TM-bia" firstAttribute="leading" secondItem="OHS-zw-AO8" secondAttribute="leading" id="ub3-4m-pnx"/>
-                            <constraint firstItem="eGW-sX-sgU" firstAttribute="top" secondItem="2zR-Wn-eMG" secondAttribute="top" constant="100" id="wGo-x0-hmK"/>
+                            <constraint firstItem="eGW-sX-sgU" firstAttribute="top" secondItem="2zR-Wn-eMG" secondAttribute="top" constant="70" id="wGo-x0-hmK"/>
                             <constraint firstItem="cIR-ji-LGl" firstAttribute="top" secondItem="nws-bY-bCF" secondAttribute="bottom" constant="10" id="xOI-kx-9Xl"/>
                             <constraint firstItem="5YK-WY-Yyj" firstAttribute="leading" secondItem="Qr4-Yi-w9m" secondAttribute="leading" id="xQc-0E-MN0"/>
                             <constraint firstItem="pND-gr-bu1" firstAttribute="leading" secondItem="OHS-zw-AO8" secondAttribute="leading" id="y75-kP-O9c"/>
@@ -1887,7 +1890,10 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" name="Color1"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" name="Color7"/>
+                            <color key="textColor" name="Color1"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" name="Color1"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1929,7 +1935,7 @@
                             <color key="textColor" name="Color7"/>
                         </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" name="Color7"/>
+                            <color key="textColor" name="Color1"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1995,11 +2001,17 @@
         <namedColor name="Color1">
             <color red="0.97254901960784312" green="0.74117647058823533" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="Color1">
+            <color red="0.97254901960784312" green="0.74117647058823533" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="Color3">
             <color red="0.96078431372549022" green="0.49019607843137253" blue="0.56862745098039214" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Color3">
             <color red="0.96078431372549022" green="0.49019607843137253" blue="0.56862745098039214" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Color7">
+            <color red="0.40392156862745099" green="0.40392156862745099" blue="0.47450980392156861" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Color7">
             <color red="0.40392156862745099" green="0.40392156862745099" blue="0.47450980392156861" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

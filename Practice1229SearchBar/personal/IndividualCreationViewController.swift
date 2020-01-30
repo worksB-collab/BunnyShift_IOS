@@ -26,6 +26,7 @@ class IndividualCreationViewController: UIViewController {
     @IBAction func IndividualCreation_confirm(_ sender: UIButton) {
         
         let controller1 = UIAlertController(title: "好了嗎？", message: "請確認資訊正確", preferredStyle: .alert)
+        controller1.setTint(color: UIColor(named: "Color3")!)
         let okAction = UIAlertAction(title: "沒問題", style: .default) { (_) in
             if self.individual_tf_account.text == "" || self.individual_tf_password.text == "" || self.individual_tf_name.text == "" || self.individual_tf_phone.text == "" || self.individual_tf_companyID.text == ""{
                 Toast.showToast(self.view, "請完整填寫空白處")

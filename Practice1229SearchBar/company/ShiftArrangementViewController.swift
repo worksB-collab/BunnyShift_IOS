@@ -38,7 +38,7 @@ class ShiftArrangementViewController: UIViewController, UITableViewDataSource , 
 
         if currentShiftArr.count == 0{
             let controller1 = UIAlertController(title: "忘記填了嗎？", message: "請至少書輸入一項班別", preferredStyle: .alert)
-            
+            controller1.setTint(color: UIColor(named: "Color3")!)
             let cancelAction = UIAlertAction(title: "好的", style: .cancel) { (_) in
             }
             controller1.addAction(cancelAction)
@@ -54,7 +54,7 @@ class ShiftArrangementViewController: UIViewController, UITableViewDataSource , 
         
         
         let controller1 = UIAlertController(title: "新增班別", message: "請輸入以下資訊", preferredStyle: .alert)
-        
+        controller1.setTint(color: UIColor(named: "Color3")!)
         controller1.addTextField { (textField) in
         textField.placeholder = "日別"
             textField.tag = 0
@@ -125,7 +125,6 @@ class ShiftArrangementViewController: UIViewController, UITableViewDataSource , 
         
         controller1.addAction(okAction)
         
-                
         let cancelAction = UIAlertAction(title: "取消", style: .cancel) { (_) in
         }
         controller1.addAction(cancelAction)

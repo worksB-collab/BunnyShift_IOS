@@ -40,9 +40,9 @@ class CNotificationController: UIViewController {
 
     func setTableView(){
         view.addSubview(tableView)
-        self.tableView.register(UINib(nibName: "RegularNotificationCell", bundle: nil), forCellReuseIdentifier: "RegularNotificationCell")
+        self.tableView.register(UINib(nibName: "NormalNotificationCell", bundle: nil), forCellReuseIdentifier: "NormalNotificationCell")
         self.tableView.register(UINib(nibName: "AcceptableNotificationCell", bundle: nil), forCellReuseIdentifier: "AcceptableNotificationCell")
-        tableView.frame = CGRect(x: 10, y: 200, width: view.frame.width-20, height: 650);
+        tableView.frame = CGRect(x: 10, y: 150, width: view.frame.width-20, height: 650);
         tableView.dataSource = self
         tableView.delegate = self
         tableView.allowsMultipleSelection = false
@@ -64,7 +64,7 @@ class CNotificationController: UIViewController {
                     return
                 }
                 
-                for i in 0 ..< arr.count{
+                for i in (0 ... arr.count-1).reversed(){
                     let companyJson = arr[i]
                     let leaveID = companyJson["leaveID"].int
                     let staffName = companyJson["staffName"].string
@@ -97,7 +97,7 @@ class CNotificationController: UIViewController {
                     return
                 }
                 
-                for i in 0 ..< arr.count{
+                for i in (0 ... arr.count-1).reversed(){
                     let companyJson = arr[i]
                     let leaveID = companyJson["leaveID"].int
                     let staffName = companyJson["staffName"].string
@@ -138,16 +138,27 @@ extension CNotificationController : UITableViewDelegate, UITableViewDataSource{
         default:
             reviewed = false
         }
-        let leaveID = acceptableLeaveArr[sender.tag].leaveID
-        NetWorkController.sharedInstance.postT(api: "/leave/companyreviewleave", params: ["leaveID": leaveID, "reviewed": reviewed])
-        {(jsonData) in
-            print(jsonData.description)
-            if jsonData["Status"].string == "200"{
-                print(jsonData["message"].string)
-                self.acceptableLeaveArr.remove(at: sender.tag)
-                self.tableView.reloadData()
+        let controller1 = UIAlertController(title: "確認\(sender.currentTitle!)", message: "如沒問題，請按下\(sender.currentTitle!)", preferredStyle: .alert)
+        controller1.setTint(color: UIColor(named: "Color3")!)
+        let okAction = UIAlertAction(title: "\(sender.currentTitle!)", style: .default) { (_) in
+            let leaveID = self.acceptableLeaveArr[sender.tag].leaveID
+            NetWorkController.sharedInstance.postT(api: "/leave/companyreviewleave", params: ["leaveID": leaveID, "reviewed": reviewed])
+            {(jsonData) in
+                print(jsonData.description)
+                if jsonData["Status"].string == "200"{
+                    print(jsonData["message"].string)
+                    self.acceptableLeaveArr.remove(at: sender.tag)
+                    self.tableView.reloadData()
+                }
             }
         }
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel) { (_) in
+        }
+        controller1.addAction(okAction)
+        controller1.addAction(cancelAction)
+        present(controller1, animated: true, completion: nil)
+        
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -160,11 +171,12 @@ extension CNotificationController : UITableViewDelegate, UITableViewDataSource{
             
             let leaveData = acceptableLeaveArr[indexPath.item]
             
-            let notification = "\(leaveData.staffName!)請求\(leaveData.deputy!)協助代班\n" +
-                "\(leaveData.date!) \(leaveData.timeShiftName!)\n" +
-                "\(leaveData.startTime!)-\(leaveData.endTime!)\n" +
-                "\(leaveData.submitTime!)"
-            cell1.configureCell(notification: notification)
+            let title = "\(leaveData.staffName!)請求\(leaveData.deputy!)協助代班"
+            let shift = "\(leaveData.date!) \(leaveData.timeShiftName!)"
+            let time = "\(leaveData.startTime!)-\(leaveData.endTime!)"
+            let submitTime = "\(leaveData.submitTime!)"
+            
+            cell1.configureCell(title: title, shift: shift, time: time, submitTime: submitTime)
             cell1.accept.addTarget(self, action: #selector(acceptAction), for: .touchUpInside)
             cell1.reject.addTarget(self, action: #selector(acceptAction), for: .touchUpInside)
             
@@ -177,16 +189,19 @@ extension CNotificationController : UITableViewDelegate, UITableViewDataSource{
             return cell1
             
         }else{
-            let cellIdentifier = "RegularNotificationCell"
-            let cell1 = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! RegularNotificationCell
+            let cellIdentifier = "NormalNotificationCell"
+            let cell1 = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! NormalNotificationCell
             //            cell1.backgroundColor = UIColor(named: "Color1")
             
             let leaveData = regularRecordArr[indexPath.item - acceptableLeaveArr.count]
-            let notification = "\(leaveData.statusName!)\n" +
-                "由\(leaveData.deputy!)協助\(leaveData.staffName!)代班\n" +
-            "時間為\(leaveData.date!) \(leaveData.timeShiftName!) \(leaveData.startTime!)-\(leaveData.endTime!)\n"
-            let time = leaveData.submitTime!
-            cell1.configureCell(notification: notification, time: time)
+            
+            let status = "\(leaveData.statusName!)"
+            let title = "由\(leaveData.deputy!)協助\(leaveData.staffName!)代班"
+            let shift = "時間為\(leaveData.date!) \(leaveData.timeShiftName!)"
+            let time = "\(leaveData.startTime!)-\(leaveData.endTime!)"
+            let submitTime = "\(leaveData.submitTime!)"
+            
+            cell1.configureCell(status: status, title: title, shift: shift, time: time, submitTime: submitTime)
             
             cell1.layer.shadowColor = UIColor.groupTableViewBackground.cgColor
             cell1.layer.shadowOffset = CGSize(width: 2, height: 7)

@@ -53,7 +53,7 @@ class PersonalScheduleViewController: UIViewController {
         }
     
     func setCalendar(){
-        let calendar = FSCalendar(frame: CGRect(x: 5, y: 100, width: view.frame.width-10, height: view.frame.height-200))
+        let calendar = FSCalendar(frame: CGRect(x: 5, y: 150, width: view.frame.width-10, height: view.frame.height-250))
         calendar.dataSource = self
         calendar.delegate = self
         calendar.register(FSCalendarCell.self, forCellReuseIdentifier: "CELL")

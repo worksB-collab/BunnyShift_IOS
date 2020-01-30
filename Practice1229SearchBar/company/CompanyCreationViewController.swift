@@ -33,6 +33,7 @@ class CompanyCreationViewController: UIViewController{
         }
         
         let controller1 = UIAlertController(title: "完成了？", message: "請確認資訊正確", preferredStyle: .alert)
+        controller1.setTint(color: UIColor(named: "Color3")!)
         let okAction = UIAlertAction(title: "沒問題", style: .default) { (_) in
             
             Global.companyInfo = Company(name : self.company_tf_name.text!, number: self.company_tf_phone.text!, address: self.company_tf_address.text!, taxID : self.company_tf_taxID.text!)

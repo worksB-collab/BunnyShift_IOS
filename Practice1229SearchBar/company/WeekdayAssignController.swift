@@ -173,12 +173,17 @@ class WeekdayAssignController: UIViewController, UICollectionViewDataSource, UIC
         return weekDayNames.count
     }
     
+    var viewAppear = true
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeekdayCollectionViewCell.reuseIdentifier,for: indexPath) as? WeekdayCollectionViewCell {
             let name = weekDayNames[indexPath.row]
             cell.configureCell(name: name)
             cell.clipsToBounds = true
             cell.layer.cornerRadius = cell.frame.height/2
+            if viewAppear{
+                collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .left)
+                viewAppear = false
+            }
             changeCellColor(collectionView, didSelectItemAt: cell, isSelected: indexPath.item == selected ? true : false)
             return cell
             
@@ -212,7 +217,7 @@ class WeekdayAssignController: UIViewController, UICollectionViewDataSource, UIC
     
     func changeCellColor(_ collectionView: UICollectionView, didSelectItemAt cell: UICollectionViewCell, isSelected : Bool){
         if isSelected {
-            cell.contentView.backgroundColor = UIColor(named : "Color6")
+            cell.contentView.backgroundColor = UIColor(named : "Color7")
         }else{
             cell.contentView.backgroundColor = UIColor.clear
         }

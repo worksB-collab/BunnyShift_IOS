@@ -34,6 +34,7 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
     @IBAction func login_btn_login(_ sender: UIButton) {
         if login_tf_password.text == "" || login_tf_account.text == "" || loginIdentify.text == "" {
             let controller = UIAlertController(title: "資料未完成", message: "請輸入正確的身份，帳號及密碼", preferredStyle: .alert)
+            controller.setTint(color: UIColor(named: "Color3")!)
             let okAction = UIAlertAction(title: "好的", style: .default) { (_) in
                 print("請輸入正確的身份，帳號及密碼")
             }
@@ -212,7 +213,7 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
     }
     @IBAction func forgotPassword(_ sender: UIButton) {
         let alertController = UIAlertController(title: "Email", message: "", preferredStyle: .alert)
-        
+        alertController.setTint(color: UIColor(named: "Color3")!)
         // Change font and color of title
         alertController.setTitlet(font: UIFont.systemFont(ofSize: 20), color: UIColor(named :"Color3"))
         

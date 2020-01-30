@@ -13,7 +13,7 @@ class PersonalProfileController: UIViewController {
     @IBAction func logout(_ sender: RoundRecButton) {
         let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RootNavigationController")
         let controller1 = UIAlertController(title: "登出", message: "確認登出？", preferredStyle: .alert)
-        
+        controller1.setTint(color: UIColor(named: "Color3")!)
         let okAction = UIAlertAction(title: "登出", style: .default) { (_) in
             Global.clearData()
             Toast.showToast(self.view, "登出")

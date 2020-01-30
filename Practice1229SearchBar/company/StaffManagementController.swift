@@ -85,7 +85,7 @@ class StaffManagementController: UIViewController, UITableViewDelegate, UITableV
 //        let cells = tableView.cellForRow(at: sender.)
         
         let controller1 = UIAlertController(title: "確定開除\(Global.staffList[sender.tag].name)嗎？", message: "開除後此員工將從清單上移除", preferredStyle: .alert)
-        
+        controller1.setTint(color: UIColor(named: "Color3")!)
         let okAction = UIAlertAction(title: "確認", style: .default) { (_) in
             NetWorkController.sharedInstance.postT(api: "/leave/firestaff", params: ["staffID" : Global.staffList[sender.tag].staffID])
             {(jsonData) in
@@ -105,22 +105,22 @@ class StaffManagementController: UIViewController, UITableViewDelegate, UITableV
     }
     
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("selected" , indexPath.item)
-        let cell1 = tableView.cellForRow(at: indexPath) as! StaffManagementTableViewCell
-        
-        
-        cell1.contentView.backgroundColor = UIColor (named : "Color1")
-        cell1.contentView.tintColor = UIColor (named : "Color5")
-    }
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        
-        print("deSelected" , indexPath.item)
-        
-        let cell1 = tableView.cellForRow(at: indexPath) as! StaffManagementTableViewCell
-        
-        cell1.contentView.backgroundColor = UIColor.clear
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        print("selected" , indexPath.item)
+//        let cell1 = tableView.cellForRow(at: indexPath) as! StaffManagementTableViewCell
+//        
+//        
+//        cell1.contentView.backgroundColor = UIColor (named : "Color1")
+//        cell1.contentView.tintColor = UIColor (named : "Color5")
+//    }
+//    
+//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+//        
+//        print("deSelected" , indexPath.item)
+//        
+//        let cell1 = tableView.cellForRow(at: indexPath) as! StaffManagementTableViewCell
+//        
+//        cell1.contentView.backgroundColor = UIColor.clear
+//    }
     
 }

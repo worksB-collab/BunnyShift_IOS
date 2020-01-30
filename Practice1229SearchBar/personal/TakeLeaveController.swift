@@ -44,7 +44,9 @@ class TakeLeaveController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     }
     
     func sendOutApplication(){
+        getStaffIDAPI()
         let controller1 = UIAlertController(title: "確認送出？", message: "請確認資訊正確", preferredStyle: .alert)
+        controller1.setTint(color: UIColor(named: "Color3")!)
         let okAction = UIAlertAction(title: "沒問題", style: .default) { (_) in
             if TakeLeaveController.selectedScheduleID == nil || Global.companyInfo?.ltdID == nil {
                 Toast.showToast(self.view, "資料不完整")
@@ -62,7 +64,10 @@ class TakeLeaveController: UIViewController, UIPickerViewDelegate, UIPickerViewD
             {(jsonData) in
                 
                 if jsonData["Status"].string == "200"{
+                    print("xx? ltdScheduleID \( TakeLeaveController.selectedScheduleID) time\( time)deputyID \(TakeLeaveController.deputyID) approverLtdID \(Global.companyInfo?.ltdID))")
+                    
                     Toast.showToast(self.view, "已成功送出申請")
+                    
                     self.dismiss(animated: true, completion: nil)
                 }else{
                     Toast.showToast(self.view, jsonData["message"].string!)
@@ -87,9 +92,11 @@ class TakeLeaveController: UIViewController, UIPickerViewDelegate, UIPickerViewD
                 for i in 0 ..< arr.count{
                     let companyJson = arr[i]
                     let staffName = companyJson["staffName"].string
+                    print("zzz \(staffName) \(self.tf_deputy.text)")
                     if staffName == self.tf_deputy.text{
                         let staffID = companyJson["staffID"].int
                         TakeLeaveController.deputyID = staffID
+                        
                     }
                 }
             }
