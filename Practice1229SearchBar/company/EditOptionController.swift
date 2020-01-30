@@ -25,7 +25,7 @@ class EditOptionController: UIViewController, UITableViewDataSource , UITableVie
         
         navigationController?.title = "各種設定"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(named: "Color7")! ]
-        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.isTranslucent = true
     }
     

@@ -37,7 +37,7 @@ class ChooseDateController: UIViewController {
     func setNav(){
         navigationItem.title = "選擇日期"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(named: "Color7")! ]
-        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.isTranslucent = true
         }
     

@@ -32,7 +32,8 @@ class ScheduleViewController: UIViewController {
     
     fileprivate weak var calendar: FSCalendar!
     fileprivate weak var eventLabel: UILabel!
-    var selectedStaff = ""
+    var selectedStaff : String?
+    var selectedStaffID : Int?
     
     //test
     var datesWithEvent = ["2020-01-03", "2020-01-05", "2020-01-07", "2020-01-10", "2020-01-15", "2020-01-21", "2020-01-26", "2020-01-29"]
@@ -47,7 +48,10 @@ class ScheduleViewController: UIViewController {
         self.calendar.setScope(scope, animated: true)
     }
     
-    
+    @IBAction func btn_assign(_ sender: UIBarButtonItem) {
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "navAssignScheduleController")
+        present(controller, animated: true, completion: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,6 +68,7 @@ class ScheduleViewController: UIViewController {
 //        let indexPathForFirstRow = IndexPath(row: selected, section: 0)
 //        collectionView.selectItem(at: indexPathForFirstRow, animated: true, scrollPosition: [])
         Updates.getStaffList()
+        collectionView.reloadData()
     }
     
     
@@ -108,7 +113,7 @@ class ScheduleViewController: UIViewController {
     func setNav(){
         navigationItem.title = "班表總覽"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(named: "Color7")! ]
-        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.isTranslucent = true
 
     }
@@ -165,18 +170,69 @@ extension ScheduleViewController :  UICollectionViewDataSource, UICollectionView
     
     // 點選 cell 後執行的動作
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedCell:UICollectionViewCell = self.collectionView.cellForItem(at: indexPath)!
+        let selectedCell: StaffCollectionViewCell = self.collectionView.cellForItem(at: indexPath) as! StaffCollectionViewCell
         if selectedCell != nil {
             changeCellColor(collectionView, didSelectItemAt: self.collectionView.cellForItem(at: indexPath) as! UICollectionViewCell, isSelected: true)
-            selectedStaff = Global.staffList[indexPath.item].name
+            
+//            print("xxx \(selectedStaff) \(selectedCell.name!.text!)")
+            if selectedStaff == selectedCell.name!.text!{
+                selectedStaff = nil
+            }else{
+                selectedStaff = selectedCell.name!.text!
+            }
+            if selectedStaff == nil{
+                //希望做重複點選同一個員工就取消選項的功能，尚未完成
+                changeCellColor(collectionView, didSelectItemAt: self.collectionView.cellForItem(at: indexPath) as! UICollectionViewCell, isSelected: false)
+                Updates.seeNotEnoughDates(calendar : calendar)
+                return
+            }
         }
+        if selectedStaff != nil{
+            seeNotEnoughDates()
+        }
+        
+        
     }
     
+    func seeNotEnoughDates(){
+        Global.eventDotsArr = []
+        var dailyManPower : Array<Int>?
+        dailyManPower = Array(repeating : 0, count : countOfDaysInCurrentMonth(fscalendar : calendar))
+        let daysinMonth = countOfDaysInCurrentMonth(fscalendar : calendar)
+        for i in 0 ..< daysinMonth {
+            for j in Global.monthlyShiftArr!{
+                let date = j?.date!.components(separatedBy: "-")
+                let day = Int(date![2])
+                if day == i, j?.staffName == selectedStaff{
+                    dailyManPower![i] += 1
+                }
+            }
+        }
+        //有安排班表的日子 （紅點會標記這些日子）
+        for i in 0 ..< dailyManPower!.count{
+            if dailyManPower![i] > 0{
+                let theDay = dateFormatter.string(from: calendar.currentPage.startOfDay.add(component: .day, value: i-1))
+                Global.eventDotsArr.append(theDay)
+            }
+        }
+        calendar.reloadData()
+    }
+    
+    func countOfDaysInCurrentMonth(fscalendar : FSCalendar) ->Int {
+        let calendar = Calendar(identifier:Calendar.Identifier.gregorian)
+        let range = (calendar as NSCalendar?)?.range(of: NSCalendar.Unit.day, in: NSCalendar.Unit.month, for:  fscalendar.currentPage)
+        return (range?.length)!
+    }
+    
+    
+
+    
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let selectedCell:UICollectionViewCell? = self.collectionView.cellForItem(at: indexPath)
+        let selectedCell: StaffCollectionViewCell? = self.collectionView.cellForItem(at: indexPath) as! StaffCollectionViewCell
         if selectedCell != nil {
             changeCellColor(collectionView, didSelectItemAt: self.collectionView.cellForItem(at: indexPath) as! UICollectionViewCell, isSelected: false)
         }
+        
     }
     
     func changeCellColor(_ collectionView: UICollectionView, didSelectItemAt cell: UICollectionViewCell, isSelected : Bool){

@@ -60,6 +60,10 @@ class SNotificationController: UIViewController {
                 self.acceptableLeaveArr = Array<LeaveData>()
                 
                 let arr = jsonData["rows"]
+                if arr.isEmpty{
+                    return
+                }
+                
                 for i in 0 ..< arr.count{
                     let companyJson = arr[i]
                     let leaveID = companyJson["leaveID"].int
@@ -88,6 +92,11 @@ class SNotificationController: UIViewController {
 
                 self.regularRecordArr = Array<LeaveData>()
                 let arr = jsonData["rows"]
+                
+                if arr.isEmpty{
+                    return
+                }
+                
                 for i in 0 ..< arr.count{
                     let companyJson = arr[i]
                     let leaveID = companyJson["leaveID"].int
@@ -100,7 +109,7 @@ class SNotificationController: UIViewController {
                     let endTime = companyJson["endTime"].string
                     let statusName = companyJson["statusName"].string
                     let submitTime = companyJson["submitTime"].string
-                    self.regularRecordArr.append(LeaveData(leaveID : leaveID!, staffName : staffName!, deputy : deputy!, date : date!, dateShiftName : dateShiftName!, timeShiftName : timeShiftName!, startTime : startTime!, endTime : endTime!, statusName : statusName!, submitTime: submitTime!))
+                    self.regularRecordArr.append(LeaveData(leaveID : leaveID!, staffName : staffName!, deputy : deputy ?? "查無人員", date : date!, dateShiftName : dateShiftName!, timeShiftName : timeShiftName!, startTime : startTime!, endTime : endTime!, statusName : statusName!, submitTime: submitTime!))
                 }
             }
             self.tableView.reloadData()
@@ -118,12 +127,11 @@ extension SNotificationController : UITableViewDelegate, UITableViewDataSource{
     
     // 根據各區去計算顯示列數
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return regularRecordArr.count + acceptableLeaveArr.count //需要依據當天為平日或假日給予不同的array
+        return regularRecordArr.count + acceptableLeaveArr.count
     }
     
     @objc func acceptAction(_ sender: UIButton){
         var reviewed : Bool?
-        print("xxx> \(sender.currentTitle)")
         switch sender.currentTitle {
         case "同意":
             reviewed = true
@@ -131,7 +139,7 @@ extension SNotificationController : UITableViewDelegate, UITableViewDataSource{
             reviewed = false
         }
         let leaveID = acceptableLeaveArr[sender.tag].leaveID
-        NetWorkController.sharedInstance.postT(api: "/leave/companyreviewleave", params: ["leaveID": leaveID, "reviewed": reviewed])
+        NetWorkController.sharedInstance.postT(api: "/leave/staffreviewdeputy", params: ["leaveID": leaveID, "reviewed": reviewed])
         {(jsonData) in
             print(jsonData.description)
             if jsonData["Status"].string == "200"{
@@ -148,13 +156,14 @@ extension SNotificationController : UITableViewDelegate, UITableViewDataSource{
             
             let cellIdentifier = "AcceptableNotificationCell"
             let cell1 = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! AcceptableNotificationCell
-            cell1.backgroundColor = UIColor(named: "Color1")
+//            cell1.backgroundColor = UIColor(named: "Color1")
             
             let leaveData = acceptableLeaveArr[indexPath.item]
             
             let notification = "來自\(leaveData.staffName!)的代班請求\n" +
             "\(leaveData.date!) \(leaveData.timeShiftName!)\n" +
-            "\(leaveData.startTime!)-\(leaveData.endTime!)\n"
+            "\(leaveData.startTime!)-\(leaveData.endTime!)\n" +
+            "\(leaveData.submitTime!)"
             
             cell1.configureCell(notification: notification)
             cell1.accept?.addTarget(self, action: #selector(acceptAction), for: .touchUpInside)
@@ -171,15 +180,15 @@ extension SNotificationController : UITableViewDelegate, UITableViewDataSource{
         }else{
             let cellIdentifier = "RegularNotificationCell"
             let cell1 = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! RegularNotificationCell
-            cell1.backgroundColor = UIColor(named: "Color1")
+//            cell1.backgroundColor = UIColor(named: "Color1")
             
             let leaveData = regularRecordArr[indexPath.item - acceptableLeaveArr.count]
-            let notification = "\(leaveData.statusName!)" +
+            let notification = "\(leaveData.statusName!)\n" +
                 "由\(leaveData.deputy!)協助\(leaveData.staffName!)代班\n" +
                 "時間為\(leaveData.date!) \(leaveData.timeShiftName!)\n" +
                 "\(leaveData.startTime!)-\(leaveData.endTime!)\n"
-            let time = leaveData.submitTime
-            cell1.configureCell(notification: notification, time: time!)
+            let time = leaveData.submitTime!
+            cell1.configureCell(notification: notification, time: time)
             
             cell1.layer.shadowColor = UIColor.groupTableViewBackground.cgColor
             cell1.layer.shadowOffset = CGSize(width: 2, height: 7)

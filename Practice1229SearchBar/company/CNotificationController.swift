@@ -40,8 +40,8 @@ class CNotificationController: UIViewController {
 
     func setTableView(){
         view.addSubview(tableView)
-        self.tableView.register(RegularNotificationCell.self, forCellReuseIdentifier: "RegularNotificationCell")
-        self.tableView.register(AcceptableNotificationCell.self, forCellReuseIdentifier: "AcceptableNotificationCell")
+        self.tableView.register(UINib(nibName: "RegularNotificationCell", bundle: nil), forCellReuseIdentifier: "RegularNotificationCell")
+        self.tableView.register(UINib(nibName: "AcceptableNotificationCell", bundle: nil), forCellReuseIdentifier: "AcceptableNotificationCell")
         tableView.frame = CGRect(x: 10, y: 200, width: view.frame.width-20, height: 650);
         tableView.dataSource = self
         tableView.delegate = self
@@ -59,6 +59,11 @@ class CNotificationController: UIViewController {
                 self.acceptableLeaveArr = Array<LeaveData>()
                 
                 let arr = jsonData["rows"]
+                
+                if arr.isEmpty{
+                    return
+                }
+                
                 for i in 0 ..< arr.count{
                     let companyJson = arr[i]
                     let leaveID = companyJson["leaveID"].int
@@ -87,6 +92,11 @@ class CNotificationController: UIViewController {
 
                 self.regularRecordArr = Array<LeaveData>()
                 let arr = jsonData["rows"]
+                
+                if arr.isEmpty{
+                    return
+                }
+                
                 for i in 0 ..< arr.count{
                     let companyJson = arr[i]
                     let leaveID = companyJson["leaveID"].int
@@ -99,7 +109,7 @@ class CNotificationController: UIViewController {
                     let endTime = companyJson["endTime"].string
                     let statusName = companyJson["statusName"].string
                     let submitTime = companyJson["submitTime"].string
-                    self.regularRecordArr.append(LeaveData(leaveID : leaveID!, staffName : staffName!, deputy : deputy!, date : date!, dateShiftName : dateShiftName!, timeShiftName : timeShiftName!, startTime : startTime!, endTime : endTime!, statusName : statusName!, submitTime: submitTime!))
+                    self.regularRecordArr.append(LeaveData(leaveID : leaveID!, staffName : staffName!, deputy : deputy ?? "查無人員", date : date!, dateShiftName : dateShiftName!, timeShiftName : timeShiftName!, startTime : startTime!, endTime : endTime!, statusName : statusName!, submitTime: submitTime!))
                 }
             }
             self.tableView.reloadData()
@@ -112,15 +122,12 @@ class CNotificationController: UIViewController {
 extension CNotificationController : UITableViewDelegate, UITableViewDataSource{
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     // 根據各區去計算顯示列數
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0{
-            return acceptableLeaveArr.count
-        }
-        return regularRecordArr.count //需要依據當天為平日或假日給予不同的array
+        return regularRecordArr.count + acceptableLeaveArr.count
     }
     
     @objc func acceptAction(_ sender: UIButton){
@@ -144,71 +151,70 @@ extension CNotificationController : UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0{
+        
+        if indexPath.item < acceptableLeaveArr.count{
             
             let cellIdentifier = "AcceptableNotificationCell"
             let cell1 = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! AcceptableNotificationCell
             cell1.backgroundColor = UIColor(named: "Color1")
             
             let leaveData = acceptableLeaveArr[indexPath.item]
-            // for staff
-            //            var notification = "來自\(leaveData.staffName)的代班請求\n" +
-            //                                "\(leaveData.date) \(leaveData.timeShiftName) \(leaveData.startTime)-\(leaveData.endTime)\n"
             
-            let notification = "\(leaveData.staffName)請求\(leaveData.deputy)協助代班\n" +
-            "\(leaveData.date) \(leaveData.timeShiftName) \(leaveData.startTime)-\(leaveData.endTime)\n" +
-                "\(leaveData.submitTime)"
+            let notification = "\(leaveData.staffName!)請求\(leaveData.deputy!)協助代班\n" +
+                "\(leaveData.date!) \(leaveData.timeShiftName!)\n" +
+                "\(leaveData.startTime!)-\(leaveData.endTime!)\n" +
+                "\(leaveData.submitTime!)"
             cell1.configureCell(notification: notification)
             cell1.accept.addTarget(self, action: #selector(acceptAction), for: .touchUpInside)
             cell1.reject.addTarget(self, action: #selector(acceptAction), for: .touchUpInside)
             
-                        cell1.layer.shadowColor = UIColor.groupTableViewBackground.cgColor
-                        cell1.layer.shadowOffset = CGSize(width: 2, height: 7)
-                        cell1.layer.shadowOpacity = 2
-                        cell1.layer.shadowRadius = 2
-                        cell1.layer.masksToBounds = false
+            cell1.layer.shadowColor = UIColor.groupTableViewBackground.cgColor
+            cell1.layer.shadowOffset = CGSize(width: 2, height: 7)
+            cell1.layer.shadowOpacity = 2
+            cell1.layer.shadowRadius = 2
+            cell1.layer.masksToBounds = false
             
             return cell1
+            
         }else{
             let cellIdentifier = "RegularNotificationCell"
             let cell1 = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! RegularNotificationCell
-            cell1.backgroundColor = UIColor(named: "Color1")
+            //            cell1.backgroundColor = UIColor(named: "Color1")
             
-            let leaveData = regularRecordArr[indexPath.item]
-            let notification = "\(leaveData.statusName)" +
-                "由\(leaveData.deputy)協助\(leaveData.staffName)代班\n" +
-            "時間為\(leaveData.date) \(leaveData.timeShiftName) \(leaveData.startTime)-\(leaveData.endTime)\n" +
-                           "\(leaveData.submitTime)"
-            let time = leaveData.submitTime
-            cell1.configureCell(notification: notification, time: time!)
+            let leaveData = regularRecordArr[indexPath.item - acceptableLeaveArr.count]
+            let notification = "\(leaveData.statusName!)\n" +
+                "由\(leaveData.deputy!)協助\(leaveData.staffName!)代班\n" +
+            "時間為\(leaveData.date!) \(leaveData.timeShiftName!) \(leaveData.startTime!)-\(leaveData.endTime!)\n"
+            let time = leaveData.submitTime!
+            cell1.configureCell(notification: notification, time: time)
             
-            //            cell1.layer.shadowColor = UIColor.groupTableViewBackground.cgColor
-            //            cell1.layer.shadowOffset = CGSize(width: 2, height: 7)
-            //            cell1.layer.shadowOpacity = 2
-            //            cell1.layer.shadowRadius = 2
-            //            cell1.layer.masksToBounds = false
+            cell1.layer.shadowColor = UIColor.groupTableViewBackground.cgColor
+            cell1.layer.shadowOffset = CGSize(width: 2, height: 7)
+            cell1.layer.shadowOpacity = 2
+            cell1.layer.shadowRadius = 2
+            cell1.layer.masksToBounds = false
             
             return cell1
         }
     }
     
-
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        print("selected" , indexPath.item)
-//        let cell1 = tableView.cellForRow(at: indexPath) as! DayViewTableViewCell
-//
-//
-//        cell1.contentView.backgroundColor = UIColor (named : "Color1")
-//        cell1.tintColor = UIColor (named : "Color5")
-//    }
-//
-//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-//
-//        print("deSelected" , indexPath.item)
-//
-//        let cell1 = tableView.cellForRow(at: indexPath) as! DayViewTableViewCell
-//
-//        cell1.contentView.backgroundColor = UIColor.clear
-//    }
+    
+    //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    //        print("selected" , indexPath.item)
+    //        let cell1 = tableView.cellForRow(at: indexPath) as! DayViewTableViewCell
+    //
+    //
+    //        cell1.contentView.backgroundColor = UIColor (named : "Color1")
+    //        cell1.tintColor = UIColor (named : "Color5")
+    //    }
+    //
+    //    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+    //
+    //        print("deSelected" , indexPath.item)
+    //
+    //        let cell1 = tableView.cellForRow(at: indexPath) as! DayViewTableViewCell
+    //
+    //        cell1.contentView.backgroundColor = UIColor.clear
+    //    }
 }
 

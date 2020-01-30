@@ -24,13 +24,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dvH-XC-cZO">
-                        <rect key="frame" x="240" y="10" width="30" height="24"/>
+                        <rect key="frame" x="200" y="10" width="30" height="24"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="tintColor" name="Color3"/>
                         <state key="normal" title="同意"/>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kio-ag-xOO">
-                        <rect key="frame" x="280" y="10" width="30" height="24"/>
+                        <rect key="frame" x="260" y="10" width="30" height="24"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="tintColor" name="Color3"/>
                         <state key="normal" title="拒絕"/>
@@ -41,8 +41,8 @@
                     <constraint firstItem="pp6-B8-Ce2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="2SJ-uS-NLJ"/>
                     <constraint firstItem="pp6-B8-Ce2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Gma-0S-t9A"/>
                     <constraint firstAttribute="bottom" secondItem="kio-ag-xOO" secondAttribute="bottom" constant="10" id="HPu-og-aLe"/>
-                    <constraint firstAttribute="trailing" secondItem="kio-ag-xOO" secondAttribute="trailing" constant="10" id="Kl6-ci-EHw"/>
-                    <constraint firstItem="kio-ag-xOO" firstAttribute="leading" secondItem="dvH-XC-cZO" secondAttribute="trailing" constant="10" id="KpQ-Gm-SwR"/>
+                    <constraint firstAttribute="trailing" secondItem="kio-ag-xOO" secondAttribute="trailing" constant="30" id="Kl6-ci-EHw"/>
+                    <constraint firstItem="kio-ag-xOO" firstAttribute="leading" secondItem="dvH-XC-cZO" secondAttribute="trailing" constant="30" id="KpQ-Gm-SwR"/>
                     <constraint firstItem="dvH-XC-cZO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="oKe-zG-HAp"/>
                     <constraint firstAttribute="bottom" secondItem="dvH-XC-cZO" secondAttribute="bottom" constant="10" id="qgq-eQ-U2T"/>
                     <constraint firstItem="kio-ag-xOO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="yp0-5x-KZ1"/>

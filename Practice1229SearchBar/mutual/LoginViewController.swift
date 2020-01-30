@@ -55,8 +55,8 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
                         if jsonData["Status"].string == "200"{
                            
                             let arr = jsonData["rows"]
-                            for _ in 0 ..< arr.count{
-                                let companyJson = arr[0]
+                            for i in 0 ..< arr.count{
+                                let companyJson = arr[i]
                                 
                                 let account = companyJson["ltdAccount"].string
                                 let password = companyJson["ltdPassword"].string
@@ -157,8 +157,8 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
                     
                     Global.identity = "員工"
                     let arr = jsonData["rows"]
-                    for _ in 0 ..< arr.count{
-                        let companyJson = arr[0]
+                    for i in 0 ..< arr.count{
+                        let companyJson = arr[i]
                         
                         let ltdID = companyJson["ltdID"].int
                         let name = companyJson["ltdName"].string
@@ -179,8 +179,8 @@ class LoginViewController: UIViewController , UIPickerViewDataSource, UIPickerVi
                             if jsonData["Status"].string == "200"{
                                 
                                 let arr = jsonData["rows"]
-                                for _ in 0 ..< arr.count{
-                                    let staffJson = arr[0]
+                                for i in 0 ..< arr.count{
+                                    let staffJson = arr[i]
                                     
                                     let staffName = staffJson["staffName"].string
                                     let staffAccount = staffJson["staffAccount"].string

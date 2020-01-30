@@ -18,6 +18,10 @@ class StaffManagementTableViewCell: UITableViewCell {
         
     }
     @IBOutlet weak var salaryMonthly: UIButton!
+    @IBOutlet weak var btn_fire: UIButton!
+    
+    @IBOutlet weak var number: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -36,14 +40,16 @@ class StaffManagementTableViewCell: UITableViewCell {
         return "StaffManagementTableViewCell"
     }
     
-    func configureCell(name: String, currentWorkingHours : Int, assignedWorkingHours : Int, salaryHourly : Int, salaryMonthly : Int) {
-        self.name.titleLabel!.text = name
-        self.currentWorkingHours.titleLabel!.text = "\(assignedWorkingHours)"
-        self.assignedWorkingHours.titleLabel!.text = "\(assignedWorkingHours)"
-        self.salaryHourly.titleLabel?.text = "\(salaryHourly)/hr"
-        self.salaryMonthly.titleLabel?.text = "\(salaryMonthly)"
+    func configureCell(name: String, currentWorkingHours : Int, assignedWorkingHours : Int, salaryHourly : Int, salaryMonthly : Int, number : String) {
         
-        print("AAA " + self.name.titleLabel!.text!)
+        self.name.setTitle(name, for: .normal)
+        self.currentWorkingHours.setTitle("\(assignedWorkingHours)", for: .normal)
+        self.assignedWorkingHours.setTitle("\(assignedWorkingHours)", for: .normal)
+        self.salaryHourly.setTitle("\(salaryHourly)/hr", for: .normal)
+        self.salaryMonthly.setTitle("\(salaryMonthly)", for: .normal)
+        self.number.text = number
+        
+        
     }
     
 }

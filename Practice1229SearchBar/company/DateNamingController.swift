@@ -138,7 +138,7 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
         
         navigationController?.title = "新增日別"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(named: "Color7")! ]
-        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.isTranslucent = true
     }
     

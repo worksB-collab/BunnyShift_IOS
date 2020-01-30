@@ -40,22 +40,22 @@ class IndividualCreationViewController: UIViewController {
                             if jsonData["Status"].string == "200"{
                                 
                                 let arr = jsonData["rows"]
-                                for _ in 0 ..< arr.count{
-                                    let companyJson = arr[0]
+                                for i in 0 ..< arr.count{
+                                    let companyJson = arr[i]
                                     
                                     Global.identity = "公司"
-                                    let token = companyJson["token"].string
                                     
                                     let ltdID = companyJson["ltdID"].int
                                     let name = companyJson["ltdName"].string
                                     let number = companyJson["ltdNumber"].string
                                     let address = companyJson["address"].string
                                     let taxID = companyJson["taxID"].string
-                                    Global.token = token
                                     Global.companyInfo = Company(name: name!, number: number!, address: address!, taxID: taxID!)
                                     Global.companyInfo?.ltdID = ltdID
-                                    self.getStaffID()
                                 }
+                                let token = jsonData["token"].string
+                                Global.token = token
+                                self.getStaffID()
                             }
                         }
                     }else{
@@ -77,8 +77,8 @@ class IndividualCreationViewController: UIViewController {
             
             if jsonData["Status"].string == "200"{
                 let arr = jsonData["rows"]
-                for _ in 0 ..< arr.count{
-                    let staffJson = arr[0]
+                for i in 0 ..< arr.count{
+                    let staffJson = arr[i]
                     let staffID = staffJson["staffID"].int
                     
                     Global.staffInfo = Staff(name : self.individual_tf_name.text!, staffID : staffID!, account: self.individual_tf_account.text!, password: self.individual_tf_password.text!, number: self.individual_tf_phone.text!)

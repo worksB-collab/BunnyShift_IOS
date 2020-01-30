@@ -40,14 +40,15 @@ class PersonalProfileController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        //test
-//        Global.staffInfo = Staff(name: "Chad", staffID: 1, account: "ImChad", password: "yesIm", number: "0985231245")
-//        Global.staffInfo?.salaryHourly = 150
-//        Global.staffInfo?.currentWorkingHours = 50
-//        Global.staffInfo?.assignedWorkingHours = 150
-//        //test
         setInfo()
-        // Do any additional setup after loading the view.
+        setNav()
+    }
+    
+    func setNav(){
+        navigationItem.title = "公司資料"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(named: "Color7")! ]
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.isTranslucent = true
         
     }
     

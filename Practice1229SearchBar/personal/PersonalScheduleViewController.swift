@@ -48,7 +48,7 @@ class PersonalScheduleViewController: UIViewController {
     func setNav(){
         navigationItem.title = "班表"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(named: "Color7")! ]
-        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.isTranslucent = true
         }
     

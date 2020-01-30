@@ -79,7 +79,7 @@ class AssignScheduleController: UIViewController{
     func setNav(){
         navigationItem.title = "班表排程設定"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(named: "Color7")! ]
-        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.isTranslucent = true
         
     }
@@ -343,7 +343,6 @@ extension AssignScheduleController : UICollectionViewDataSource, UICollectionVie
                 calendar.select(selectedDates[i])
             }
         }
-        let sd = calendar.selectedDates.map({self.dateFormatter.string(from: $0)})
         calendar.reloadData()
         
     }
@@ -445,7 +444,6 @@ extension AssignScheduleController : UITableViewDelegate, UITableViewDataSource{
 
 extension AssignScheduleController : FSCalendarDataSource, FSCalendarDelegate{
     
-    
     //data source
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
@@ -503,6 +501,7 @@ extension AssignScheduleController : FSCalendarDataSource, FSCalendarDelegate{
         NetWorkController.sharedInstance.postT(api: "/schedule/removeworkerinschedule", params: ["ltdScheduleID" : self.deselectedScheduleID, "staffID" : selectedStaffID])
         {(jsonData) in
             print("\(jsonData["message"].string)")
+            self.calendar.reloadData()
         }
     }
     

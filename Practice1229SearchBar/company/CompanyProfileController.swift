@@ -36,10 +36,19 @@ class CompanyProfileController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         reloadStaffList()
+        setInfo()
+        setNav()
     }
     
     func viewWillAppear(){
-        reloadStaffList()
+    }
+    
+    func setNav(){
+        navigationItem.title = "公司資料"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(named: "Color7")! ]
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.isTranslucent = true
+        
     }
     
     func setInfo(){
@@ -51,7 +60,8 @@ class CompanyProfileController: UIViewController {
             self.companyID.text = "\(cID)"
         }
         self.address.text = Global.companyInfo?.address
-        self.staffNum.titleLabel?.text = "員工人數：\(Global.companyInfo?.staffList?.count ?? 0)"
+        self.staffNum.setTitle("員工人數：\(Global.staffList.count ?? 0)", for: .normal)
+        
 
     }
     
@@ -64,8 +74,8 @@ class CompanyProfileController: UIViewController {
             if jsonData["Status"].string == "200"{
                 
                 let arr = jsonData["rows"]
-                for _ in 0 ..< arr.count{
-                    let staffJson = arr[0]
+                for i in 0 ..< arr.count{
+                    let staffJson = arr[i]
                     
                     let staffName = staffJson["staffName"].string
                     let staffnumber = staffJson["staffNumber"].string

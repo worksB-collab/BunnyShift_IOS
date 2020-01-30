@@ -65,7 +65,7 @@ class WeekdayAssignController: UIViewController, UICollectionViewDataSource, UIC
     func setNav(){
         navigationItem.title = "每週日別設定"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor(named: "Color7")! ]
-        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.isTranslucent = true
         self.navigationItem.setHidesBackButton(true, animated:true);
         
@@ -199,11 +199,9 @@ class WeekdayAssignController: UIViewController, UICollectionViewDataSource, UIC
             indexP = tableView.indexPath(for: cell)
             tableView.deselectRow(at: indexP!, animated: true)
             tableView.cellForRow(at: indexP!)?.contentView.backgroundColor = UIColor.clear
-            print("CCC deselect")
             if Global.dayType[indexPath.item] == cell.dateName.text{
                 tableView.selectRow(at: indexP, animated: true, scrollPosition: .top)
                 tableView.cellForRow(at: indexP!)?.contentView.backgroundColor = UIColor(named : "Color1")
-                print("CCC select")
             }
         }
     }
