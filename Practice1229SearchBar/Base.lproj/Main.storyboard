@@ -58,7 +58,7 @@
                                 <rect key="frame" x="0.0" y="381" width="414" height="350"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="密碼" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="q7o-XE-pbJ">
-                                        <rect key="frame" x="70" y="123" width="274" height="34"/>
+                                        <rect key="frame" x="70" y="162" width="274" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done" secureTextEntry="YES" textContentType="password"/>
                                         <connections>
@@ -66,7 +66,7 @@
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Pa-ZQ-Nwn" customClass="RoundRecButton" customModule="Practice1229SearchBar" customModuleProvider="target">
-                                        <rect key="frame" x="70" y="177" width="274" height="30"/>
+                                        <rect key="frame" x="70" y="216" width="274" height="30"/>
                                         <color key="backgroundColor" name="Color7"/>
                                         <state key="normal" title="登入">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -76,15 +76,15 @@
                                         </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="帳號" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jdQ-jc-bVm">
-                                        <rect key="frame" x="70" y="70" width="274" height="34"/>
+                                        <rect key="frame" x="70" y="109" width="274" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next" textContentType="email"/>
                                         <connections>
                                             <outlet property="delegate" destination="TyT-7j-vAO" id="Jxo-6M-rlC"/>
                                         </connections>
                                     </textField>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AXr-Yt-8T4" customClass="GIDSignInButton">
-                                        <rect key="frame" x="70" y="227" width="274" height="30"/>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AXr-Yt-8T4" customClass="GIDSignInButton">
+                                        <rect key="frame" x="70" y="266" width="274" height="30"/>
                                         <color key="backgroundColor" name="Color1"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="XjC-7j-MU9"/>
@@ -94,7 +94,7 @@
                                         </connections>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C9K-9L-lG5">
-                                        <rect key="frame" x="0.0" y="265" width="414" height="27"/>
+                                        <rect key="frame" x="0.0" y="254" width="414" height="27"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="忘記密碼？">
                                             <color key="titleColor" name="Color7"/>
@@ -104,7 +104,7 @@
                                         </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="你的身份是？" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yto-Jh-AWI">
-                                        <rect key="frame" x="70" y="16" width="274" height="34"/>
+                                        <rect key="frame" x="70" y="55" width="274" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="274" id="Vtt-Jp-w34"/>
                                         </constraints>
@@ -117,16 +117,15 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="yto-Jh-AWI" firstAttribute="leading" secondItem="yFr-OB-OmZ" secondAttribute="leading" constant="70" id="1pY-lr-iO4"/>
-                                    <constraint firstItem="jdQ-jc-bVm" firstAttribute="top" secondItem="yFr-OB-OmZ" secondAttribute="top" constant="70" id="37T-Sb-vk9"/>
                                     <constraint firstItem="3Pa-ZQ-Nwn" firstAttribute="leading" secondItem="q7o-XE-pbJ" secondAttribute="leading" id="43X-1a-UF6"/>
                                     <constraint firstItem="jdQ-jc-bVm" firstAttribute="leading" secondItem="yFr-OB-OmZ" secondAttribute="leading" constant="70" id="4Do-XN-wE6"/>
                                     <constraint firstItem="AXr-Yt-8T4" firstAttribute="width" secondItem="3Pa-ZQ-Nwn" secondAttribute="width" id="50v-GO-mj7"/>
                                     <constraint firstItem="AXr-Yt-8T4" firstAttribute="top" secondItem="3Pa-ZQ-Nwn" secondAttribute="bottom" constant="20" id="5el-9i-eTt"/>
+                                    <constraint firstItem="C9K-9L-lG5" firstAttribute="top" secondItem="3Pa-ZQ-Nwn" secondAttribute="bottom" constant="8" id="6LD-20-K5c"/>
                                     <constraint firstItem="q7o-XE-pbJ" firstAttribute="top" secondItem="jdQ-jc-bVm" secondAttribute="bottom" constant="19" id="8vH-FD-BjD"/>
                                     <constraint firstItem="q7o-XE-pbJ" firstAttribute="leading" secondItem="jdQ-jc-bVm" secondAttribute="leading" id="C5t-0Q-kjh"/>
                                     <constraint firstAttribute="trailing" secondItem="yto-Jh-AWI" secondAttribute="trailing" constant="70" id="Fve-jE-OXn"/>
                                     <constraint firstAttribute="trailing" secondItem="C9K-9L-lG5" secondAttribute="trailing" id="IR5-sY-Ruz"/>
-                                    <constraint firstItem="C9K-9L-lG5" firstAttribute="top" secondItem="AXr-Yt-8T4" secondAttribute="bottom" constant="8" id="L4B-q4-7E5"/>
                                     <constraint firstAttribute="trailing" secondItem="jdQ-jc-bVm" secondAttribute="trailing" constant="70" id="OAR-qT-wTN"/>
                                     <constraint firstItem="3Pa-ZQ-Nwn" firstAttribute="top" secondItem="q7o-XE-pbJ" secondAttribute="bottom" constant="20" id="RoS-h3-rmi"/>
                                     <constraint firstItem="jdQ-jc-bVm" firstAttribute="top" secondItem="yto-Jh-AWI" secondAttribute="bottom" constant="20" id="VUa-nT-HfZ"/>
@@ -141,20 +140,20 @@
                                 <rect key="frame" x="0.0" y="168" width="414" height="180"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="邦尼排班" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gum-Lj-hCB">
-                                        <rect key="frame" x="0.0" y="134" width="414" height="35"/>
+                                        <rect key="frame" x="0.0" y="182.5" width="414" height="35"/>
                                         <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="29"/>
                                         <color key="textColor" name="Color1"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="table.badge.more" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="1ae-ob-98G">
-                                        <rect key="frame" x="135" y="21.5" width="144" height="105"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon" translatesAutoresizingMaskIntoConstraints="NO" id="1ae-ob-98G">
+                                        <rect key="frame" x="103.5" y="20" width="207" height="152.5"/>
                                         <color key="tintColor" name="Color1"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="1ae-ob-98G" secondAttribute="height" multiplier="72:53" id="lNM-rf-bFe"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="排班的最佳幫手" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FHE-ba-mxA">
-                                        <rect key="frame" x="0.0" y="177" width="414" height="16"/>
+                                        <rect key="frame" x="0.0" y="225.5" width="414" height="16"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" name="Color7"/>
                                         <nil key="highlightedColor"/>
@@ -163,13 +162,13 @@
                                 <constraints>
                                     <constraint firstItem="FHE-ba-mxA" firstAttribute="leading" secondItem="TiX-sf-6vB" secondAttribute="leading" id="0Mf-Nl-fQK"/>
                                     <constraint firstItem="1ae-ob-98G" firstAttribute="top" secondItem="TiX-sf-6vB" secondAttribute="top" constant="20" id="0OD-v3-SaN"/>
-                                    <constraint firstItem="1ae-ob-98G" firstAttribute="width" secondItem="TiX-sf-6vB" secondAttribute="width" multiplier="0.347826" id="0bH-uT-qvV"/>
+                                    <constraint firstItem="1ae-ob-98G" firstAttribute="width" secondItem="TiX-sf-6vB" secondAttribute="width" multiplier="0.5" id="0bH-uT-qvV"/>
                                     <constraint firstAttribute="height" constant="180" id="1p6-Mv-6Ek"/>
                                     <constraint firstAttribute="trailing" secondItem="FHE-ba-mxA" secondAttribute="trailing" id="4TZ-0h-8cy"/>
                                     <constraint firstItem="1ae-ob-98G" firstAttribute="centerX" secondItem="TiX-sf-6vB" secondAttribute="centerX" id="Crd-0P-oef"/>
                                     <constraint firstAttribute="trailing" secondItem="Gum-Lj-hCB" secondAttribute="trailing" id="Q5d-TW-yHd"/>
                                     <constraint firstItem="Gum-Lj-hCB" firstAttribute="leading" secondItem="TiX-sf-6vB" secondAttribute="leading" id="dxa-SV-k9O"/>
-                                    <constraint firstItem="Gum-Lj-hCB" firstAttribute="top" secondItem="1ae-ob-98G" secondAttribute="bottom" constant="8" id="oPU-If-ATh"/>
+                                    <constraint firstItem="Gum-Lj-hCB" firstAttribute="top" secondItem="1ae-ob-98G" secondAttribute="bottom" constant="10" id="oPU-If-ATh"/>
                                     <constraint firstItem="FHE-ba-mxA" firstAttribute="top" secondItem="Gum-Lj-hCB" secondAttribute="bottom" constant="8" id="p98-xt-UFD"/>
                                 </constraints>
                             </view>
@@ -184,6 +183,7 @@
                             <constraint firstItem="yFr-OB-OmZ" firstAttribute="centerX" secondItem="TMn-v0-o8D" secondAttribute="centerX" id="A8c-oy-5Td"/>
                             <constraint firstItem="D07-8D-aZP" firstAttribute="centerX" secondItem="TMn-v0-o8D" secondAttribute="centerX" id="De0-lt-OMK"/>
                             <constraint firstItem="TiX-sf-6vB" firstAttribute="centerX" secondItem="TMn-v0-o8D" secondAttribute="centerX" id="HPz-WC-LXa"/>
+                            <constraint firstItem="yto-Jh-AWI" firstAttribute="top" secondItem="TiX-sf-6vB" secondAttribute="bottom" constant="88" id="OtR-mK-RpT"/>
                             <constraint firstItem="yFr-OB-OmZ" firstAttribute="top" secondItem="TiX-sf-6vB" secondAttribute="bottom" constant="33" id="Qkw-WF-AJs"/>
                             <constraint firstItem="TiX-sf-6vB" firstAttribute="leading" secondItem="TMn-v0-o8D" secondAttribute="leading" id="Uqc-tW-BvX"/>
                             <constraint firstItem="yFr-OB-OmZ" firstAttribute="centerY" secondItem="TMn-v0-o8D" secondAttribute="centerY" constant="81" id="Wkm-6Y-WzH"/>
@@ -1991,13 +1991,10 @@
         <image name="bell" catalog="system" width="64" height="62"/>
         <image name="calendar" catalog="system" width="64" height="52"/>
         <image name="doc.text.magnifyingglass" catalog="system" width="58" height="64"/>
+        <image name="icon" width="366" height="306"/>
         <image name="person" catalog="system" width="64" height="58"/>
         <image name="person.circle" catalog="system" width="64" height="60"/>
         <image name="person.crop.rectangle" catalog="system" width="64" height="46"/>
-        <image name="table.badge.more" catalog="system" width="64" height="44"/>
-        <namedColor name="Color1">
-            <color red="0.97254901960784312" green="0.74117647058823533" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="Color1">
             <color red="0.97254901960784312" green="0.74117647058823533" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -2009,9 +2006,6 @@
         </namedColor>
         <namedColor name="Color3">
             <color red="0.96078431372549022" green="0.49019607843137253" blue="0.56862745098039214" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="Color7">
-            <color red="0.40392156862745099" green="0.40392156862745099" blue="0.47450980392156861" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Color7">
             <color red="0.40392156862745099" green="0.40392156862745099" blue="0.47450980392156861" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

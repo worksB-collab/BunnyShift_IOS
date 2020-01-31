@@ -131,18 +131,20 @@ extension SNotificationController : UITableViewDelegate, UITableViewDataSource{
     }
     
     @objc func acceptAction(_ sender: UIButton){
-        var reviewed : Bool?
-        switch sender.currentTitle {
+        var reviewed : String?
+        print("ooo \(sender.currentTitle!)")
+        switch sender.currentTitle! {
         case "同意":
-            reviewed = true
+            reviewed = "true"
         default:
-            reviewed = false
+            reviewed = "false"
         }
         let controller1 = UIAlertController(title: "確認\(sender.currentTitle!)?", message: "如沒問題，請按下\(sender.currentTitle!)", preferredStyle: .alert)
         controller1.setTint(color: UIColor(named: "Color3")!)
         let okAction = UIAlertAction(title: "\(sender.currentTitle!)", style: .default) { (_) in
             
             let leaveID = self.acceptableLeaveArr[sender.tag].leaveID
+            print("vvv \(leaveID)")
             NetWorkController.sharedInstance.postT(api: "/leave/staffreviewdeputy", params: ["leaveID": leaveID, "reviewed": reviewed])
             {(jsonData) in
                 print(jsonData.description)

@@ -167,7 +167,6 @@ extension CNotificationController : UITableViewDelegate, UITableViewDataSource{
             
             let cellIdentifier = "AcceptableNotificationCell"
             let cell1 = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! AcceptableNotificationCell
-            cell1.backgroundColor = UIColor(named: "Color1")
             
             let leaveData = acceptableLeaveArr[indexPath.item]
             

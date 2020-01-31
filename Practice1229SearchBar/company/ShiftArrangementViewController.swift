@@ -29,6 +29,12 @@ class ShiftArrangementViewController: UIViewController, UITableViewDataSource , 
     var shiftAdd = false
     var addItem = 1
     
+    fileprivate lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter
+    }()
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -195,16 +201,21 @@ class ShiftArrangementViewController: UIViewController, UITableViewDataSource , 
         
         var params: Dictionary<String, Any> = [:]
         var arr = [Any]()
+        let id = Global.temDateShiftIDs[dateFormatter.string(from: Date())]
         for i in currentShiftArr{
-            let id = Global.temDateShiftIDs[i.dateName]
+            
+            print("sss currentShiftArr \(i.dateName)")
+            
             params = ["timeShiftName" : i.timeName , "startTime": i.startTime,
                       "endTime": i.endTime, "staffNumber": i.staffNum]
             arr.append(params)
-            NetWorkController.sharedInstance.postT(api: "/schedule/settimeshift", params: ["dataShiftID": "\(id)", "data" : arr])
-            {(jsonData) in
-                print("xxx \(jsonData.description)")
-            }
+            
             Global.shiftTimeNames.append(i.timeName)
+            
+        }
+        NetWorkController.sharedInstance.postT(api: "/schedule/settimeshift", params: ["dataShiftID": "\(id)", "data" : arr])
+        {(jsonData) in
+            print("xxx \(jsonData.description)")
         }
     }
     

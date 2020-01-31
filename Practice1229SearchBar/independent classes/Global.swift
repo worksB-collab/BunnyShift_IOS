@@ -27,6 +27,7 @@ public class Global{
     public static var dailyShiftArr = Array<ShiftDate>()
     public static var temDateShiftIDs : Dictionary<String , Int> = [:]
     
+    public static var temTimeShiftNames = Array<String>()
     
 //    public static var staffNameList : [String] = ["Anders", "Kristian", "Sofia", "John", "Jenny", "Lina", "Annie", "Katie", "Johanna"]
        

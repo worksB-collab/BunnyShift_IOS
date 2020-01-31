@@ -34,8 +34,8 @@ class EventCell: UICollectionViewCell {
         locationLabel.textColor = UIColor( named: "Color7")
 //        self.backgroundColor = UIColor(hex: 0xEEF7FF)
 //        borderView.backgroundColor = UIColor(hex: 0x0899FF)
-        self.backgroundColor = UIColor( named: "Color1")
-        borderView.backgroundColor = UIColor( named: "Color7")
+        self.backgroundColor = UIColor.white
+        borderView.backgroundColor = UIColor( named: "Color1")
     }
 
     func configureCell(event: DefaultEvent) {

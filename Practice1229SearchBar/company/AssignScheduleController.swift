@@ -195,7 +195,7 @@ class AssignScheduleController: UIViewController{
         NetWorkController.sharedInstance.postT(api: "/schedule/setWorker", params: data){(jsonData) in
             if jsonData["Status"].string == "200"{
                 let msg = jsonData["message"].string
-                print(msg!)
+                print("eh?" + msg!)
                 Updates.getMonthData(calendar : self.calendar)
             }
         }
@@ -275,7 +275,11 @@ extension AssignScheduleController : UICollectionViewDataSource, UICollectionVie
         if collectionView == self.collectionView{
             return Global.staffList.count
         }else{
-            return Global.shiftTimeNames.count// 依照日期給定某日別的班別
+            if Global.shiftTimeNames.count > 0 {
+                return Global.shiftTimeNames.count
+            }else{
+                return Global.temTimeShiftNames.count
+            }
         }
     }
     
@@ -292,7 +296,15 @@ extension AssignScheduleController : UICollectionViewDataSource, UICollectionVie
             }
         }else{
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShiftCollectionViewCell.reuseIdentifier,for: indexPath) as? ShiftCollectionViewCell {
-                cell.configureCell(dateShift: Global.shiftTimeNames[indexPath.row])
+                if Global.shiftTimeNames.count > 0 {
+                    cell.configureCell(dateShift: Global.shiftTimeNames[indexPath.row])
+                    
+                }else{
+                    cell.configureCell(dateShift: Global.temTimeShiftNames[indexPath.row])
+                }
+                
+                
+                
                 //                cell.configureCell(dateShift: Global.shiftDateNames[indexPath.row], timeShift: Global.shiftTimeNames[indexPath.row])
                 
                 cell.clipsToBounds = true
@@ -316,7 +328,11 @@ extension AssignScheduleController : UICollectionViewDataSource, UICollectionVie
         }else{
             let selectedCell:UICollectionViewCell = self.shiftCollectionView.cellForItem(at: indexPath)!
             changeCellColor(collectionView, didSelectItemAt: self.shiftCollectionView.cellForItem(at: indexPath) as! UICollectionViewCell, isSelected: true)
-            selectedShift = Global.shiftTimeNames[indexPath.item]
+            if Global.shiftTimeNames.count > 0 {
+                selectedShift = Global.shiftTimeNames[indexPath.item]
+            }else{
+                selectedShift = Global.temTimeShiftNames[indexPath.item]
+            }
         }
         if selectedStaff != nil , selectedShift != nil{
             showCurrentSelection()
@@ -433,9 +449,7 @@ extension AssignScheduleController : UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         
         print("deSelected" , indexPath.item)
-        
         let cell1 = tableView.cellForRow(at: indexPath) as! DayViewTableViewCell
-        
         cell1.backgroundColor = UIColor.clear
     }
     
@@ -443,8 +457,6 @@ extension AssignScheduleController : UITableViewDelegate, UITableViewDataSource{
 
 
 extension AssignScheduleController : FSCalendarDataSource, FSCalendarDelegate{
-    
-    //data source
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         print("did select date \(self.dateFormatter.string(from: date))")
@@ -496,12 +508,13 @@ extension AssignScheduleController : FSCalendarDataSource, FSCalendarDelegate{
                         self.scheduleSetWorkerAPI()
                     }
                 }
+                NetWorkController.sharedInstance.postT(api: "/schedule/removeworkerinschedule", params: ["ltdScheduleID" : self.deselectedScheduleID, "staffID" : self.selectedStaffID])
+                {(jsonData) in
+                    print("\(jsonData["message"].string)")
+                    Toast.showToast(self.view, "已調整班表")
+                    self.calendar.reloadData()
+                }
             }
-        }
-        NetWorkController.sharedInstance.postT(api: "/schedule/removeworkerinschedule", params: ["ltdScheduleID" : self.deselectedScheduleID, "staffID" : selectedStaffID])
-        {(jsonData) in
-            print("\(jsonData["message"].string)")
-            self.calendar.reloadData()
         }
     }
     

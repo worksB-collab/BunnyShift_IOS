@@ -50,6 +50,7 @@ public class Updates{
                 for i in 0 ..< arr.count{
                     let companyJson = arr[i]
                     
+                    
                     let date = companyJson["date"].string
                     let dateShiftName = companyJson["dateShiftName"].string
                     let timeShiftName = companyJson["timeShiftName"].string
@@ -58,6 +59,8 @@ public class Updates{
                     let staffNum = companyJson["number"].int
                     let staffName = companyJson["staffName"].string
                     var matchDateArr = true
+                    
+                    print("uuu \(date)")
                     
                     if first {
                         dateArr.append(ShiftDate(date!, dateShiftName!, timeShiftName!, startTime!, endTime!, staffNum!, staffName!))
@@ -74,9 +77,26 @@ public class Updates{
                         }
                     }
                 }
-                self.setCompanyShiftDateList(dateArr : dateArr )
                 Global.monthlyShiftArr = dateArr
-                self.seeNotEnoughDates(calendar : calendar)
+                if Global.monthlyShiftArr!.count == 0{
+                    NetWorkController.sharedInstance.get(api: "/search/timeshiftbycompany"){(jsonData) in
+                        Global.temTimeShiftNames = Array<String>()
+                        
+                        if jsonData["Status"].string == "200"{
+                            let arr = jsonData["rows"]
+                            for i in 0 ..< arr.count{
+                                let companyJson = arr[i]
+                                
+                                let timeShiftName = companyJson["timeShiftName"].string
+                                Global.temTimeShiftNames.append(timeShiftName!)
+                                
+                                
+                                self.setCompanyShiftDateList(dateArr : dateArr )
+                                self.seeNotEnoughDates(calendar : calendar)
+                            }
+                        }
+                    }
+                }
             }
         }
     }

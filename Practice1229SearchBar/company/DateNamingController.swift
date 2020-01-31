@@ -85,26 +85,26 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
         
     }
     
-    func getDataFromDataBase(){ // 應該要放在修改的controller
-        Global.shiftDateNames = Array<String>()
-        Global.companyShiftDateList = [String : Array<ShiftDate>]()
-//        Global.companyInfo = Company()
-        NetWorkController.sharedInstance.get(api: "/search/dateshiftbycompany/")
-        {(jsonData) in
-            print("dateNameController can do>> \(jsonData)")
-            if jsonData["Status"].string == "200"{
-                let arr = jsonData["rows"]
-                for i in 0 ..< arr.count{
-                    let companyJson = arr[i]
-                    let name = companyJson["dateShiftName"].string
-                    self.tableViewCellArr.append(name!)
-                    
-                }
-            }else{
-                print("not able to get data: " + jsonData.description)
-            }
-        }
-    }
+//    func getDataFromDataBase(){ // 應該要放在修改的controller
+//        Global.shiftDateNames = Array<String>()
+//        Global.companyShiftDateList = [String : Array<ShiftDate>]()
+////        Global.companyInfo = Company()
+//        NetWorkController.sharedInstance.get(api: "/search/dateshiftbycompany/")
+//        {(jsonData) in
+//            print("dateNameController can do>> \(jsonData)")
+//            if jsonData["Status"].string == "200"{
+//                let arr = jsonData["rows"]
+//                for i in 0 ..< arr.count{
+//                    let companyJson = arr[i]
+//                    let name = companyJson["dateShiftName"].string
+//                    self.tableViewCellArr.append(name!)
+//
+//                }
+//            }else{
+//                print("not able to get data: " + jsonData.description)
+//            }
+//        }
+//    }
     
     func saveDataToDataBase(){
         var params: Dictionary<String, Any> = [:]
@@ -117,18 +117,27 @@ class DateNamingController: UIViewController, UITableViewDataSource , UITableVie
         for _ in tableViewCellArr{
             NetWorkController.sharedInstance.postT(api: "/schedule/setdateshift", params: ["data" : arr])
             {(jsonData) in
-                print("\(jsonData["message"].string)")
                 
-                Global.temDateShiftIDs = [:]
+                print("ccc \(jsonData.description)")
                 
-                let arr = jsonData["rows"]
-                for i in 0 ..< arr.count{
-                    let companyJson = arr[i]
-                    let dateShiftID = companyJson["dateShiftID"].int
-                    let dateShiftName = companyJson["dateShiftName"].string
-                    let ltdID = companyJson["ltdID"].int
-                    Global.companyInfo?.ltdID = ltdID
-                    Global.temDateShiftIDs.updateValue(dateShiftID!, forKey: dateShiftName!)
+                if jsonData["Status"].string == "200"{
+                    Global.temDateShiftIDs = [:]
+                    
+                    let arr = jsonData["rows"]
+                    for i in 0 ..< arr.count{
+                        let companyJson = arr[i]
+                        let dateShiftID = companyJson["dateShiftID"].int
+                        let dateShiftName = companyJson["dateShiftName"].string
+                        let ltdID = companyJson["ltdID"].int
+                        
+                        print("sss dateShiftName \(dateShiftName)")
+                        
+                        
+                        Global.companyInfo?.ltdID = ltdID
+                        Global.temDateShiftIDs.updateValue(dateShiftID!, forKey: dateShiftName!)
+                    }
+                }else{
+                    print("ddd \(jsonData["message"].string)")
                 }
             }
         }
