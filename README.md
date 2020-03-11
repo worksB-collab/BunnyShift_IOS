@@ -21,7 +21,8 @@ Where company could customize thier day type.
 Where company could customize thier time shifts.
 ![login page](https://github.com/worksB-collab/BunnyShift_IOS/blob/master/pitch/%E6%88%AA%E5%9C%96%202020-01-31%20%E4%B8%8A%E5%8D%8810.08.32.png)
 
-
 #### Staff Account Creation
 Company Account should be existed before staff accounts created
 ![login page](https://github.com/worksB-collab/BunnyShift_IOS/blob/master/pitch/3.png)
+
+to be adding...
