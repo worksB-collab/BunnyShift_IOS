@@ -6,11 +6,11 @@ A company based dual side system designed for HRs and labors on shifting time an
 
 ## Instruction
 
-## Account Creation
+### Account Creation
 * Customized day type, shift type and time arrangement.
 <br>![demo](https://github.com/worksB-collab/BunnyShift_IOS/blob/master/demo/bunnyshift2.gif)
 
-## In App Function
+### In App Function
 * Month/ Day view toggle.
 * Take leave with other colleages who are free at the selected time.
 * Access company detialed information.
@@ -39,5 +39,3 @@ Where company could customize thier time shifts.
 #### Staff Account Creation
 Company Account should be existed before staff accounts created
 ![login page](https://github.com/worksB-collab/BunnyShift_IOS/blob/master/pitch/3.png)
-
-to be adding...
