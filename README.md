@@ -5,22 +5,20 @@ A company based dual side system designed for HRs and labors on shifting time an
 ![structure image](https://github.com/worksB-collab/BunnyShift_IOS/blob/master/pitch/Untitled.png)
 
 ## Instruction
-## HR Side
+
+## Account Creation
 * Customized day type, shift type and time arrangement.
+<br>![demo](https://github.com/worksB-collab/BunnyShift_IOS/blob/master/demo/bunnyshift2.gif)
+
+## In App Function
 * Month/ Day view toggle.
+* Take leave with other colleages who are free at the selected time.
+* Access company detialed information.
 * View certain date with all staff info.
 * Assign certain time to a selected labor with multiple dates.
 * Customized company info and staff management.
-* Real time notification from staffs.
-<br>![demo](https://github.com/worksB-collab/BunnyShift_IOS/blob/master/demo/bunnyshift1.gif)
-
-## Staff Side
-* Month/ Day view toggle.
-* View certain date with all other colleages info.
-* Take leave with other colleages who are free at the selected time.
-* Access company detialed information.
 * Real time notification of approval process.
-<br>![demo](https://github.com/worksB-collab/BunnyShift_IOS/blob/master/demo/bunnyshift2.gif)
+<br>![demo](https://github.com/worksB-collab/BunnyShift_IOS/blob/master/demo/bunnyshift1.gif)
 
 ### Login page
 Where HRs or staffs could choose identity to login, register or reset passwords.
