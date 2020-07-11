@@ -1,5 +1,5 @@
 # BunnyShift_IOS
-A company based dual side system designed for HRs and labors on shifting time and taking leaves.
+A company based dual side HR system designed for shifting time and taking leaves, aming on gradually developing as an complete HR system.
 ## Structure of the app
 
 ![structure image](https://github.com/worksB-collab/BunnyShift_IOS/blob/master/pitch/Untitled.png)
